@@ -97,13 +97,8 @@ export default function Nav() {
         <Link to="/" onClick={() => setMenuOpen(false)}>{t.home}</Link>
         <Link to="/concerts" onClick={() => setMenuOpen(false)}>{t.concerts}</Link>
         <Link to="/biography" onClick={() => setMenuOpen(false)}>{t.biography}</Link>
-        <Link to="/#cursos" onClick={() => setMenuOpen(false)}>{t.navCourses}</Link>
-        <Link to="/#cursos" onClick={() => setMenuOpen(false)}>{t.masterclass}</Link>
         <Link to="/contact" onClick={() => setMenuOpen(false)}>{t.contact}</Link>
         <button className="nav-link" style={{ fontSize: 'inherit' }} onClick={() => { setPlatformsOpen(true); setMenuOpen(false); }}>{t.platformsTitle || t.platform}</button>
-        <Link to="/#planes" className="mobile-cta" onClick={() => setMenuOpen(false)}>
-          {t.startNow}
-        </Link>
       </div>
 
       <PlatformsModal 
