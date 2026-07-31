@@ -1,12 +1,49 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import Globe from 'react-globe.gl';
 import { useApp } from '../context/AppContext';
 import { CONCERTS, GLOBE_LOCATIONS, GLOBE_ARCS } from '../data/concerts';
+
+// Next 5 upcoming concerts for the sidebar card
+const UPCOMING_DATES = GLOBE_LOCATIONS.slice(0, 5);
+
+// All unique countries from archived concerts
+const ALL_COUNTRIES = [...new Set(CONCERTS.map((c) => c.country))].sort();
 
 export default function Concerts() {
   const { t } = useApp();
   const [hoveredMarker, setHoveredMarker] = useState(null);
   const [playingId, setPlayingId] = useState(null);
+  const [activeUpcoming, setActiveUpcoming] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [searchCountry, setSearchCountry] = useState('');
+  const [sortOrder, setSortOrder] = useState('newest'); // 'newest' | 'oldest'
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+
+  // Filtered + sorted concerts
+  const filteredConcerts = useMemo(() => {
+    let result = [...CONCERTS];
+    // Filter by country
+    if (searchCountry.trim()) {
+      const query = searchCountry.trim().toLowerCase();
+      result = result.filter(
+        (c) =>
+          c.country.toLowerCase().includes(query) ||
+          c.city.toLowerCase().includes(query)
+      );
+    }
+    // Sort by year
+    result.sort((a, b) =>
+      sortOrder === 'newest' ? b.year - a.year : a.year - b.year
+    );
+    return result;
+  }, [searchCountry, sortOrder]);
+
+  // Countries matching search for dropdown suggestions
+  const matchingCountries = useMemo(() => {
+    if (!searchCountry.trim()) return [];
+    const query = searchCountry.trim().toLowerCase();
+    return ALL_COUNTRIES.filter((c) => c.toLowerCase().includes(query));
+  }, [searchCountry]);
   const globeEl = useRef();
 
   useEffect(() => {
@@ -16,6 +53,23 @@ export default function Concerts() {
       controls.enableZoom = false;
     }
   }, []);
+
+  // Auto-cycle upcoming dates every 3.5s
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setActiveUpcoming((prev) => (prev + 1) % UPCOMING_DATES.length);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [isPaused]);
+
+  const handlePlay = (concertId) => {
+    const scrollY = window.scrollY;
+    setPlayingId(concertId);
+    requestAnimationFrame(() => {
+      window.scrollTo(0, scrollY);
+    });
+  };
 
   const activeMarker = null; // No longer needed for globe since it has native labels if needed, or we can use custom markers.
 
@@ -44,7 +98,7 @@ export default function Concerts() {
                   <span className="map-badge-dot" />
                   World Tour
                 </span>
-                <h3 className="map-title">{t.concertsMapTitle}</h3>
+                <h3 className="map-title">World Tour Upcoming Dates</h3>
               </div>
               <p className="map-desc">{t.concertsMapDesc}</p>
             </div>
@@ -61,12 +115,13 @@ export default function Concerts() {
                   width={1000}
                   height={700}
                   backgroundColor="rgba(0,0,0,0)"
-                  globeImageUrl="//unpkg.com/three-globe/example/img/earth-dark.jpg"
+                  globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
+                  bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
                   atmosphereColor="#C9A227"
-                  atmosphereAltitude={0.15}
+                  atmosphereAltitude={0.18}
                   
-                  // Rings for cities
-                  ringsData={GLOBE_LOCATIONS}
+                  // Rings for upcoming concert cities only
+                  ringsData={UPCOMING_DATES}
                   ringLat="lat"
                   ringLng="lng"
                   ringColor="color"
@@ -74,8 +129,8 @@ export default function Concerts() {
                   ringPropagationSpeed={2.5}
                   ringRepeatPeriod={800}
 
-                  // Points/Dots — larger radius = bigger hitbox
-                  pointsData={GLOBE_LOCATIONS}
+                  // Points/Dots — only upcoming concert locations
+                  pointsData={UPCOMING_DATES}
                   pointLat="lat"
                   pointLng="lng"
                   pointColor={() => '#C9A227'}
@@ -110,6 +165,68 @@ export default function Concerts() {
                 />
               </div>
 
+              {/* ── Upcoming Dates Card ── */}
+              <aside
+                className="upcoming-dates-card"
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
+              >
+                <div className="upcoming-card-header">
+                  <div className="upcoming-card-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                      <rect x="3" y="4" width="18" height="18" rx="3" stroke="currentColor" strokeWidth="1.5"/>
+                      <path d="M3 9h18" stroke="currentColor" strokeWidth="1.5"/>
+                      <path d="M8 2v4M16 2v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                      <circle cx="12" cy="15" r="1.5" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="upcoming-card-title">Próximas Fechas</h4>
+                    <span className="upcoming-card-count">{UPCOMING_DATES.length} shows</span>
+                  </div>
+                </div>
+
+                {/* Timeline progress bar */}
+                <div className="upcoming-progress-track">
+                  <div
+                    className="upcoming-progress-fill"
+                    style={{ width: `${((activeUpcoming + 1) / UPCOMING_DATES.length) * 100}%` }}
+                  />
+                </div>
+
+                <ul className="upcoming-list">
+                  {UPCOMING_DATES.map((concert, i) => (
+                    <li
+                      key={i}
+                      className={`upcoming-item ${i === activeUpcoming ? 'upcoming-item--active' : ''} ${i < activeUpcoming ? 'upcoming-item--past' : ''}`}
+                      onClick={() => setActiveUpcoming(i)}
+                      onKeyDown={(e) => e.key === 'Enter' && setActiveUpcoming(i)}
+                      role="button"
+                      tabIndex={0}
+                    >
+                      <div className="upcoming-item-indicator">
+                        <span className="upcoming-dot" />
+                        {i < UPCOMING_DATES.length - 1 && <span className="upcoming-line" />}
+                      </div>
+                      <div className="upcoming-item-content">
+                        <span className="upcoming-date">{concert.date}</span>
+                        <span className="upcoming-city">{concert.city}</span>
+                        <span className="upcoming-venue">{concert.venue}</span>
+                        {i === activeUpcoming && (
+                          <span className="upcoming-country-badge">{concert.country}</span>
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="upcoming-card-footer">
+                  <span className="upcoming-footer-label">Ver todas las fechas</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                    <path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </aside>
 
             </div>
 
@@ -139,19 +256,115 @@ export default function Concerts() {
               <span className="stat-label">Shows</span>
             </div>
             <div className="gallery-stat">
-              <span className="stat-number">{new Set(CONCERTS.map((c) => c.country)).size}</span>
+              <span className="stat-number">{ALL_COUNTRIES.length}</span>
               <span className="stat-label">Países</span>
             </div>
           </div>
         </div>
 
+        {/* ── Search & Filter Bar ── */}
+        <div className="concerts-filter-bar" data-reveal>
+          <div className={`filter-search-wrap ${isSearchFocused ? 'filter-search-wrap--focused' : ''}`}>
+            <svg className="filter-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/>
+              <path d="M20 20l-4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+            <input
+              type="text"
+              className="filter-search-input"
+              placeholder="Buscar por país o ciudad..."
+              value={searchCountry}
+              onChange={(e) => setSearchCountry(e.target.value)}
+              onFocus={() => setIsSearchFocused(true)}
+              onBlur={() => setTimeout(() => setIsSearchFocused(false), 200)}
+            />
+            {searchCountry && (
+              <button
+                className="filter-search-clear"
+                onClick={() => setSearchCountry('')}
+                aria-label="Limpiar búsqueda"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                  <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+              </button>
+            )}
+
+            {/* Autocomplete dropdown */}
+            {isSearchFocused && searchCountry.trim() && matchingCountries.length > 0 && (
+              <div className="filter-search-dropdown">
+                {matchingCountries.map((country) => (
+                  <button
+                    key={country}
+                    className="filter-dropdown-item"
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      setSearchCountry(country);
+                      setIsSearchFocused(false);
+                    }}
+                  >
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="currentColor" opacity="0.5"/>
+                      <circle cx="12" cy="9" r="2.5" fill="currentColor"/>
+                    </svg>
+                    <span>{country}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="filter-sort-wrap">
+            <span className="filter-sort-label">Ordenar:</span>
+            <button
+              className={`filter-sort-btn ${sortOrder === 'newest' ? 'filter-sort-btn--active' : ''}`}
+              onClick={() => setSortOrder('newest')}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                <path d="M12 5v14M5 12l7-7 7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" transform={sortOrder === 'newest' ? '' : 'rotate(180 12 12)'}/>
+              </svg>
+              Más reciente
+            </button>
+            <button
+              className={`filter-sort-btn ${sortOrder === 'oldest' ? 'filter-sort-btn--active' : ''}`}
+              onClick={() => setSortOrder('oldest')}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                <path d="M12 19V5M5 12l7 7 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              Más antiguo
+            </button>
+          </div>
+
+          {searchCountry && (
+            <div className="filter-result-count">
+              <span className="filter-count-number">{filteredConcerts.length}</span>
+              <span className="filter-count-text">
+                {filteredConcerts.length === 1 ? 'resultado' : 'resultados'}
+              </span>
+            </div>
+          )}
+        </div>
+
         <div className="concerts-gallery" data-reveal-stagger>
-          {CONCERTS.map((concert, i) => {
+          {filteredConcerts.length === 0 && (
+            <div className="concerts-empty-state">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.5" opacity="0.4"/>
+                <path d="M20 20l-4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.4"/>
+              </svg>
+              <p>No se encontraron conciertos para <strong>"{searchCountry}"</strong></p>
+              <button className="empty-state-reset" onClick={() => setSearchCountry('')}>
+                Mostrar todos los conciertos
+              </button>
+            </div>
+          )}
+          {filteredConcerts.map((concert, i) => {
             const isPlaying = playingId === concert.id;
             return (
               <article
                 key={concert.id}
-                className={`concert-card ${isPlaying ? 'playing' : ''} ${i === 0 ? 'concert-card--featured' : ''}`}
+                className={`concert-card ${isPlaying ? 'playing' : ''} ${i === 0 && !searchCountry ? 'concert-card--featured' : ''}`}
                 data-reveal
                 data-reveal-delay={i * 80}
               >
@@ -166,8 +379,8 @@ export default function Concerts() {
                   ) : (
                     <div
                       className="concert-card-poster"
-                      onClick={() => setPlayingId(concert.id)}
-                      onKeyDown={(e) => e.key === 'Enter' && setPlayingId(concert.id)}
+                      onClick={() => handlePlay(concert.id)}
+                      onKeyDown={(e) => e.key === 'Enter' && handlePlay(concert.id)}
                       role="button"
                       tabIndex={0}
                       aria-label={`Play ${concert.title}`}

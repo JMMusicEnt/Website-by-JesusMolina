@@ -10,17 +10,14 @@ const LANGUAGES = ['en', 'es', 'fr'];
 export default function Nav() {
   const { scrolled, onDark } = useNavScroll();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const [platformsOpen, setPlatformsOpen] = useState(false);
   const { language, setLanguage, t } = useApp();
-  const servicesRef = useRef(null);
   const langRef = useRef(null);
 
   /* Close dropdowns on outside click */
   useEffect(() => {
     function handleClick(e) {
-      if (servicesRef.current && !servicesRef.current.contains(e.target)) setServicesOpen(false);
       if (langRef.current && !langRef.current.contains(e.target)) setLangOpen(false);
     }
     document.addEventListener('mousedown', handleClick);
@@ -44,29 +41,6 @@ export default function Nav() {
           <Link to="/" className="nav-link">{t.home}</Link>
           <Link to="/concerts" className="nav-link">{t.concerts}</Link>
           <Link to="/biography" className="nav-link">{t.biography}</Link>
-
-          {/* Services dropdown */}
-          <div
-            className={`nav-dropdown${servicesOpen ? ' open' : ''}`}
-            ref={servicesRef}
-          >
-            <button
-              className="nav-link nav-dropdown-trigger"
-              onClick={() => setServicesOpen((v) => !v)}
-              aria-expanded={servicesOpen}
-              aria-haspopup="true"
-            >
-              {t.services}
-              <svg className="nav-dropdown-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-            <div className="nav-dropdown-menu">
-              <Link to="/#cursos" className="nav-dropdown-item" onClick={() => setServicesOpen(false)}>{t.navCourses}</Link>
-              <Link to="/#cursos" className="nav-dropdown-item" onClick={() => setServicesOpen(false)}>{t.masterclass}</Link>
-            </div>
-          </div>
-
           <Link to="/contact" className="nav-link">{t.contact}</Link>
           <button className="nav-link" onClick={() => setPlatformsOpen(true)}>{t.platformsTitle || t.platform}</button>
         </nav>

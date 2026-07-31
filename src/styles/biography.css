@@ -168,15 +168,15 @@
 [data-theme="light"] .bio-subtitle { color: var(--ebano); }
 
 .bio-story-text {
-  font-size: 16px;
-  line-height: 1.75;
+  font-size: 14px;
+  line-height: 1.7;
   color: var(--niebla-claro);
 }
 
 [data-theme="light"] .bio-story-text { color: var(--niebla); }
 
 .bio-lead {
-  font-size: 18px;
+  font-size: 15px;
   color: var(--marfil);
   margin-bottom: 20px;
   font-weight: 500;
@@ -259,7 +259,7 @@
 
 .collab-card {
   flex-shrink: 0;
-  width: 260px;
+  width: 320px;
   border-radius: var(--radius-md);
   overflow: hidden;
   border: 1px solid rgba(247, 241, 230, 0.08);
@@ -288,6 +288,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top center;
   filter: grayscale(20%);
   transition: filter 0.5s var(--ease), transform 0.6s var(--ease);
 }
@@ -352,7 +353,7 @@
 
 .influences-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 

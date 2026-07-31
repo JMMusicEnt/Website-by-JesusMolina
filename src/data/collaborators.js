@@ -1,13 +1,48 @@
-/** Collaborators — placeholder image reused for prototype */
-export const PLACEHOLDER_PORTRAIT = `${import.meta.env.BASE_URL}images/biography-portrait.png`;
+/** Collaborators — Featured artists & collaborators */
+export const PLACEHOLDER_PORTRAIT = `${import.meta.env.BASE_URL}images/biography-portrait.jpg`;
 
 export const COLLABORATORS = [
-  { id: 1, name: 'Horacio Hernández', role: 'Batería · Percusión', project: 'Gira Latina 2024' },
-  { id: 2, name: 'John Patitucci', role: 'Contrabajo', project: 'Jazz Trio Live' },
-  { id: 3, name: 'Gonzalo Rubalcaba', role: 'Piano · Arreglos', project: 'Dúo de Piano' },
-  { id: 4, name: 'Dafnis Prieto', role: 'Batería', project: 'Fusión Caribeña' },
-  { id: 5, name: 'Paquito D\'Rivera', role: 'Saxofón · Clarinete', project: 'Latin Jazz Ensemble' },
-  { id: 6, name: 'Edmar Castañeda', role: 'Arpa Llanera', project: 'Colombia Jazz Project' },
-  { id: 7, name: 'Chick Corea Legacy Band', role: 'Ensemble', project: 'Tribute Tour' },
-  { id: 8, name: 'Terri Lyne Carrington', role: 'Batería · Dirección', project: 'Women in Jazz' },
+  {
+    id: 1,
+    name: 'Jesús Adrián Romero',
+    role: 'Cantautor · Producción',
+    project: 'Colaboración Especial',
+    image: `${import.meta.env.BASE_URL}images/jesusAdrian.jpeg`,
+  },
+  {
+    id: 2,
+    name: 'Noel Schajris',
+    role: 'Voz · Piano · Pop Latino',
+    project: 'Dúo & Sesiones en Vivo',
+    image: `${import.meta.env.BASE_URL}images/noel.jpg`,
+  },
+  {
+    id: 3,
+    name: 'Zedd',
+    role: 'Productor · DJ & Electrónica',
+    project: 'Crossover Project',
+    image: `${import.meta.env.BASE_URL}images/zedd.jpg`,
+  },
+  {
+    id: 4,
+    name: 'Arturo Sandoval',
+    role: 'Trompeta · Latin Jazz Legend',
+    project: 'Latin Jazz Masters',
+    image: `${import.meta.env.BASE_URL}images/arturo.jpg`,
+  },
+  {
+    id: 5,
+    name: 'Randy Brecker',
+    role: 'Trompeta · Jazz Fusión Legend',
+    project: 'Jazz Fusion Sessions',
+    image: `${import.meta.env.BASE_URL}images/randy.png`,
+  },
+  {
+    id: 6,
+    name: 'Juan Luis Guerra',
+    role: 'Cantautor · Producción Orquestal',
+    project: 'Colaboración Especial',
+    image: `${import.meta.env.BASE_URL}images/juanluis.png`,
+    objectPosition: 'top center',
+  },
 ];

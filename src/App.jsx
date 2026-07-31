@@ -51,10 +51,10 @@ function Home() {
     <>
       <Hero />
       <Marquee />
-      <CoursesCarousel />
-      <Method />
       <SpotifySection />
       <ChinafunkVideo />
+      <CoursesCarousel />
+      <Method />
       <FinalCTA />
     </>
   );

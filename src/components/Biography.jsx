@@ -3,10 +3,9 @@ import { useTiltCards } from '../hooks/useTiltCards';
 import { COLLABORATORS, PLACEHOLDER_PORTRAIT } from '../data/collaborators';
 
 const INFLUENCES = [
-  { id: 1, name: 'Oscar Peterson', style: 'Jazz Swing / Virtuosismo' },
-  { id: 2, name: 'Frédéric Chopin', style: 'Romanticismo Clásico' },
-  { id: 3, name: 'Chick Corea', style: 'Jazz Fusión / Armonía' },
-  { id: 4, name: 'Art Tatum', style: 'Stride Piano / Armonía Avanzada' },
+  { id: 1, name: 'Oscar Peterson', style: 'Jazz Swing / Virtuosismo', image: `${import.meta.env.BASE_URL}images/oscar.png` },
+  { id: 2, name: 'Brian Culbertson', style: 'Contemporary Jazz / Funk', image: `${import.meta.env.BASE_URL}images/brian.png` },
+  { id: 3, name: 'Chick Corea', style: 'Jazz Fusión / Armonía', image: `${import.meta.env.BASE_URL}images/chick.png` },
 ];
 
 const INSTRUMENTS = [
@@ -55,6 +54,9 @@ export default function Biography() {
             <h2 className="bio-subtitle">{t.bioTitle1}</h2>
             <p className="bio-lead">{t.bioP1}</p>
             <p>{t.bioP2}</p>
+            <p>{t.bioP3}</p>
+            <p>{t.bioP4}</p>
+            <p>{t.bioP5}</p>
           </div>
         </div>
 
@@ -74,7 +76,12 @@ export default function Biography() {
               {carouselItems.map((collab, i) => (
                 <article className="collab-card" key={`${collab.id}-${i}`}>
                   <div className="collab-card-photo">
-                    <img src={PLACEHOLDER_PORTRAIT} alt={collab.name} loading="lazy" />
+                    <img
+                      src={collab.image || PLACEHOLDER_PORTRAIT}
+                      alt={collab.name}
+                      loading="lazy"
+                      style={{ objectPosition: collab.objectPosition || 'top center' }}
+                    />
                     <div className="collab-card-overlay">
                       <span className="collab-card-overlay-project">{collab.project}</span>
                     </div>
@@ -103,7 +110,7 @@ export default function Biography() {
             {INFLUENCES.map((inf, i) => (
               <div className="influence-card" data-reveal data-reveal-delay={i * 100} data-tilt key={inf.id}>
                 <div className="influence-card-photo">
-                  <img src={PLACEHOLDER_PORTRAIT} alt={inf.name} loading="lazy" />
+                  <img src={inf.image || PLACEHOLDER_PORTRAIT} alt={inf.name} loading="lazy" />
                 </div>
                 <div className="influence-card-content">
                   <span className="influence-style">{inf.style}</span>

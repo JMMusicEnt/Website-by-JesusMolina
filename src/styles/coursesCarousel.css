@@ -38,27 +38,123 @@
 }
 
 .carousel-btn {
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
-  background: transparent;
-  color: var(--ebano);
-  border: 1px solid var(--linea);
+  background: var(--ebano);
+  color: var(--marfil);
+  border: 1px solid var(--ebano);
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  z-index: 10;
   transition: all 0.3s var(--ease);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 }
 
 .carousel-btn:hover:not(.disabled) {
-  background: var(--ebano);
-  color: var(--marfil);
-  border-color: var(--ebano);
+  background: var(--bronce);
+  color: var(--ebano);
+  border-color: var(--bronce);
   transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(201, 162, 39, 0.3);
 }
 
 .carousel-btn.disabled {
-  opacity: 0.35;
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Informative Video Container */
+.courses-video-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 520px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--ebano);
+  margin-bottom: 56px;
+  cursor: pointer;
+  box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--linea);
+}
+
+.courses-intro-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.courses-video-play-btn {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 72px;
+  height: 72px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--marfil);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3;
+  transition: opacity 0.35s ease, transform 0.35s ease, background 0.25s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.courses-video-play-btn:hover {
+  background: rgba(17, 24, 39, 0.9);
+  transform: scale(1.08);
+}
+
+.courses-video-play-btn.is-playing {
+  opacity: 0;
+}
+
+.courses-video-container:hover .courses-video-play-btn.is-playing {
+  opacity: 1;
+}
+
+.courses-video-badge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(17, 24, 39, 0.85);
+  backdrop-filter: blur(6px);
+  color: var(--bronce);
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  z-index: 2;
+  border: 1px solid rgba(201, 162, 39, 0.3);
+}
+
+/* Header & Controls bar under video */
+.carousel-cards-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-top: 12px;
+}
+
+.carousel-cards-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--ebano);
+  margin: 0;
 }
 
 /* Track and cards */

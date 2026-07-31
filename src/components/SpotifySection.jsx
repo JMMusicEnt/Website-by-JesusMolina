@@ -24,7 +24,7 @@ export default function SpotifySection() {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
               </svg>
-              <span>Artista Verificado</span>
+              <span>{t.spotifyVerifiedArtist || "Verified Artist"}</span>
             </div>
 
             <div className="spotify-profile-header">
@@ -33,7 +33,7 @@ export default function SpotifySection() {
               </div>
               <div className="spotify-name-wrap">
                 <h3 className="spotify-artist-name">Jesús Molina</h3>
-                <span className="spotify-artist-genre">Jazz Fusión / Piano Solo</span>
+                <span className="spotify-artist-genre">Jazz Fusion / Solo Piano</span>
               </div>
             </div>
 
@@ -45,7 +45,7 @@ export default function SpotifySection() {
             </div>
 
             <div className="spotify-featured-quote">
-              <p>"Uno de los pianistas y multi-instrumentistas más creativos de la escena del jazz moderno internacional."</p>
+              <p>{t.spotifyQuote || '"One of the most creative pianists and multi-instrumentalists in the international modern jazz scene."'}</p>
             </div>
 
             <a 

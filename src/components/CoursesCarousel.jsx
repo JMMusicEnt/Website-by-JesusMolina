@@ -1,79 +1,110 @@
 import { useRef, useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 
-const DUMMY_PLATFORM_COURSES = [
-  {
-    id: 1,
-    title: 'Piano Pro: Armonía y Composición Creativa',
-    platform: 'Udemy',
-    platformColor: '#A435F0',
-    rating: 4.9,
-    reviews: 1240,
-    duration: '15 horas',
-    level: 'Intermedio - Avanzado',
-    image: 'images/image1.png',
-    link: '#',
-    badge: 'Best Seller'
-  },
-  {
-    id: 2,
-    title: 'Improvisación de Jazz para Pianistas',
-    platform: 'Domestika',
-    platformColor: '#FF5A5F',
-    rating: 4.8,
-    reviews: 850,
-    duration: '8 horas',
-    level: 'Todos los niveles',
-    image: 'images/image3.png',
-    link: '#',
-    badge: 'Popular'
-  },
-  {
-    id: 3,
-    title: 'Bases del Piano: Técnica Clásica y Postura',
-    platform: 'Hotmart',
-    platformColor: '#F75A22',
-    rating: 4.7,
-    reviews: 620,
-    duration: '10 horas',
-    level: 'Inicial',
-    image: 'images/image1.png',
-    link: '#',
-    badge: 'Nuevo'
-  },
-  {
-    id: 4,
-    title: 'Composición de Bandas Sonoras en el Piano',
-    platform: 'Udemy',
-    platformColor: '#A435F0',
-    rating: 4.9,
-    reviews: 430,
-    duration: '12 horas',
-    level: 'Avanzado',
-    image: 'images/image3.png',
-    link: '#',
-    badge: 'Destacado'
-  },
-  {
-    id: 5,
-    title: 'Ritmos Latinos y Montuno para Piano Popular',
-    platform: 'Crehana',
-    platformColor: '#00B4FF',
-    rating: 4.8,
-    reviews: 310,
-    duration: '6 horas',
-    level: 'Intermedio',
-    image: 'images/image1.png',
-    link: '#',
-    badge: null
-  }
-];
-
 export default function CoursesCarousel() {
-  const { t } = useApp();
+  const { language, t } = useApp();
   const scrollRef = useRef(null);
+  const videoRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const isEs = language === 'es';
+
+  const courses = [
+    {
+      id: 1,
+      title: isEs ? 'Paquete de cursos' : 'Course Bundle',
+      platform: 'CLAMA',
+      platformColor: '#C9A227',
+      rating: 5.0,
+      reviews: 1480,
+      duration: null,
+      level: isEs ? 'Todos los niveles' : 'All levels',
+      image: 'images/image1.png',
+      link: 'https://www.clama.mx/offers/rLLoYagM/checkout',
+      badge: isEs ? 'Bundle Especial' : 'Special Bundle'
+    },
+    {
+      id: 2,
+      title: isEs ? 'Destreza' : 'Dexterity',
+      platform: 'CLAMA',
+      platformColor: '#C9A227',
+      rating: 4.9,
+      reviews: 920,
+      duration: isEs ? '30 días' : '30 days',
+      level: isEs ? 'Todos los niveles' : 'All levels',
+      image: 'images/image3.png',
+      link: 'https://www.clama.mx/cursodestreza-jesusmolina',
+      badge: 'Popular'
+    },
+    {
+      id: 3,
+      title: 'PIANO ESSENTIALS I',
+      platform: 'CLAMA',
+      platformColor: '#C9A227',
+      rating: 4.9,
+      reviews: 810,
+      duration: isEs ? '20 días' : '20 days',
+      level: isEs ? 'Intermedio - Avanzado' : 'Intermediate - Advanced',
+      image: 'images/image1.png',
+      link: 'https://www.clama.mx/curso-piano-essentials-I',
+      badge: isEs ? 'Destacado' : 'Featured'
+    },
+    {
+      id: 4,
+      title: 'PIANO ESSENTIALS II',
+      platform: 'CLAMA',
+      platformColor: '#C9A227',
+      rating: 5.0,
+      reviews: 740,
+      duration: isEs ? '37 días' : '37 days',
+      level: isEs ? 'Intermedio - Avanzado' : 'Intermediate - Advanced',
+      image: 'images/image3.png',
+      link: 'https://www.clama.mx/piano-essentials-ii-con-jesus-molina',
+      badge: isEs ? 'Avanzado' : 'Advanced'
+    },
+    {
+      id: 5,
+      title: 'Piano Pro',
+      platform: 'CLAMA',
+      platformColor: '#C9A227',
+      rating: 4.8,
+      reviews: 650,
+      duration: isEs ? '20 días' : '20 days',
+      level: isEs ? 'Intermedio' : 'Intermediate',
+      image: 'images/image1.png',
+      link: 'https://www.clama.mx/pianopro-jesusmolina',
+      badge: null
+    },
+    {
+      id: 6,
+      title: isEs ? 'Cómo vivir de la música' : 'How to Make a Living from Music',
+      platform: 'CLAMA',
+      platformColor: '#C9A227',
+      rating: 4.9,
+      reviews: 1120,
+      duration: isEs ? '25 días' : '25 days',
+      level: isEs ? 'Todos los niveles' : 'All levels',
+      image: 'images/image3.png',
+      link: 'https://www.clama.mx/comovivirdelamusica-jesusmolina',
+      badge: isEs ? 'Recommended' : 'Recommended'
+    }
+  ];
+
+  const togglePlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      video.muted = false;
+      video.play();
+      setIsPlaying(true);
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
 
   const checkScrollLimits = () => {
     const el = scrollRef.current;
@@ -86,9 +117,7 @@ export default function CoursesCarousel() {
     const el = scrollRef.current;
     if (el) {
       el.addEventListener('scroll', checkScrollLimits);
-      // Run once on load
       checkScrollLimits();
-      // Handle resize
       window.addEventListener('resize', checkScrollLimits);
     }
     return () => {
@@ -101,7 +130,7 @@ export default function CoursesCarousel() {
     const el = scrollRef.current;
     if (!el) return;
     const cardWidth = el.querySelector('.course-card')?.clientWidth || 320;
-    const scrollAmount = (cardWidth + 24) * 2; // Scroll two cards at a time
+    const scrollAmount = (cardWidth + 24) * 2;
     el.scrollBy({
       left: direction === 'left' ? -scrollAmount : scrollAmount,
       behavior: 'smooth'
@@ -113,12 +142,50 @@ export default function CoursesCarousel() {
       <div className="carousel-container">
         <div className="carousel-header">
           <div className="carousel-header-info">
-            <span className="section-eyebrow" data-reveal>{t.coursesCarouselEyebrow}</span>
-            <h2 className="section-title" data-reveal>{t.coursesCarouselTitle}</h2>
-            <p className="carousel-subtitle-text" data-reveal>{t.coursesCarouselSub}</p>
+            <span className="section-eyebrow" data-reveal>{t.coursesCarouselEyebrow || "— Clama Academy"}</span>
+            <h2 className="section-title" data-reveal>CLAMA COURSES</h2>
+            <p className="carousel-subtitle-text" data-reveal>
+              {t.coursesCarouselSub || "Explora nuestra amplia variedad de cursos especializados diseñados para todos los niveles. Desde fundamentos del piano y técnica clásica hasta armonía avanzada, improvisación de jazz y composición creativa dentro de la plataforma CLAMA."}
+            </p>
           </div>
-          
-          <div className="carousel-controls" data-reveal>
+        </div>
+
+        {/* Video informativo de la plataforma / cursos */}
+        <div className="courses-video-container" data-reveal onClick={togglePlay}>
+          <video
+            ref={videoRef}
+            className="courses-intro-video"
+            src={`${import.meta.env.BASE_URL}video/klamavideo.mp4`}
+            playsInline
+            preload="metadata"
+            onEnded={() => setIsPlaying(false)}
+          ></video>
+          <button
+            className={`courses-video-play-btn ${isPlaying ? 'is-playing' : ''}`}
+            aria-label={isPlaying ? 'Pausar video' : 'Reproducir video'}
+            onClick={(e) => {
+              e.stopPropagation();
+              togglePlay();
+            }}
+          >
+            {isPlaying ? (
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="6" y="4" width="4" height="16" rx="1" />
+                <rect x="14" y="4" width="4" height="16" rx="1" />
+              </svg>
+            ) : (
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11.04-6.86a1 1 0 0 0 0-1.72L9.5 4.28A1 1 0 0 0 8 5.14z" />
+              </svg>
+            )}
+          </button>
+          <div className="courses-video-badge">{t.clamaVideoBadge || "Discover the CLAMA platform"}</div>
+        </div>
+
+        {/* Barra de navegación de tarjetas de cursos (debajo del video) */}
+        <div className="carousel-cards-header">
+          <h3 className="carousel-cards-title">{t.coursesCatalogTitle || "Course Catalog"}</h3>
+          <div className="carousel-controls">
             <button 
               className={`carousel-btn prev-btn ${!canScrollLeft ? 'disabled' : ''}`}
               onClick={() => scroll('left')}
@@ -144,7 +211,7 @@ export default function CoursesCarousel() {
 
         <div className="carousel-track-wrapper" data-reveal>
           <div className="carousel-track" ref={scrollRef}>
-            {DUMMY_PLATFORM_COURSES.map((course) => (
+            {courses.map((course) => (
               <div className="course-card" key={course.id}>
                 {course.badge && <span className="course-card-badge">{course.badge}</span>}
                 <div className="course-card-image">
@@ -157,7 +224,7 @@ export default function CoursesCarousel() {
                 <div className="course-card-content">
                   <div className="course-card-meta">
                     <span className="course-level">{course.level}</span>
-                    <span className="course-duration">{course.duration}</span>
+                    {course.duration && <span className="course-duration">{course.duration}</span>}
                   </div>
                   
                   <h3 className="course-card-title">{course.title}</h3>
@@ -182,8 +249,8 @@ export default function CoursesCarousel() {
                     <span className="reviews-count">({course.reviews})</span>
                   </div>
                   
-                  <a href={course.link} className="course-card-link">
-                    <span>Ver curso</span>
+                  <a href={course.link} target="_blank" rel="noopener noreferrer" className="course-card-link">
+                    <span>{t.viewCourse || "View course"}</span>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                       <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>

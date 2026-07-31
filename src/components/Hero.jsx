@@ -83,13 +83,6 @@ export default function Hero() {
               <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </a>
-          <a href="#chinafunk" className="btn btn-ghost btn-hero-ghost">
-            <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
-              <circle cx="17" cy="17" r="16" stroke="currentColor" strokeWidth="1.2" />
-              <path d="M14 11l9 6-9 6V11z" fill="currentColor" />
-            </svg>
-            <span>{t.heroCta2}</span>
-          </a>
         </div>
       </div>
 

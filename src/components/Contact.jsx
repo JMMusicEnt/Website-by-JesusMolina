@@ -79,53 +79,99 @@ export default function Contact() {
 
         <div className="contact-grid">
           <div className="contact-info-cards" data-reveal="slide-left">
-            <a href="https://wa.me/573000000000" target="_blank" rel="noopener noreferrer" className="info-card">
-              <div className="info-card-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+            <div className="contact-directory-card">
+              <div className="directory-header">
+                <span className="directory-badge">
+                  <span className="directory-badge-dot" />
+                  Official Contacts
+                </span>
+                <h3 className="directory-title">Management & Booking</h3>
               </div>
-              <div className="info-card-text">
-                <span className="info-card-label">WhatsApp</span>
-                <span className="info-card-value">+57 300 000 0000</span>
-              </div>
-              <span className="info-card-arrow">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-              <span className="info-card-shimmer" aria-hidden="true" />
-            </a>
 
-            <a href="mailto:info@jesusmolinapiano.com" className="info-card">
-              <div className="info-card-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M22 6l-10 7L2 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-              <div className="info-card-text">
-                <span className="info-card-label">Email</span>
-                <span className="info-card-value">info@jesusmolinapiano.com</span>
-              </div>
-              <span className="info-card-arrow">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-              <span className="info-card-shimmer" aria-hidden="true" />
-            </a>
+              {/* Management Section */}
+              <div className="directory-section">
+                <div className="directory-section-header">
+                  <div className="directory-icon-wrap">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                      <circle cx="12" cy="7" r="4" stroke="currentColor" strokeWidth="1.8" />
+                    </svg>
+                  </div>
+                  <div>
+                    <span className="directory-category">Management</span>
+                    <h4 className="directory-company">The Colomby Group</h4>
+                  </div>
+                </div>
 
-            <div className="info-card static-card">
-              <div className="info-card-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.8" />
-                  <path d="M12 6v6l4 2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-                </svg>
+                <div className="directory-details">
+                  <div className="directory-row">
+                    <span className="directory-row-label">Contact</span>
+                    <span className="directory-row-val">Bobby Colomby or Archie Castillo</span>
+                  </div>
+
+                  <div className="directory-row">
+                    <span className="directory-row-label">Address</span>
+                    <span className="directory-row-val">
+                      4115 Glencoe Avenue, Unit 114<br />
+                      Marina Del Rey, CA 90292
+                    </span>
+                  </div>
+
+                  <div className="directory-row">
+                    <span className="directory-row-label">Phone</span>
+                    <a href="tel:3103998881" className="directory-link">
+                      <span>(310) 399-8881</span>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                        <path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </a>
+                  </div>
+
+                  <div className="directory-row">
+                    <span className="directory-row-label">Email</span>
+                    <a href="mailto:Info@thecolombygroup.com" className="directory-link">
+                      <span>Info@thecolombygroup.com</span>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                        <path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
               </div>
-              <div className="info-card-text">
-                <span className="info-card-label">Booking</span>
-                <span className="info-card-value">Molina Music Group Corp.</span>
+
+              <div className="directory-divider" />
+
+              {/* Booking Section */}
+              <div className="directory-section">
+                <div className="directory-section-header">
+                  <div className="directory-icon-wrap">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="currentColor" strokeWidth="1.8" />
+                      <circle cx="12" cy="10" r="3" stroke="currentColor" strokeWidth="1.8" />
+                    </svg>
+                  </div>
+                  <div>
+                    <span className="directory-category">North American Booking</span>
+                    <h4 className="directory-company">Mint Talent Group</h4>
+                  </div>
+                </div>
+
+                <div className="directory-details">
+                  <div className="directory-row">
+                    <span className="directory-row-label">Agent</span>
+                    <span className="directory-row-val">Michael Morris</span>
+                  </div>
+
+                  <div className="directory-row">
+                    <span className="directory-row-label">Email</span>
+                    <a href="mailto:michael@minttalentgroup.com" className="directory-link">
+                      <span>michael@minttalentgroup.com</span>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                        <path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
