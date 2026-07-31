@@ -319,8 +319,8 @@
 }
 
 /* ── Responsive ── */
-@media (max-width: 900px) {
-  .contact-container {
+@media (max-width: 1024px) {
+  .final-cta .contact-container {
     grid-template-columns: 1fr;
     gap: 48px;
   }
@@ -345,15 +345,18 @@
 
 @media (max-width: 640px) {
   .final-cta {
-    padding: 80px 20px;
+    padding: 60px 16px;
   }
 
   .contact-form {
-    padding: 28px 20px;
+    padding: 24px 16px;
+    box-sizing: border-box;
+    width: 100%;
   }
 
   .contact-form-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .contact-title {
