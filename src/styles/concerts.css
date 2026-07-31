@@ -1483,6 +1483,23 @@
   }
 }
 
+@media (max-width: 576px) {
+  .concerts-container {
+    padding: 0 14px;
+  }
+  .map-card {
+    padding: 18px 12px;
+  }
+  .map-title {
+    font-size: 20px;
+  }
+  .map-legend {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
+
 /* Globe Tooltip */
 .scene-tooltip {
   /* Override default globe.gl tooltip styling */

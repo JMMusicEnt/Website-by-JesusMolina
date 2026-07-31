@@ -45,6 +45,31 @@ export default function Concerts() {
     return ALL_COUNTRIES.filter((c) => c.toLowerCase().includes(query));
   }, [searchCountry]);
   const globeEl = useRef();
+  const globeContainerRef = useRef(null);
+  const [globeWidth, setGlobeWidth] = useState(800);
+  const [globeHeight, setGlobeHeight] = useState(500);
+
+  useEffect(() => {
+    const updateGlobeDimensions = () => {
+      if (globeContainerRef.current) {
+        const containerWidth = globeContainerRef.current.clientWidth;
+        setGlobeWidth(containerWidth);
+        setGlobeHeight(window.innerWidth < 768 ? Math.min(containerWidth, 380) : 550);
+      }
+    };
+
+    updateGlobeDimensions();
+    const resizeObserver = new ResizeObserver(updateGlobeDimensions);
+    if (globeContainerRef.current) {
+      resizeObserver.observe(globeContainerRef.current);
+    }
+    window.addEventListener('resize', updateGlobeDimensions);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', updateGlobeDimensions);
+    };
+  }, []);
 
   useEffect(() => {
     if (globeEl.current) {
@@ -70,9 +95,6 @@ export default function Concerts() {
       window.scrollTo(0, scrollY);
     });
   };
-
-  const activeMarker = null; // No longer needed for globe since it has native labels if needed, or we can use custom markers.
-
 
   return (
     <section className="concerts-page">
@@ -105,6 +127,7 @@ export default function Concerts() {
 
             <div className="map-canvas-container">
               <div 
+                ref={globeContainerRef}
                 className="globe-wrapper" 
                 style={{ width: '100%', height: '100%', cursor: 'grab' }}
                 onMouseEnter={() => setHoveredMarker('globe')}
@@ -112,8 +135,8 @@ export default function Concerts() {
               >
                 <Globe
                   ref={globeEl}
-                  width={1000}
-                  height={700}
+                  width={globeWidth}
+                  height={globeHeight}
                   backgroundColor="rgba(0,0,0,0)"
                   globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
                   bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"

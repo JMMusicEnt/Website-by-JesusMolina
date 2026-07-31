@@ -662,7 +662,7 @@
 }
 
 /* Responsive grid styling */
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .contact-grid {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -672,9 +672,45 @@
   }
 }
 
-@media (max-width: 576px) {
-  .contact-form-card {
-    padding: 30px 20px;
+@media (max-width: 768px) {
+  .contact-page {
+    padding: 80px 0 60px;
+  }
+  .contact-header {
+    margin-bottom: 40px;
+  }
+  .contact-container {
+    padding: 0 16px;
+  }
+  .contact-form-card,
+  .contact-directory-card {
+    padding: 28px 20px;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-form-card,
+  .contact-directory-card {
+    padding: 22px 14px;
+  }
+  .subject-chips-row {
+    gap: 8px;
+  }
+  .subject-chip {
+    padding: 8px 12px;
+  }
+  .subject-chip-text {
+    font-size: 12px;
+  }
+  .subject-icon-svg {
+    width: 15px;
+    height: 15px;
+  }
+  .directory-link {
+    font-size: 13px;
+    word-break: break-all;
   }
 }
 
