@@ -3,8 +3,8 @@
    Token system:
    Color   — Ébano #0E0D0F, Marfil #F7F1E6, Marfil-osc #ECE3D2,
              Bronce #C9A227, Vino #5C1A28, Niebla #8B8378
-   Type    — Display: Fraunces (serif editorial, óptica variable)
-             Body/UI: Inter
+   Type    — Display: Bebas Neue (sans-serif bold display)
+             Body/UI: Instrument Sans
              Mono/data: JetBrains Mono (cifras, etiquetas técnicas)
    Layout  — Scroll storytelling por secciones de ancho completo,
              alternando fondo marfil / ébano, como un programa de
@@ -27,8 +27,8 @@
   --linea: rgba(14, 13, 15, 0.12);
   --linea-clara: rgba(247, 241, 230, 0.14);
 
-  --font-display: 'Fraunces', serif;
-  --font-body: 'Inter', sans-serif;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Instrument Sans', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   --container: 1240px;
@@ -56,12 +56,12 @@ body {
   color: var(--ebano);
   font-family: var(--font-body);
   overflow-x: hidden;
-  cursor: none;
 }
 
 a {
   text-decoration: none;
   color: inherit;
+  cursor: pointer;
 }
 
 ul {
@@ -70,7 +70,7 @@ ul {
 
 button {
   font-family: inherit;
-  cursor: none;
+  cursor: pointer;
   border: none;
   background: none;
 }

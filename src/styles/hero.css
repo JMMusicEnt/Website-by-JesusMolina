@@ -73,12 +73,13 @@
 /* ── Title ── */
 .hero-title {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 400;
   font-size: clamp(64px, 11vw, 150px);
   line-height: .88;
-  letter-spacing: -.03em;
+  letter-spacing: .02em;
   color: var(--marfil);
   margin-bottom: 8px;
+  text-transform: uppercase;
 }
 
 .hero-title-line {
@@ -91,12 +92,10 @@
 }
 
 .hero-title-firstname {
-  /* Slight italic for artistic flair */
+  /* First name — default display styling */
 }
 
 .hero-title-lastname {
-  font-style: italic;
-  font-weight: 400;
   color: var(--bronce);
 }
 

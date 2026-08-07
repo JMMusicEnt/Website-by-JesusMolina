@@ -1,0 +1,252 @@
+/* ============================================================
+   UPCOMING CONCERTS — Home section
+   Light (marfil) background, editorial list layout
+   ============================================================ */
+
+.uc-sec {
+  position: relative;
+  background: var(--marfil);
+  padding: 140px 48px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--linea);
+}
+
+.uc-bg-accent {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201, 162, 39, 0.08) 0%, transparent 70%);
+  top: -10%;
+  right: -10%;
+  pointer-events: none;
+}
+
+.uc-container {
+  max-width: var(--container);
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Header ── */
+.uc-header {
+  margin-bottom: 64px;
+}
+
+/* ── Concert list ── */
+.uc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.uc-row {
+  display: grid;
+  grid-template-columns: 90px 1px 1fr auto auto;
+  align-items: center;
+  gap: 32px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--linea);
+  transition: background 0.3s var(--ease);
+  border-radius: 4px;
+  cursor: default;
+}
+
+.uc-row:first-child {
+  border-top: 1px solid var(--linea);
+}
+
+.uc-row:hover {
+  background: rgba(14, 13, 15, 0.03);
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: var(--radius-sm);
+  margin-left: -12px;
+  margin-right: -12px;
+  border-bottom-color: transparent;
+}
+
+/* ── Date column ── */
+.uc-date {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 80px;
+}
+
+.uc-date-day {
+  font-family: var(--font-display);
+  font-size: 38px;
+  line-height: 1;
+  color: var(--ebano);
+  letter-spacing: .01em;
+}
+
+.uc-date-month {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--niebla);
+}
+
+/* ── Vertical divider ── */
+.uc-divider {
+  width: 1px;
+  height: 44px;
+  background: var(--linea);
+  flex-shrink: 0;
+}
+
+/* ── Info column ── */
+.uc-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.uc-venue {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ebano);
+  line-height: 1.2;
+}
+
+.uc-city {
+  font-size: 14px;
+  color: var(--niebla);
+}
+
+/* ── Type badge ── */
+.uc-type {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--niebla);
+  background: rgba(14, 13, 15, 0.06);
+  padding: 5px 12px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+/* ── Action column ── */
+.uc-action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+/* ── Status badge ── */
+.uc-status {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+
+.uc-status--available {
+  color: #1a7a3c;
+  background: rgba(26, 122, 60, 0.1);
+}
+
+.uc-status--few {
+  color: #a05c00;
+  background: rgba(201, 162, 39, 0.15);
+}
+
+.uc-status--soldout {
+  color: var(--niebla);
+  background: rgba(14, 13, 15, 0.06);
+}
+
+/* ── Ticket button ── */
+.uc-ticket-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ebano);
+  border: 1.5px solid var(--ebano);
+  padding: 8px 16px;
+  border-radius: 100px;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease), transform 0.25s var(--ease);
+  white-space: nowrap;
+}
+
+.uc-ticket-btn:hover {
+  background: var(--ebano);
+  color: var(--marfil);
+  transform: translateY(-2px);
+}
+
+.uc-ticket-btn--disabled {
+  border-color: var(--linea);
+  color: var(--niebla);
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* ── Footer CTA ── */
+.uc-footer-cta {
+  margin-top: 56px;
+  display: flex;
+  justify-content: center;
+}
+
+.uc-all-btn {
+  width: auto !important;
+  padding: 16px 40px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .uc-row {
+    grid-template-columns: 70px 1px 1fr auto;
+    gap: 20px;
+  }
+
+  .uc-type {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .uc-sec {
+    padding: 100px 24px;
+  }
+
+  .uc-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 24px 0;
+  }
+
+  .uc-divider {
+    display: none;
+  }
+
+  .uc-date {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .uc-date-day {
+    font-size: 28px;
+  }
+
+  .uc-action {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

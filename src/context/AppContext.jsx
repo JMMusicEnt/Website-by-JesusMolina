@@ -301,13 +301,11 @@ export const translations = {
     ],
 
     /* ── SPOTIFY ── */
-    spotifyEyebrow: "— Spotify",
-    spotifyTitle: "Listen to Jesús Molina",
-    spotifySub: "Connect with the most vibrant piano performances. Listen to his original compositions, jazz fusion, and piano solos on Spotify.",
+    
     spotifyMonthlyListeners: "Monthly listeners",
     spotifyFollowBtn: "Follow on Spotify",
     spotifyVerifiedArtist: "Verified Artist",
-    spotifyQuote: '"One of the most creative pianists and multi-instrumentalists in the international modern jazz scene."',
+    spotifyQuote: '"One of the most creative pianists and multi-instrumentalists in the international world wide scene."',
 
     /* ── FEATURED ── */
     featuredEyebrow: "— Featured",

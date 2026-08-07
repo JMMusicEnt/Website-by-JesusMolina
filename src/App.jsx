@@ -6,8 +6,8 @@ import Nav from './components/Nav';
 import Hero from './components/Hero';
 import Marquee from './components/Marquee';
 import CoursesCarousel from './components/CoursesCarousel';
-import Method from './components/Method';
 import SpotifySection from './components/SpotifySection';
+import UpcomingConcerts from './components/UpcomingConcerts';
 import ChinafunkVideo from './components/ChinafunkVideo';
 import FinalCTA from './components/FinalCTA';
 import Footer from './components/Footer';
@@ -52,9 +52,9 @@ function Home() {
       <Hero />
       <Marquee />
       <SpotifySection />
-      <ChinafunkVideo />
+      <UpcomingConcerts />
       <CoursesCarousel />
-      <Method />
+      <ChinafunkVideo />
       <FinalCTA />
     </>
   );

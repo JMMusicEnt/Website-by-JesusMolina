@@ -12,9 +12,9 @@ export default function SpotifySection() {
 
       <div className="spotify-container">
         <div className="spotify-header">
-          <span className="section-eyebrow section-eyebrow-light" data-reveal>{t.spotifyEyebrow}</span>
-          <h2 className="section-title section-title-light" data-reveal>{t.spotifyTitle}</h2>
-          <p className="spotify-subtitle-text" data-reveal>{t.spotifySub}</p>
+          {t.spotifyEyebrow && <span className="section-eyebrow section-eyebrow-light" data-reveal>{t.spotifyEyebrow}</span>}
+          {t.spotifyTitle && <h2 className="section-title section-title-light" data-reveal>{t.spotifyTitle}</h2>}
+          {t.spotifySub && <p className="spotify-subtitle-text" data-reveal>{t.spotifySub}</p>}
         </div>
 
         <div className="spotify-grid" data-reveal>
@@ -66,13 +66,10 @@ export default function SpotifySection() {
             <iframe 
               title="Jesús Molina on Spotify"
               src="https://open.spotify.com/embed/artist/7Gl7yiOLDSRr1cZyPwpGv4?utm_source=generator&theme=0" 
-              width="100%" 
-              height="380" 
               frameBorder="0" 
               allowFullScreen="" 
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
               loading="lazy"
-              style={{ borderRadius: '18px', border: 'none', background: 'transparent' }}
             ></iframe>
           </div>
         </div>

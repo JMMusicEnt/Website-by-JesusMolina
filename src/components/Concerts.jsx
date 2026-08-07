@@ -1,28 +1,143 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
-import Globe from 'react-globe.gl';
+import { useState, useEffect, useMemo } from 'react';
 import { useApp } from '../context/AppContext';
-import { CONCERTS, GLOBE_LOCATIONS, GLOBE_ARCS } from '../data/concerts';
+import { CONCERTS } from '../data/concerts';
 
-// Next 5 upcoming concerts for the sidebar card
-const UPCOMING_DATES = GLOBE_LOCATIONS.slice(0, 5);
+// 5 Upcoming Shows as seen in mockup
+const UPCOMING_SHOWS = [
+  {
+    id: 1,
+    day: '15',
+    month: 'OCT',
+    year: '2026',
+    dateLabel: '15 OCT 2026',
+    targetDate: '2026-10-15T20:00:00',
+    city: 'BOGOTÁ',
+    countryCode: 'CO',
+    venue: 'Teatro Mayor Julio Mario Santo Domingo',
+    ticketUrl: 'https://www.teatromayor.org',
+    image: `${import.meta.env.BASE_URL}images/concert-hero.png`
+  },
+  {
+    id: 2,
+    day: '04',
+    month: 'NOV',
+    year: '2026',
+    dateLabel: '04 NOV 2026',
+    targetDate: '2026-11-04T20:00:00',
+    city: 'LOS ANGELES',
+    countryCode: 'USA',
+    venue: 'Walt Disney Concert Hall',
+    ticketUrl: 'https://www.laphil.com',
+    image: `${import.meta.env.BASE_URL}images/image1.png`
+  },
+  {
+    id: 3,
+    day: '21',
+    month: 'NOV',
+    year: '2026',
+    dateLabel: '21 NOV 2026',
+    targetDate: '2026-11-21T20:00:00',
+    city: 'CIUDAD DE MÉXICO',
+    countryCode: 'MX',
+    venue: 'Auditorio Nacional',
+    ticketUrl: 'https://www.auditorio.com.mx',
+    image: `${import.meta.env.BASE_URL}images/image3.png`
+  },
+  {
+    id: 4,
+    day: '18',
+    month: 'ENE',
+    year: '2027',
+    dateLabel: '18 ENE 2027',
+    targetDate: '2027-01-18T20:00:00',
+    city: 'MADRID',
+    countryCode: 'ES',
+    venue: 'Teatro Real',
+    ticketUrl: 'https://www.teatroreal.es',
+    image: `${import.meta.env.BASE_URL}images/image2.png`
+  },
+  {
+    id: 5,
+    day: '09',
+    month: 'FEB',
+    year: '2027',
+    dateLabel: '09 FEB 2027',
+    targetDate: '2027-02-09T20:00:00',
+    city: 'BUENOS AIRES',
+    countryCode: 'AR',
+    venue: 'Teatro Coliseo',
+    ticketUrl: 'https://www.teatrocoliseo.org.ar',
+    image: `${import.meta.env.BASE_URL}images/biography-portrait.jpg`
+  }
+];
 
 // All unique countries from archived concerts
 const ALL_COUNTRIES = [...new Set(CONCERTS.map((c) => c.country))].sort();
 
+function LiveCountdown({ targetDateStr }) {
+  const [timeLeft, setTimeLeft] = useState({ days: 68, hours: 6, minutes: 58, seconds: 1 });
+
+  useEffect(() => {
+    function updateTimer() {
+      const target = new Date(targetDateStr).getTime();
+      const now = new Date().getTime();
+      const diff = target - now;
+
+      if (isNaN(diff) || diff <= 0) {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      setTimeLeft({ days, hours, minutes, seconds });
+    }
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+    return () => clearInterval(interval);
+  }, [targetDateStr]);
+
+  const pad = (n) => String(n).padStart(2, '0');
+
+  return (
+    <div className="wt-countdown-grid">
+      <div className="wt-countdown-item">
+        <span className="wt-countdown-val">{pad(timeLeft.days)}</span>
+        <span className="wt-countdown-lbl">DÍAS</span>
+      </div>
+      <div className="wt-countdown-item">
+        <span className="wt-countdown-val">{pad(timeLeft.hours)}</span>
+        <span className="wt-countdown-lbl">HRS</span>
+      </div>
+      <div className="wt-countdown-item">
+        <span className="wt-countdown-val">{pad(timeLeft.minutes)}</span>
+        <span className="wt-countdown-lbl">MIN</span>
+      </div>
+      <div className="wt-countdown-item">
+        <span className="wt-countdown-val">{pad(timeLeft.seconds)}</span>
+        <span className="wt-countdown-lbl">SEG</span>
+      </div>
+    </div>
+  );
+}
+
 export default function Concerts() {
   const { t } = useApp();
-  const [hoveredMarker, setHoveredMarker] = useState(null);
+  const [activeShowIndex, setActiveShowIndex] = useState(1); // Default to Los Angeles (index 1) as in mockup
   const [playingId, setPlayingId] = useState(null);
-  const [activeUpcoming, setActiveUpcoming] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const [searchCountry, setSearchCountry] = useState('');
-  const [sortOrder, setSortOrder] = useState('newest'); // 'newest' | 'oldest'
+  const [sortOrder, setSortOrder] = useState('newest');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+
+  const activeShow = UPCOMING_SHOWS[activeShowIndex] || UPCOMING_SHOWS[0];
 
   // Filtered + sorted concerts
   const filteredConcerts = useMemo(() => {
     let result = [...CONCERTS];
-    // Filter by country
     if (searchCountry.trim()) {
       const query = searchCountry.trim().toLowerCase();
       result = result.filter(
@@ -31,62 +146,17 @@ export default function Concerts() {
           c.city.toLowerCase().includes(query)
       );
     }
-    // Sort by year
     result.sort((a, b) =>
       sortOrder === 'newest' ? b.year - a.year : a.year - b.year
     );
     return result;
   }, [searchCountry, sortOrder]);
 
-  // Countries matching search for dropdown suggestions
   const matchingCountries = useMemo(() => {
     if (!searchCountry.trim()) return [];
     const query = searchCountry.trim().toLowerCase();
     return ALL_COUNTRIES.filter((c) => c.toLowerCase().includes(query));
   }, [searchCountry]);
-  const globeEl = useRef();
-  const globeContainerRef = useRef(null);
-  const [globeWidth, setGlobeWidth] = useState(800);
-  const [globeHeight, setGlobeHeight] = useState(500);
-
-  useEffect(() => {
-    const updateGlobeDimensions = () => {
-      if (globeContainerRef.current) {
-        const containerWidth = globeContainerRef.current.clientWidth;
-        setGlobeWidth(containerWidth);
-        setGlobeHeight(window.innerWidth < 768 ? Math.min(containerWidth, 380) : 550);
-      }
-    };
-
-    updateGlobeDimensions();
-    const resizeObserver = new ResizeObserver(updateGlobeDimensions);
-    if (globeContainerRef.current) {
-      resizeObserver.observe(globeContainerRef.current);
-    }
-    window.addEventListener('resize', updateGlobeDimensions);
-
-    return () => {
-      resizeObserver.disconnect();
-      window.removeEventListener('resize', updateGlobeDimensions);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (globeEl.current) {
-      const controls = globeEl.current.controls();
-      controls.autoRotate = false;
-      controls.enableZoom = false;
-    }
-  }, []);
-
-  // Auto-cycle upcoming dates every 3.5s
-  useEffect(() => {
-    if (isPaused) return;
-    const interval = setInterval(() => {
-      setActiveUpcoming((prev) => (prev + 1) % UPCOMING_DATES.length);
-    }, 3500);
-    return () => clearInterval(interval);
-  }, [isPaused]);
 
   const handlePlay = (concertId) => {
     const scrollY = window.scrollY;
@@ -96,6 +166,14 @@ export default function Concerts() {
     });
   };
 
+  const scrollToArchive = (e) => {
+    e.preventDefault();
+    const el = document.getElementById('todas-las-fechas');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="concerts-page">
       <div className="concerts-bg-piano-strings" aria-hidden="true" />
@@ -103,172 +181,127 @@ export default function Concerts() {
       <div className="concerts-ambient-glow-2" aria-hidden="true" />
 
       <div className="concerts-container">
-        <header className="concerts-header" data-reveal>
-          <span className="section-eyebrow">{t.concertsEyebrow2}</span>
-          <h1 className="section-title">
-            Jesús Molina <em>{t.concerts}</em>
-          </h1>
-          <p className="concerts-subtitle">{t.concertsSubtitle}</p>
-        </header>
-
-        {/* ── World Tour Map — Premium redesign ── */}
-        <div className="concerts-map-section" data-reveal>
-          <div className="map-card">
-            <div className="map-header">
-              <div className="map-header-left">
-                <span className="map-badge">
-                  <span className="map-badge-dot" />
-                  World Tour
-                </span>
-                <h3 className="map-title">World Tour Upcoming Dates</h3>
-              </div>
-              <p className="map-desc">{t.concertsMapDesc}</p>
+        {/* ── World Tour Interactive Section ── */}
+        <div className="wt-section" data-reveal>
+          {/* Section Header */}
+          <div className="wt-header">
+            <div className="wt-header-left">
+              <span className="wt-badge">
+                <span className="wt-badge-dot" />
+                WORLD TOUR
+              </span>
+              <h1 className="wt-title">
+                WORLD TOUR
+                <span className="wt-title-highlight">UPCOMING DATES</span>
+              </h1>
             </div>
 
-            <div className="map-canvas-container">
-              <div 
-                ref={globeContainerRef}
-                className="globe-wrapper" 
-                style={{ width: '100%', height: '100%', cursor: 'grab' }}
-                onMouseEnter={() => setHoveredMarker('globe')}
-                onMouseLeave={() => setHoveredMarker(null)}
-              >
-                <Globe
-                  ref={globeEl}
-                  width={globeWidth}
-                  height={globeHeight}
-                  backgroundColor="rgba(0,0,0,0)"
-                  globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
-                  bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
-                  atmosphereColor="#C9A227"
-                  atmosphereAltitude={0.18}
-                  
-                  // Rings for upcoming concert cities only
-                  ringsData={UPCOMING_DATES}
-                  ringLat="lat"
-                  ringLng="lng"
-                  ringColor="color"
-                  ringMaxRadius={2}
-                  ringPropagationSpeed={2.5}
-                  ringRepeatPeriod={800}
-
-                  // Points/Dots — only upcoming concert locations
-                  pointsData={UPCOMING_DATES}
-                  pointLat="lat"
-                  pointLng="lng"
-                  pointColor={() => '#C9A227'}
-                  pointAltitude={0.01}
-                  pointRadius={0.8}
-                  
-                  // Premium HTML Tooltip on hover
-                  pointLabel={(d) => `
-                    <div class="globe-tooltip" style="pointer-events:none;">
-                      <div class="tooltip-header">
-                        <span class="tooltip-city">${d.city}</span>, <span class="tooltip-country">${d.country}</span>
-                      </div>
-                      <div class="tooltip-details">
-                        <span class="tooltip-date">${d.date}</span>
-                        <span class="tooltip-venue">${d.venue}</span>
-                      </div>
-                    </div>
-                  `}
-
-                  // Arcs (airline routes)
-                  arcsData={GLOBE_ARCS}
-                  arcStartLat="startLat"
-                  arcStartLng="startLng"
-                  arcEndLat="endLat"
-                  arcEndLng="endLng"
-                  arcColor="color"
-                  arcDashLength={0.4}
-                  arcDashGap={4}
-                  arcDashInitialGap={() => Math.random() * 5}
-                  arcDashAnimateTime={2000}
-                  arcAltitudeAutoScale={0.3}
-                />
-              </div>
-
-              {/* ── Upcoming Dates Card ── */}
-              <aside
-                className="upcoming-dates-card"
-                onMouseEnter={() => setIsPaused(true)}
-                onMouseLeave={() => setIsPaused(false)}
-              >
-                <div className="upcoming-card-header">
-                  <div className="upcoming-card-icon">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                      <rect x="3" y="4" width="18" height="18" rx="3" stroke="currentColor" strokeWidth="1.5"/>
-                      <path d="M3 9h18" stroke="currentColor" strokeWidth="1.5"/>
-                      <path d="M8 2v4M16 2v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                      <circle cx="12" cy="15" r="1.5" fill="currentColor"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="upcoming-card-title">Próximas Fechas</h4>
-                    <span className="upcoming-card-count">{UPCOMING_DATES.length} shows</span>
-                  </div>
-                </div>
-
-                {/* Timeline progress bar */}
-                <div className="upcoming-progress-track">
-                  <div
-                    className="upcoming-progress-fill"
-                    style={{ width: `${((activeUpcoming + 1) / UPCOMING_DATES.length) * 100}%` }}
-                  />
-                </div>
-
-                <ul className="upcoming-list">
-                  {UPCOMING_DATES.map((concert, i) => (
-                    <li
-                      key={i}
-                      className={`upcoming-item ${i === activeUpcoming ? 'upcoming-item--active' : ''} ${i < activeUpcoming ? 'upcoming-item--past' : ''}`}
-                      onClick={() => setActiveUpcoming(i)}
-                      onKeyDown={(e) => e.key === 'Enter' && setActiveUpcoming(i)}
-                      role="button"
-                      tabIndex={0}
-                    >
-                      <div className="upcoming-item-indicator">
-                        <span className="upcoming-dot" />
-                        {i < UPCOMING_DATES.length - 1 && <span className="upcoming-line" />}
-                      </div>
-                      <div className="upcoming-item-content">
-                        <span className="upcoming-date">{concert.date}</span>
-                        <span className="upcoming-city">{concert.city}</span>
-                        <span className="upcoming-venue">{concert.venue}</span>
-                        {i === activeUpcoming && (
-                          <span className="upcoming-country-badge">{concert.country}</span>
-                        )}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="upcoming-card-footer">
-                  <span className="upcoming-footer-label">Ver todas las fechas</span>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                    <path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-              </aside>
-
-            </div>
-
-            {/* Map legend */}
-            <div className="map-legend">
-              <div className="map-legend-item">
-                <span className="legend-dot" />
-                <span className="legend-text">+60 países visitados</span>
-              </div>
-              <div className="map-legend-item">
-                <span className="legend-line" />
-                <span className="legend-text">Ruta de gira</span>
-              </div>
+            <div className="wt-counter-badge">
+              <span className="wt-counter-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                  <rect x="3" y="4" width="18" height="18" rx="3" stroke="currentColor" strokeWidth="1.5"/>
+                  <path d="M3 9h18" stroke="currentColor" strokeWidth="1.5"/>
+                  <path d="M8 2v4M16 2v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+                PRÓXIMAS FECHAS
+              </span>
+              <span className="wt-counter-value">
+                {UPCOMING_SHOWS.length} <small>SHOWS</small>
+              </span>
             </div>
           </div>
+
+          {/* 2-Column Grid */}
+          <div className="wt-grid">
+            {/* Left Column: 5 Shows List */}
+            <ul className="wt-list">
+              {UPCOMING_SHOWS.map((show, idx) => {
+                const isActive = idx === activeShowIndex;
+                return (
+                  <li
+                    key={show.id}
+                    className={`wt-row ${isActive ? 'wt-row--active' : ''}`}
+                    onMouseEnter={() => setActiveShowIndex(idx)}
+                    onClick={() => setActiveShowIndex(idx)}
+                  >
+                    {/* Date */}
+                    <div className="wt-date-block">
+                      <span className="wt-date-day">{show.day}</span>
+                      <span className="wt-date-my">{show.month} {show.year}</span>
+                    </div>
+
+                    {/* City & Venue */}
+                    <div className="wt-info-block">
+                      <div className="wt-city-wrap">
+                        <span className="wt-city">{show.city}</span>
+                        <span className="wt-country-code">{show.countryCode}</span>
+                      </div>
+                      <span className="wt-venue">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="currentColor" opacity="0.6"/>
+                          <circle cx="12" cy="9" r="2.5" fill="currentColor"/>
+                        </svg>
+                        {show.venue}
+                      </span>
+                    </div>
+
+                    {/* Button & Arrow */}
+                    <div className="wt-actions">
+                      <a
+                        href={show.ticketUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="wt-ticket-btn"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                          <rect x="2" y="6" width="20" height="12" rx="2" stroke="currentColor" strokeWidth="1.5"/>
+                          <path d="M6 10h.01M6 14h.01M18 10h.01M18 14h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                        </svg>
+                        ENTRADAS
+                      </a>
+                      <svg className="wt-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+
+            {/* Right Column: Dark Interactive Card */}
+            <aside className="wt-preview-card">
+              <div className="wt-card-header">
+                <span className="wt-card-subhead">PRÓXIMO SHOW</span>
+                <LiveCountdown targetDateStr={activeShow.targetDate} />
+              </div>
+
+              <div className="wt-card-img-wrap">
+                <img
+                  key={activeShow.id}
+                  src={activeShow.image}
+                  alt={activeShow.city}
+                  className="wt-card-img"
+                />
+                <div className="wt-card-img-overlay">
+                  <span className="wt-card-date">{activeShow.dateLabel}</span>
+                  <h3 className="wt-card-city">{activeShow.city}</h3>
+                  <span className="wt-card-venue">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="currentColor"/>
+                      <circle cx="12" cy="9" r="2.5" fill="#0E0D0F"/>
+                    </svg>
+                    {activeShow.venue}
+                  </span>
+                </div>
+              </div>
+            </aside>
+          </div>
+
         </div>
 
         {/* ── Concert Gallery — Editorial bento grid ── */}
-        <div className="concerts-gallery-header" data-reveal>
+        <div id="todas-las-fechas" className="concerts-gallery-header" data-reveal>
           <div className="gallery-header-content">
             <h3 className="gallery-title">{t.concertsGalleryTitle}</h3>
             <p className="gallery-desc">{t.concertsGalleryDesc}</p>
