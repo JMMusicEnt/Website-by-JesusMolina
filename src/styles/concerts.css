@@ -494,28 +494,121 @@
   transform: translateX(4px);
 }
 
-/* Responsive */
-@media (max-width: 980px) {
+/* Responsive adjustments for World Tour section */
+@media (max-width: 1024px) {
   .wt-grid {
     grid-template-columns: 1fr;
+    gap: 32px;
   }
+
   .wt-preview-card {
     position: static;
+    max-width: 580px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .wt-header {
+    margin-bottom: 32px;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  .wt-section {
+    margin-bottom: 60px;
+  }
+
   .wt-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 16px;
   }
+
+  .wt-counter-badge {
+    align-items: flex-start;
+  }
+
+  .wt-title {
+    font-size: clamp(28px, 7.5vw, 42px);
+  }
+
+  .wt-row {
+    grid-template-columns: 64px 1fr auto;
+    gap: 16px;
+    padding: 18px 20px;
+  }
+
+  .wt-row:hover,
+  .wt-row.wt-row--active {
+    transform: none;
+  }
+
+  .wt-date-day {
+    font-size: 28px;
+  }
+
+  .wt-city {
+    font-size: 18px;
+  }
+
+  .wt-venue {
+    font-size: 12px;
+  }
+
+  .wt-ticket-btn {
+    font-size: 10px;
+    padding: 7px 14px;
+  }
+
+  .wt-preview-card {
+    padding: 20px;
+    max-width: 100%;
+  }
+
+  .wt-card-img-wrap {
+    height: 250px;
+  }
+
+  .wt-card-city {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 520px) {
   .wt-row {
     grid-template-columns: 1fr;
-    gap: 14px;
-    padding: 20px;
+    gap: 12px;
+    padding: 16px;
   }
+
+  .wt-date-block {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .wt-date-my {
+    margin-top: 0;
+  }
+
   .wt-actions {
     justify-content: space-between;
+    width: 100%;
+    margin-top: 4px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(14, 13, 15, 0.1);
+  }
+
+  .wt-countdown-grid {
+    gap: 6px;
+  }
+
+  .wt-countdown-val {
+    font-size: 20px;
+  }
+
+  .wt-countdown-lbl {
+    font-size: 8px;
   }
 }
 
