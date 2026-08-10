@@ -2,12 +2,13 @@
   "name": "piano-react",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://ramiromolina21.github.io/JesusMolina-WebPage",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "predeploy": "npm run build",
-    "deploy": "npm run build && wrangler deploy",
+    "deploy": "gh-pages -d dist",
     "lint": "oxlint",
     "preview": "npm run build && wrangler dev"
   },
