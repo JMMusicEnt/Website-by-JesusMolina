@@ -44,32 +44,88 @@
 .footer-socials {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 20px;
+  margin-top: 12px;
 }
 
-.footer-social-pill {
+.social-link {
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
   gap: 8px;
-  padding: 10px 14px;
-  border: 1px solid rgba(255,255,255,0.14);
-  border-radius: 999px;
-  color: var(--niebla-claro);
-  background: rgba(255,255,255,0.04);
-  transition: color .25s, transform .25s, border-color .25s, background .25s;
   text-decoration: none;
+  cursor: pointer;
+  color: var(--niebla-claro);
+  transition: color .3s ease;
 }
 
-.footer-social-pill:hover {
-  color: var(--marfil);
-  border-color: rgba(255,255,255,0.28);
-  background: rgba(255,255,255,0.08);
-  transform: translateY(-2px);
+.social-link--instagram { color: #E1306C; }
+.social-link--youtube { color: #FF0000; }
+.social-link--spotify { color: #1DB954; }
+.social-link--apple { color: #FA243C; }
+.social-link--tiktok { color: #00F2FE; }
+.social-link--facebook { color: #1877F2; }
+.social-link--soundcloud { color: #FF5500; }
+
+.social-svg {
+  width: 46px;
+  height: 46px;
+  overflow: visible;
 }
 
-.footer-social-pill svg {
-  width: 18px;
-  height: 18px;
+.social-group__icon {
+  fill: #FFFFFF;
+  color: #FFFFFF;
+  transition: fill .25s ease, color .25s ease;
+}
+
+.social-group__inner-circle {
+  fill: transparent;
+  transition: fill .3s ease;
+}
+
+.social-group__outline {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.22);
+  stroke-width: 2;
+  transform-origin: 50% 50%;
+  transition: stroke .35s ease, transform .35s ease;
+}
+
+.social-link-name {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--niebla-claro);
+  transition: color .3s ease;
+}
+
+/* Hover / Focus / Active State */
+.social-link:hover .social-group__icon,
+.social-link:active .social-group__icon,
+.social-link:focus .social-group__icon {
+  fill: #FFFFFF;
+  color: #FFFFFF;
+  transition: all .45s ease;
+}
+
+.social-link:hover .social-group__inner-circle,
+.social-link:active .social-group__inner-circle,
+.social-link:focus .social-group__inner-circle {
+  fill: currentColor;
+  transition: all .45s ease;
+}
+
+.social-link:hover .social-group__outline,
+.social-link:active .social-group__outline,
+.social-link:focus .social-group__outline {
+  stroke: currentColor;
+  transform: scale(1.12);
+  transition: all .45s ease;
+}
+
+.social-link:hover .social-link-name {
+  color: #FFFFFF;
 }
 
 .footer-links {
@@ -145,4 +201,5 @@
     justify-content: center;
   }
 }
+
 

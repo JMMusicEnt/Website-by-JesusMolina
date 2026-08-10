@@ -19,8 +19,8 @@
   --ebano-soft: #19171A;
   --marfil: #F7F1E6;
   --marfil-osc: #ECE3D2;
-  --bronce: #C9A227;
-  --bronce-soft: #E3C765;
+  --bronce: #FFFFFF;
+  --bronce-soft: rgba(255, 255, 255, 0.85);
   --vino: #5C1A28;
   --niebla: #8B8378;
   --niebla-claro: #B7AEA0;
@@ -52,8 +52,8 @@ html {
 }
 
 body {
-  background: var(--marfil);
-  color: var(--ebano);
+  background: var(--ebano);
+  color: var(--marfil);
   font-family: var(--font-body);
   overflow-x: hidden;
 }

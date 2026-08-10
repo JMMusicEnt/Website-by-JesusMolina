@@ -639,8 +639,8 @@ export function AppProvider({ children }) {
   });
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", "light");
-    document.body.setAttribute("data-theme", "light");
+    document.documentElement.setAttribute("data-theme", "dark");
+    document.body.setAttribute("data-theme", "dark");
   }, []);
 
   useEffect(() => {

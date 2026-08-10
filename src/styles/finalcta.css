@@ -173,7 +173,7 @@
   background: rgba(25, 23, 26, 0.6);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(247, 241, 230, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: var(--radius-lg);
   padding: 40px;
   display: flex;
@@ -217,7 +217,7 @@
 .contact-field textarea {
   width: 100%;
   background: rgba(14, 13, 15, 0.5);
-  border: 1px solid rgba(247, 241, 230, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-sm);
   padding: 14px 16px;
   font-family: var(--font-body);
@@ -363,3 +363,4 @@
     font-size: 28px;
   }
 }
+

@@ -1,8 +1,17 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useApp } from '../context/AppContext';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export default function ChinafunkVideo() {
   const { t } = useApp();
+  const containerRef = useRef(null);
+  const textRef = useRef(null);
+  const gridRef = useRef(null);
   const videoRefs = useRef([]);
   const [playing, setPlaying] = useState({});
 
@@ -13,6 +22,7 @@ export default function ChinafunkVideo() {
       label: t.featuredCard1Label || 'Main Highlight',
       description: t.featuredCard1Desc || 'A vibrant piece bringing rhythm, energy, and an unforgettable stage presence, demonstrating musical versatility and improvisational skill.',
       video: 'video/0709.mp4',
+      poster: 'images/image1.png',
       externalLink: 'https://arthouserecords.lnk.to/ChikaIFunk',
     },
     {
@@ -21,6 +31,7 @@ export default function ChinafunkVideo() {
       label: t.featuredCard2Label || 'On Stage',
       description: t.featuredCard2Desc || 'An emotional live performance at the 10th edition of the La Musa Awards, where nostalgia and deep feeling merge in every single note.',
       video: 'video/0730.mp4',
+      poster: 'images/image3.png',
     },
     {
       id: 'improvisacion',
@@ -28,8 +39,60 @@ export default function ChinafunkVideo() {
       label: t.featuredCard3Label || 'New Concept',
       description: t.featuredCard3Desc || 'Dizzy Gillespie\'s classic reimagined with a personal approach, exploring new textures and dynamics honoring traditional jazz.',
       video: 'video/nighintunisia.mp4',
+      poster: 'images/image2.png',
     },
   ];
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // 1. Text header entrance
+      if (textRef.current) {
+        gsap.fromTo(
+          textRef.current,
+          { opacity: 0, y: 40, scale: 0.97 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: textRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse',
+            },
+          }
+        );
+      }
+
+      // 2. Staggered Featured Cards entrance
+      const cards = containerRef.current.querySelectorAll('.featured-card');
+      if (cards.length > 0) {
+        gsap.fromTo(
+          cards,
+          { opacity: 0, y: 55, scale: 0.96, rotateX: 6 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            rotateX: 0,
+            duration: 1,
+            stagger: 0.15,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: gridRef.current,
+              start: 'top 82%',
+              toggleActions: 'play none none reverse',
+            },
+          }
+        );
+      }
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const togglePlay = (index) => {
     const video = videoRefs.current[index];
@@ -62,9 +125,9 @@ export default function ChinafunkVideo() {
   };
 
   return (
-    <section className="chinafunk" id="destacados">
+    <section ref={containerRef} className="chinafunk" id="destacados">
       <div className="chinafunk-container">
-        <div className="chinafunk-text" data-reveal>
+        <div ref={textRef} className="chinafunk-text">
           <div className="section-eyebrow">{t.featuredEyebrow}</div>
           <h2 className="section-title">{t.featuredTitle}</h2>
           <p className="chinafunk-sub">
@@ -72,26 +135,29 @@ export default function ChinafunkVideo() {
           </p>
         </div>
 
-        <div className="featured-grid" data-reveal>
-          {featuredItems.map((item, index) => (
-            <article className="featured-card" key={item.id}>
-              <div
-                className="featured-card-media"
-                onClick={() => togglePlay(index)}
+        <div ref={gridRef} className="featured-grid">
+          {featuredItems.map((item, index) => {
+            return (
+              <article 
+                className="featured-card" 
+                key={item.id}
               >
-                <video
-                  className="featured-card-video"
-                  ref={(el) => (videoRefs.current[index] = el)}
-                  src={`${import.meta.env.BASE_URL}${item.video}`}
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  onEnded={() => handleVideoEnd(index)}
-                ></video>
-                <span className="featured-card-chip">{item.label}</span>
+                <div
+                  className="featured-card-media"
+                  onClick={() => togglePlay(index)}
+                >
+                  <video
+                    className="featured-card-video"
+                    ref={(el) => (videoRefs.current[index] = el)}
+                    src={`${import.meta.env.BASE_URL}${item.video}#t=0.001`}
+                    poster={`${import.meta.env.BASE_URL}${item.poster}`}
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    onEnded={() => handleVideoEnd(index)}
+                  ></video>
 
-                {/* Play / Pause overlay */}
                 <button
                   className={`featured-play-btn ${playing[index] ? 'is-playing' : ''}`}
                   aria-label={playing[index] ? 'Pausar video' : 'Reproducir video'}
@@ -134,8 +200,10 @@ export default function ChinafunkVideo() {
                 )}
               </div>
             </article>
-          ))}
+          );
+        })}
         </div>
+
       </div>
     </section>
   );

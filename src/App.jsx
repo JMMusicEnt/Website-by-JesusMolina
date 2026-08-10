@@ -21,11 +21,22 @@ import { useScrollReveal } from './hooks/useScrollReveal';
 import { useSmoothAnchorScroll } from './hooks/useSmoothAnchorScroll';
 import { AppProvider } from './context/AppContext';
 
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
 // Helper component to handle smooth scroll for in-page anchors and top scroll on route change
 function ScrollToAnchor() {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
+    // Kill any active GSAP ScrollTrigger pins from previous route to prevent section overlap
+    ScrollTrigger.getAll().forEach((t) => t.kill());
+    ScrollTrigger.refresh();
+
     if (hash) {
       const targetId = hash.replace('#', '');
       const element = document.getElementById(targetId);

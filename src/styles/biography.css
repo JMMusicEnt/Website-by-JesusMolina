@@ -9,21 +9,12 @@
   overflow: hidden;
 }
 
-[data-theme="light"] .biography-page {
-  background: linear-gradient(165deg, #F7F1E6 0%, #EDE4D4 50%, #E8DFC8 100%);
-  color: var(--ebano);
-}
-
 .bio-grain-overlay {
   position: absolute;
   inset: 0;
   pointer-events: none;
   background: radial-gradient(circle, transparent 20%, rgba(14, 13, 15, 0.4) 100%);
   z-index: 1;
-}
-
-[data-theme="light"] .bio-grain-overlay {
-  background: radial-gradient(circle, transparent 30%, rgba(247, 241, 230, 0.5) 100%);
 }
 
 .bio-ambient-glow-1 {
@@ -62,9 +53,8 @@
 
 .bio-header { text-align: center; margin-bottom: 60px; }
 .bio-header .section-eyebrow { color: var(--bronce); display: block; margin-bottom: 12px; }
-.bio-header .section-title { font-size: clamp(38px, 5vw, 64px); }
+.bio-header .section-title { font-size: clamp(38px, 5vw, 64px); color: #ffffff; }
 .bio-header .section-title em { color: var(--bronce-soft); }
-[data-theme="light"] .bio-header .section-title { color: var(--ebano); }
 
 /* ═══════════════════════════════════════════════════
    PORTRAIT HERO
@@ -87,11 +77,6 @@
   aspect-ratio: 4/5;
   border: 1px solid var(--linea-clara);
   box-shadow: 0 32px 80px rgba(0, 0, 0, 0.3);
-}
-
-[data-theme="light"] .bio-portrait-frame {
-  border-color: rgba(14, 13, 15, 0.1);
-  box-shadow: 0 24px 60px rgba(14, 13, 15, 0.12);
 }
 
 .bio-portrait-img {
@@ -153,9 +138,8 @@
   font-family: var(--font-display);
   font-size: 16px;
   font-weight: 500;
+  color: #ffffff;
 }
-
-[data-theme="light"] .bio-caption-value { color: var(--ebano); }
 
 .bio-subtitle {
   font-family: var(--font-display);
@@ -163,17 +147,14 @@
   font-weight: 500;
   line-height: 1.15;
   margin-bottom: 24px;
+  color: #ffffff;
 }
-
-[data-theme="light"] .bio-subtitle { color: var(--ebano); }
 
 .bio-story-text {
   font-size: 14px;
   line-height: 1.7;
   color: var(--niebla-claro);
 }
-
-[data-theme="light"] .bio-story-text { color: var(--niebla); }
 
 .bio-lead {
   font-size: 15px;
@@ -183,10 +164,7 @@
   line-height: 1.6;
 }
 
-[data-theme="light"] .bio-lead { color: var(--ebano); }
-
 .bio-story-text p { margin-bottom: 16px; }
-
 
 /* ═══════════════════════════════════════════════════
    COLLABORATORS — Infinite scrolling carousel
@@ -204,8 +182,6 @@
   margin-bottom: 36px;
 }
 
-[data-theme="light"] .section-header-compact { border-bottom-color: rgba(14, 13, 15, 0.1); }
-
 .section-header-left {
   display: flex;
   flex-direction: column;
@@ -216,12 +192,10 @@
   font-size: 28px;
   font-weight: 600;
   margin-bottom: 8px;
+  color: #ffffff;
 }
 
-[data-theme="light"] .section-subtitle-editorial { color: var(--ebano); }
-
 .section-desc-editorial { font-size: 15px; color: var(--niebla-claro); max-width: 480px; }
-[data-theme="light"] .section-desc-editorial { color: var(--niebla); }
 
 .collab-count-badge {
   font-family: var(--font-mono);
@@ -262,14 +236,9 @@
   width: 320px;
   border-radius: var(--radius-md);
   overflow: hidden;
-  border: 1px solid rgba(247, 241, 230, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(25, 23, 26, 0.55);
   transition: border-color 0.35s var(--ease), transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
-}
-
-[data-theme="light"] .collab-card {
-  background: rgba(255, 255, 255, 0.85);
-  border-color: rgba(14, 13, 15, 0.1);
 }
 
 .collab-card:hover {
@@ -338,12 +307,10 @@
   font-size: 17px;
   font-weight: 600;
   margin-bottom: 4px;
+  color: #ffffff;
 }
 
-[data-theme="light"] .collab-name { color: var(--ebano); }
-
 .collab-role { font-size: 13px; color: var(--niebla-claro); }
-[data-theme="light"] .collab-role { color: var(--niebla); }
 
 /* ═══════════════════════════════════════════════════
    INFLUENCES — Cards with tilt + glow
@@ -361,15 +328,10 @@
   position: relative;
   border-radius: var(--radius-md);
   overflow: hidden;
-  border: 1px solid rgba(247, 241, 230, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(25, 23, 26, 0.5);
   transition: border-color 0.35s var(--ease), transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
   transform-style: preserve-3d;
-}
-
-[data-theme="light"] .influence-card {
-  background: rgba(255, 255, 255, 0.8);
-  border-color: rgba(14, 13, 15, 0.1);
 }
 
 .influence-card:hover {
@@ -411,9 +373,8 @@
   font-family: var(--font-display);
   font-size: 20px;
   font-weight: 600;
+  color: #ffffff;
 }
-
-[data-theme="light"] .influence-name { color: var(--ebano); }
 
 /* Subtle bottom glow on hover */
 .influence-card-glow {
@@ -446,18 +407,14 @@
   gap: 30px;
   align-items: center;
   padding: 35px 20px;
-  border-bottom: 1px solid rgba(247, 241, 230, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   transition: background-color 0.35s var(--ease), transform 0.3s var(--ease);
 }
-
-[data-theme="light"] .instrument-row { border-bottom-color: rgba(14, 13, 15, 0.08); }
 
 .instrument-row:hover {
   background: rgba(201, 162, 39, 0.03);
   transform: translateX(4px);
 }
-
-[data-theme="light"] .instrument-row:hover { background: rgba(201, 162, 39, 0.04); }
 
 .instrument-row:last-child { border-bottom: none; }
 
@@ -488,18 +445,16 @@
   font-size: 22px;
   font-weight: 600;
   margin-bottom: 10px;
+  color: #ffffff;
 }
 
-[data-theme="light"] .instrument-name { color: var(--ebano); }
-
 .instrument-desc { font-size: 14px; line-height: 1.6; color: var(--niebla-claro); }
-[data-theme="light"] .instrument-desc { color: var(--niebla); }
 
 .instrument-specs {
   display: flex;
   flex-direction: column;
   background: rgba(14, 13, 15, 0.4);
-  border: 1px solid rgba(247, 241, 230, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   padding: 16px 20px;
   border-radius: var(--radius-sm);
   transition: border-color 0.3s var(--ease);
@@ -507,11 +462,6 @@
 
 .instrument-row:hover .instrument-specs {
   border-color: rgba(201, 162, 39, 0.15);
-}
-
-[data-theme="light"] .instrument-specs {
-  background: rgba(14, 13, 15, 0.04);
-  border-color: rgba(14, 13, 15, 0.08);
 }
 
 .specs-label {
@@ -523,7 +473,6 @@
 }
 
 .specs-value { font-size: 13px; font-weight: 500; color: var(--bronce-soft); }
-[data-theme="light"] .specs-value { color: var(--bronce); }
 
 /* ── Responsive ── */
 @media (max-width: 992px) {
@@ -539,3 +488,5 @@
   .instrument-row { display: flex; flex-direction: column; align-items: flex-start; padding: 30px 10px; }
   .instrument-specs { width: 100%; margin-top: 15px; }
 }
+
+

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useApp } from '../context/AppContext';
 import { CONCERTS } from '../data/concerts';
 
@@ -132,6 +132,7 @@ export default function Concerts() {
   const [searchCountry, setSearchCountry] = useState('');
   const [sortOrder, setSortOrder] = useState('newest');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const galleryRef = useRef(null);
 
   const activeShow = UPCOMING_SHOWS[activeShowIndex] || UPCOMING_SHOWS[0];
 
@@ -157,6 +158,36 @@ export default function Concerts() {
     const query = searchCountry.trim().toLowerCase();
     return ALL_COUNTRIES.filter((c) => c.toLowerCase().includes(query));
   }, [searchCountry]);
+
+  // Slide-up animation on scroll using IntersectionObserver
+  useEffect(() => {
+    const gallery = galleryRef.current;
+    if (!gallery) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -30px 0px' }
+    );
+
+    // Small delay to let React render the new cards before observing
+    const timer = setTimeout(() => {
+      const cards = gallery.querySelectorAll('.concert-card');
+      cards.forEach((card) => observer.observe(card));
+    }, 50);
+
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, [filteredConcerts]);
+
 
   const handlePlay = (concertId) => {
     const scrollY = window.scrollY;
@@ -402,7 +433,7 @@ export default function Concerts() {
           )}
         </div>
 
-        <div className="concerts-gallery" data-reveal-stagger>
+        <div className="concerts-gallery" ref={galleryRef}>
           {filteredConcerts.length === 0 && (
             <div className="concerts-empty-state">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
@@ -421,8 +452,7 @@ export default function Concerts() {
               <article
                 key={concert.id}
                 className={`concert-card ${isPlaying ? 'playing' : ''} ${i === 0 && !searchCountry ? 'concert-card--featured' : ''}`}
-                data-reveal
-                data-reveal-delay={i * 80}
+                style={{ '--slide-delay': `${i * 80}ms` }}
               >
                 <div className="concert-card-video">
                   {isPlaying ? (

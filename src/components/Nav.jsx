@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useNavScroll } from '../hooks/useNavScroll';
 import { useApp } from '../context/AppContext';
 import PlatformsModal from './PlatformsModal';
@@ -13,45 +13,104 @@ export default function Nav() {
   const [langOpen, setLangOpen] = useState(false);
   const [platformsOpen, setPlatformsOpen] = useState(false);
   const { language, setLanguage, t } = useApp();
+  
   const langRef = useRef(null);
+  const menuListRef = useRef(null);
+  const menuItemsRef = useRef([]);
+  const location = useLocation();
 
-  /* Close dropdowns on outside click */
+  /* Close menu when route changes */
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
+
+  /* Close dropdowns and overlay on outside click or ESC key */
   useEffect(() => {
     function handleClick(e) {
       if (langRef.current && !langRef.current.contains(e.target)) setLangOpen(false);
     }
+    function handleKeyDown(e) {
+      if (e.key === 'Escape') {
+        setMenuOpen(false);
+        setLangOpen(false);
+      }
+    }
     document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
-  const navClass = ['nav', scrolled && 'scrolled', onDark && 'on-dark'].filter(Boolean).join(' ');
+  /* 3D Parallax effect on mousemove when overlay menu is open */
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const handleMouseMove = (e) => {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const offsetX = 0.5 - e.clientX / w;
+      const offsetY = 0.5 - e.clientY / h;
+
+      const offsetPoster = 15;
+      const transformPoster = `translate3d(0, ${-offsetY * offsetPoster}px, 0) rotateX(${-offsetY * offsetPoster * 1.2}deg) rotateY(${offsetX * (offsetPoster * 2)}deg)`;
+
+      if (menuListRef.current) {
+        menuListRef.current.style.transform = transformPoster;
+      }
+
+      menuItemsRef.current.forEach((itemNode) => {
+        if (!itemNode) return;
+        const offsetLayer = parseFloat(itemNode.getAttribute('data-offset') || '0');
+        const transformLayer = `translate3d(${offsetX * offsetLayer}px, ${offsetY * offsetLayer}px, 20px)`;
+        itemNode.style.transform = transformLayer;
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [menuOpen]);
+
+  /* Lock body scroll when overlay is open */
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
+
+  const navClass = ['nav', scrolled && 'scrolled', onDark && 'on-dark', menuOpen && 'menu-is-open']
+    .filter(Boolean)
+    .join(' ');
+
+  const menuItems = [
+    { label: t.home, path: '/', isButton: false, offset: 10 },
+    { label: t.concerts, path: '/concerts', isButton: false, offset: 20 },
+    { label: t.biography, path: '/biography', isButton: false, offset: 30 },
+    { label: t.contact, path: '/contact', isButton: false, offset: 40 },
+    { label: t.platformsTitle || t.platform, path: '#', isButton: true, offset: 50 },
+  ];
 
   return (
     <>
       <header className={navClass} id="nav">
-
         {/* ── Logo ── */}
-        <Link to="/#inicio" className="nav-logo">
+        <Link to="/" className="nav-logo" onClick={() => setMenuOpen(false)}>
           <img src={`${import.meta.env.BASE_URL}images/logo.png`} alt="Jesús Molina logo" className="nav-logo-img" />
           <span className="nav-logo-text">Jesús Molina</span>
         </Link>
 
-        {/* ── Centro: enlaces de redirección ── */}
-        <nav className="nav-links" aria-label="Navegación principal">
-          <Link to="/" className="nav-link">{t.home}</Link>
-          <Link to="/concerts" className="nav-link">{t.concerts}</Link>
-          <Link to="/biography" className="nav-link">{t.biography}</Link>
-          <Link to="/contact" className="nav-link">{t.contact}</Link>
-          <button className="nav-link" onClick={() => setPlatformsOpen(true)}>{t.platformsTitle || t.platform}</button>
-        </nav>
-
-        {/* ── Derecha: controles ── */}
+        {/* ── Controls: Language & Hamburger Button ── */}
         <div className="nav-controls">
           {/* Language selector */}
-          <div
-            className={`nav-lang${langOpen ? ' open' : ''}`}
-            ref={langRef}
-          >
+          <div className={`nav-lang${langOpen ? ' open' : ''}`} ref={langRef}>
             <button
               className="nav-lang-trigger"
               onClick={() => setLangOpen((v) => !v)}
@@ -73,39 +132,84 @@ export default function Nav() {
                 <button
                   key={lang}
                   className={`nav-lang-option${language === lang ? ' active' : ''}`}
-                  onClick={() => { setLanguage(lang); setLangOpen(false); }}
+                  onClick={() => {
+                    setLanguage(lang);
+                    setLangOpen(false);
+                  }}
                 >
                   {lang.toUpperCase()}
                 </button>
               ))}
             </div>
           </div>
-        </div>
 
-        {/* ── Burger (mobile) ── */}
-        <button
-          className={`nav-burger${menuOpen ? ' open' : ''}`}
-          aria-label="Abrir menú"
-          onClick={() => setMenuOpen((v) => !v)}
-        >
-          <span></span><span></span><span></span>
-        </button>
+          {/* Hamburger menu toggle button */}
+          <button
+            className={`nav-burger${menuOpen ? ' open' : ''}`}
+            aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
       </header>
 
-      {/* ── Mobile menu ── */}
-      <div className={`mobile-menu${menuOpen ? ' open' : ''}`}>
-        <Link to="/" onClick={() => setMenuOpen(false)}>{t.home}</Link>
-        <Link to="/concerts" onClick={() => setMenuOpen(false)}>{t.concerts}</Link>
-        <Link to="/biography" onClick={() => setMenuOpen(false)}>{t.biography}</Link>
-        <Link to="/contact" onClick={() => setMenuOpen(false)}>{t.contact}</Link>
-        <button className="nav-link" style={{ fontSize: 'inherit' }} onClick={() => { setPlatformsOpen(true); setMenuOpen(false); }}>{t.platformsTitle || t.platform}</button>
+      {/* ── 3D Fullscreen Overlay Menu ── */}
+      <div className={`menu-overlay${menuOpen ? ' open' : ''}`}>
+        <ul className="Menu-list" ref={menuListRef}>
+          {menuItems.map((item, idx) => {
+            const content = (
+              <>
+                <span className="Menu-item-sizer" aria-hidden="true">{item.label}</span>
+                <span className="Mask">
+                  <span>{item.label}</span>
+                </span>
+                <span className="Mask">
+                  <span>{item.label}</span>
+                </span>
+              </>
+            );
+
+            return (
+              <li
+                key={idx}
+                className="Menu-list-item"
+                data-offset={item.offset}
+                ref={(el) => (menuItemsRef.current[idx] = el)}
+              >
+                {item.isButton ? (
+                  <button
+                    className="Menu-list-item-link"
+                    onClick={() => {
+                      setMenuOpen(false);
+                      setPlatformsOpen(true);
+                    }}
+                  >
+                    {content}
+                  </button>
+                ) : (
+                  <Link
+                    to={item.path}
+                    className="Menu-list-item-link"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {content}
+                  </Link>
+                )}
+              </li>
+            );
+          })}
+        </ul>
       </div>
 
-      <PlatformsModal 
-        isOpen={platformsOpen} 
-        onClose={() => setPlatformsOpen(false)} 
+      <PlatformsModal
+        isOpen={platformsOpen}
+        onClose={() => setPlatformsOpen(false)}
         {...defaultTrackData}
       />
     </>
   );
 }
+

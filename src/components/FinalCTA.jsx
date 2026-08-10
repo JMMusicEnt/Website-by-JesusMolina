@@ -1,6 +1,12 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useApp } from '../context/AppContext';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 // Configuración de EmailJS — Reemplaza con tus claves de EmailJS:
 const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
@@ -11,7 +17,60 @@ export default function FinalCTA() {
   const { t } = useApp();
   const [formState, setFormState] = useState('idle'); // idle | sending | sent
   const [focusedField, setFocusedField] = useState(null);
+
+  const containerRef = useRef(null);
+  const infoRef = useRef(null);
+  const formWrapperRef = useRef(null);
   const formRef = useRef(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // 1. Left side info section transition
+      if (infoRef.current) {
+        gsap.fromTo(
+          infoRef.current,
+          { opacity: 0, x: -45, y: 30 },
+          {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            duration: 1.1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: infoRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse',
+            },
+          }
+        );
+      }
+
+      // 2. Right side form wrapper transition
+      if (formWrapperRef.current) {
+        gsap.fromTo(
+          formWrapperRef.current,
+          { opacity: 0, x: 45, y: 30, scale: 0.96 },
+          {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            scale: 1,
+            duration: 1.1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: formWrapperRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse',
+            },
+          }
+        );
+      }
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +94,7 @@ export default function FinalCTA() {
   };
 
   return (
-    <section className="final-cta" id="contacto">
+    <section ref={containerRef} className="final-cta" id="contacto">
       {/* Animated background elements */}
       <div className="contact-bg-elements" aria-hidden="true">
         <div className="contact-glow contact-glow-1"></div>
@@ -59,7 +118,7 @@ export default function FinalCTA() {
 
       <div className="contact-container">
         {/* Left side — Text & info */}
-        <div className="contact-info" data-reveal>
+        <div ref={infoRef} className="contact-info">
           <div className="section-eyebrow section-eyebrow-light">{t.ctaEyebrow}</div>
           <h2 className="contact-title">{t.ctaTitle}</h2>
           <p className="contact-desc">{t.ctaSub}</p>
@@ -87,7 +146,7 @@ export default function FinalCTA() {
         </div>
 
         {/* Right side — Contact form */}
-        <div className="contact-form-wrapper" data-reveal>
+        <div ref={formWrapperRef} className="contact-form-wrapper">
           <form
             ref={formRef}
             className={`contact-form ${focusedField ? 'contact-form-active' : ''}`}

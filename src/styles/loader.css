@@ -263,7 +263,7 @@
   top: 0;
   bottom: 0;
   width: calc(100% / 7 - 3px);
-  background: linear-gradient(180deg, #FAF6ED 0%, #EDE6D5 60%, #E0D8C4 100%);
+  background: linear-gradient(180deg, #F8F8F8 0%, #F3F3F3 60%, #DDE0E4 100%);
   border-radius: 0 0 4px 4px;
   box-shadow:
     0 2px 3px rgba(0, 0, 0, .3),
@@ -322,14 +322,14 @@
   15%,
   100% {
     transform: translateZ(8px) rotateX(0deg);
-    background: linear-gradient(180deg, #FAF6ED 0%, #EDE6D5 60%, #E0D8C4 100%);
+    background: linear-gradient(180deg, #F8F8F8 0%, #F3F3F3 60%, #DDE0E4 100%);
     box-shadow: 0 2px 3px rgba(0, 0, 0, .3), inset 0 -2px 4px rgba(0, 0, 0, .08), inset 0 1px 0 rgba(255, 255, 255, .8);
   }
 
   5%,
   10% {
     transform: translateZ(4px) rotateX(2deg);
-    background: linear-gradient(180deg, #F5EFE0 0%, #E8DFC8 60%, #DDD5BF 100%);
+    background: linear-gradient(180deg, #F3F3F3 0%, #E8E8E8 60%, #D3D3D3 100%);
     box-shadow: 0 1px 2px rgba(0, 0, 0, .4), inset 0 -1px 3px rgba(0, 0, 0, .12), 0 0 12px rgba(201, 162, 39, .3);
   }
 }
@@ -504,7 +504,7 @@
 .loader-progress-track {
   width: 100%;
   height: 2px;
-  background: rgba(247, 241, 230, .1);
+  background: rgba(255, 255, 255, .1);
   border-radius: 2px;
   overflow: hidden;
 }
@@ -543,4 +543,5 @@
     width: 120px;
   }
 }
+
 

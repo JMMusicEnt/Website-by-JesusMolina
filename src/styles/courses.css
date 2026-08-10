@@ -137,7 +137,7 @@
 }
 
 .course-card-featured .course-card-footer {
-  border-top: 1px solid rgba(247, 241, 230, .14);
+  border-top: 1px solid rgba(255, 255, 255, .14);
 }
 
 .course-card-price {
@@ -184,4 +184,5 @@
     grid-template-columns: 1fr;
   }
 }
+
 

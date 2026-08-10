@@ -67,7 +67,7 @@
   background: rgba(25, 23, 26, 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(247, 241, 230, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-lg);
   padding: 40px;
   display: flex;
@@ -112,7 +112,7 @@
   height: 76px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid rgba(247, 241, 230, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 20px -8px rgba(0,0,0,0.5);
 }
 
@@ -142,8 +142,8 @@
 }
 
 .spotify-stats {
-  border-top: 1px solid rgba(247, 241, 230, 0.08);
-  border-bottom: 1px solid rgba(247, 241, 230, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   padding: 24px 0;
   margin-bottom: 24px;
 }
@@ -207,7 +207,7 @@
   background: rgba(25, 23, 26, 0.3);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(247, 241, 230, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: var(--radius-lg);
   padding: 12px;
   box-shadow: 0 20px 50px -25px rgba(0, 0, 0, 0.5);
@@ -249,3 +249,4 @@
     font-size: 32px;
   }
 }
+

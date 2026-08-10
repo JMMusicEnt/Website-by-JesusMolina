@@ -17,9 +17,9 @@ export default function SpotifySection() {
           {t.spotifySub && <p className="spotify-subtitle-text" data-reveal>{t.spotifySub}</p>}
         </div>
 
-        <div className="spotify-grid" data-reveal>
+        <div className="spotify-grid">
           {/* Card 1: Artist Profile Widget */}
-          <div className="spotify-profile-card">
+          <div className="spotify-profile-card" data-reveal="slide-left">
             <div className="spotify-badge-verified">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
@@ -62,7 +62,8 @@ export default function SpotifySection() {
           </div>
 
           {/* Card 2: Spotify Embed Player */}
-          <div className="spotify-player-card">
+          <div className="spotify-player-card" data-reveal="slide-right" data-reveal-delay="150">
+
             <iframe 
               title="Jesús Molina on Spotify"
               src="https://open.spotify.com/embed/artist/7Gl7yiOLDSRr1cZyPwpGv4?utm_source=generator&theme=0" 
