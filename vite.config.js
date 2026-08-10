@@ -9,6 +9,6 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  base: './', //Se coloca de esta manera la base ya que esto permite que el proyecto ejecute en cualquier navegador sin restricciones
+  base: '/JesusMolina-WebPage/',
   plugins: [react()],
-})
+})

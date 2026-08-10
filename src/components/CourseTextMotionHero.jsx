@@ -92,41 +92,15 @@ export default function CourseTextMotionHero() {
       </div>
 
       {/* Video Player Box */}
-      <div ref={videoCardRef} className="clama-video-card" onClick={togglePlay}>
-        <video
-          ref={videoRef}
+      <div ref={videoCardRef} className="clama-video-card">
+        <iframe
           className="clama-video-element"
-          src={`${import.meta.env.BASE_URL}video/klamavideo.mp4#t=0.001`}
-          poster={`${import.meta.env.BASE_URL}images/laptop-screen.png`}
-          playsInline
-          loop
-          muted={false}
-          onEnded={() => setIsPlaying(false)}
-        />
-
-
-        {/* Centered Play Button */}
-        <button
-          className={`clama-center-play-btn ${isPlaying ? 'is-playing' : ''}`}
-          aria-label={isPlaying ? 'Pausar video' : 'Reproducir video'}
-          onClick={(e) => {
-            e.stopPropagation();
-            togglePlay();
-          }}
-        >
-          {isPlaying ? (
-            /* Pause icon */
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <rect x="6" y="4" width="4" height="16" rx="1" />
-              <rect x="14" y="4" width="4" height="16" rx="1" />
-            </svg>
-          ) : (
-            /* Play icon */
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11.04-6.86a1 1 0 0 0 0-1.72L9.5 4.28A1 1 0 0 0 8 5.14z" />
-            </svg>
-          )}
-        </button>
+          src="https://www.youtube.com/embed/R4gCwrcOUjI"
+          title="CLAMA Courses"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          style={{ width: '100%', height: '100%', border: 'none', borderRadius: '16px', minHeight: '320px' }}
+        ></iframe>
       </div>
     </div>
   );
