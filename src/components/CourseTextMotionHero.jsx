@@ -96,7 +96,7 @@ export default function CourseTextMotionHero() {
         <video
           ref={videoRef}
           className="clama-video-element"
-          src={`${import.meta.env.BASE_URL}video/0709.mp4#t=0.001`}
+          src={`${import.meta.env.BASE_URL}video/klamavideo.mp4#t=0.001`}
           poster={`${import.meta.env.BASE_URL}images/laptop-screen.png`}
           playsInline
           loop
