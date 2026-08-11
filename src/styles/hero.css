@@ -114,6 +114,22 @@
   transform: translateY(20px);
 }
 
+/* ── Roles subhead: Pianist · Producer · Composer · Performer ── */
+.hero-roles {
+  font-family: var(--font-body);
+  font-size: clamp(13px, 1.4vw, 16px);
+  font-weight: 400;
+  letter-spacing: .08em;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 36px;
+  padding-left: 2px;
+  text-transform: none;
+
+  /* Entry animation */
+  opacity: 0;
+  transform: translateY(20px);
+}
+
 /* ── Description ── */
 .hero-sub {
   font-size: 17px;
@@ -296,6 +312,10 @@
 
 .hero--visible .hero-subtitle {
   animation: heroFadeUp .9s cubic-bezier(.16, .84, .32, 1) .85s both;
+}
+
+.hero--visible .hero-roles {
+  animation: heroFadeUp .9s cubic-bezier(.16, .84, .32, 1) .9s both;
 }
 
 .hero--visible .hero-sub {

@@ -95,10 +95,10 @@ export default function ChinafunkVideo() {
     <section ref={containerRef} className="chinafunk" id="destacados">
       <div className="chinafunk-container">
         <div ref={textRef} className="chinafunk-text">
-          <div className="section-eyebrow">{t.featuredEyebrow}</div>
-          <h2 className="section-title">{t.featuredTitle}</h2>
+          <div className="section-eyebrow">{t.watchEyebrow || '— Watch'}</div>
+          <h2 className="section-title">{t.watchTitle || 'Watch'}</h2>
           <p className="chinafunk-sub">
-            {t.featuredSub}
+            {t.watchSub || t.featuredSub}
           </p>
         </div>
 

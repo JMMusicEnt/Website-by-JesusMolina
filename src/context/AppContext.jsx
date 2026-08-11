@@ -7,11 +7,14 @@ export const translations = {
     /* ── NAV ── */
     home: "Inicio",
     concerts: "Conciertos",
+    tourNav: "Tour",
     biography: "Biografía",
+    aboutNav: "Nosotros",
     services: "Servicios",
     navCourses: "Cursos",
     masterclass: "Masterclass",
     contact: "Contacto",
+    connectNav: "Conectar",
     platform: "Plataforma",
     startNow: "Empezar ahora",
     changeLanguage: "Cambiar idioma",
@@ -24,8 +27,9 @@ export const translations = {
     heroTitle1: "Jesús",
     heroTitle2: "Molina",
     heroTitle3: "Pianista · Compositor · Intérprete",
+    heroRoles: "Pianista · Productor · Compositor · Intérprete",
     heroSub: "Más de 14 años sobre los escenarios de 9 países, dominando más de 5 instrumentos. La música no es solo lo que hago — es lo que soy.",
-    heroCta1: "Descubre mi música",
+    heroCta1: "Listen",
     heroCta2: "Ver en vivo",
     heroScrollDown: "Desplázate",
     heroStat1Label: "años de carrera",
@@ -95,7 +99,25 @@ export const translations = {
     spotifyVerifiedArtist: "Artista Verificado",
     spotifyQuote: '"Uno de los pianistas y multi-instrumentistas más creativos de la escena del jazz moderno internacional."',
 
-    /* ── FEATURED ── */
+    /* ── LEARN (formerly Courses carousel) ── */
+    learnEyebrow: "Cursos en línea",
+    learnTitle: "Learn",
+    learnSub: "Elige tu camino de aprendizaje. Ya sea en español o en inglés, hay una plataforma de clase mundial esperándote.",
+    learnPrimaryBadge: "En Español · Principal",
+    learnClamaDesc: "Piano, composición y armonía en español. La plataforma educativa de Jesús Molina para estudiantes de habla hispana.",
+    learnClamaBtn: "Explorar CLAMA",
+    learnSecondaryBadge: "In English",
+    learnPianoteDesc: "World-class piano lessons in English. Learn at your own pace with Jesús Molina on Pianote.",
+    learnPianoteBtn: "Explore Pianote",
+
+    /* ── TOUR section heading ── */
+    tourEyebrow: "Upcoming Shows",
+    /* ── WATCH (formerly Featured) ── */
+    watchEyebrow: "— Watch",
+    watchTitle: "Watch",
+    watchSub: "Una selección de piezas, performances y propuestas que muestran la versatilidad de Jesús Molina, desde la energía del escenario hasta la profundidad de la improvisación.",
+
+    /* ── FEATURED (legacy keys kept for fallback) ── */
     featuredEyebrow: "— Destacados",
     featuredTitle: "Moments that speak through the music",
     featuredSub: "Una selección de piezas, performances y propuestas que muestran la versatilidad de Jesús Molina, desde la energía del escenario hasta la profundidad de la improvisación.",
@@ -128,6 +150,13 @@ export const translations = {
     /* ── FINAL CTA / CONTACT ── */
     ctaEyebrow: "— Contacto",
     ctaTitle: "Hablemos",
+    connectEyebrow: "— Connect",
+    connectTitle: "Connect",
+    connectSub: "¿Tienes alguna pregunta, propuesta de colaboración o simplemente quieres decir hola? Escríbeme y te responderé lo antes posible.",
+    connectSignupLabel: "Súscribete a la lista de correo para recibir noticias, fechas de tour y música nueva.",
+    connectSignupPlaceholder: "tu@correo.com",
+    connectSignupBtn: "Suscribirme",
+    connectSignupDone: "¡Ya estás en la lista!",
     ctaSub: "¿Tienes alguna pregunta, propuesta de colaboración o simplemente quieres decir hola? Escríbeme y te responderé lo antes posible.",
     ctaBtn: "Enviar mensaje",
     ctaSent: "¡Enviado!",
@@ -145,16 +174,16 @@ export const translations = {
     footerNav: "Navegación",
     footerNavLinks: [
       { href: "/", label: "Inicio" },
-      { href: "/concerts", label: "Conciertos" },
-      { href: "/biography", label: "Biografía" },
-      { href: "/contact", label: "Contacto" },
+      { href: "/concerts", label: "Tour" },
+      { href: "/biography", label: "About" },
+      { href: "/contact", label: "Connect" },
     ],
     footerExplore: "Explorar",
     footerExploreLinks: [
-      { href: "/#spotify", label: "Spotify" },
-      { href: "/#destacados", label: "Destacados" },
-      { href: "/#cursos-disponibles", label: "Cursos CLAMA" },
-      { href: "/#metodo", label: "Cómo Funciona" },
+      { href: "/#spotify", label: "Music" },
+      { href: "/#destacados", label: "Watch" },
+      { href: "/#cursos-disponibles", label: "Learn" },
+      { href: "/#concerts-home", label: "Tour" },
     ],
     footerIntro: "Piano, composición y presencia escénica para quienes quieren aprender con profundidad y sentir la música de forma auténtica.",
     footerContact: "Contacto",
@@ -179,7 +208,9 @@ export const translations = {
     concertsMapTitle: "Gira Mundial",
     concertsMapDesc: "Explora las ciudades donde Jesús ha tocado en vivo. Pasa el cursor sobre cada punto para ver los detalles.",
 
-    /* ── BIOGRAPHY ── */
+    /* ── BIOGRAPHY / ABOUT ── */
+    aboutEyebrow: "— About",
+    aboutLabel: "About",
     bioTitle1: "La historia detrás de la música",
     bioEyebrow2: "— Trayectoria",
     bioPortraitLabel: "Retrato editorial",
@@ -221,11 +252,14 @@ export const translations = {
     /* ── NAV ── */
     home: "Home",
     concerts: "Concerts",
+    tourNav: "Tour",
     biography: "Biography",
+    aboutNav: "About",
     services: "Services",
     navCourses: "Courses",
     masterclass: "Masterclass",
     contact: "Contact",
+    connectNav: "Connect",
     platform: "Platform",
     startNow: "Start now",
     changeLanguage: "Change language",
@@ -238,8 +272,9 @@ export const translations = {
     heroTitle1: "Jesús",
     heroTitle2: "Molina",
     heroTitle3: "Pianist · Composer · Performer",
+    heroRoles: "Pianist · Producer · Composer · Performer",
     heroSub: "Over 14 years on stages across 9 countries, mastering more than 5 instruments. Music is not just what I do — it's who I am.",
-    heroCta1: "Discover my music",
+    heroCta1: "Listen",
     heroCta2: "Watch live",
     heroScrollDown: "Scroll",
     heroStat1Label: "years of career",
@@ -320,6 +355,25 @@ export const translations = {
     featuredCard3Desc: "Dizzy Gillespie's classic reimagined with a personal approach, exploring new textures and dynamics honoring traditional jazz.",
     featuredListenPlatforms: "Listen on all platforms",
 
+    /* ── WATCH (formerly Featured) ── */
+    watchEyebrow: "— Watch",
+    watchTitle: "Watch",
+    watchSub: "A selection of pieces, performances, and ideas that show Jesús Molina's versatility, from stage energy to the depth of improvisation.",
+
+    /* ── LEARN (formerly Courses carousel) ── */
+    learnEyebrow: "Online Courses",
+    learnTitle: "Learn",
+    learnSub: "Choose your learning path — whether you prefer Spanish or English instruction, there's a world-class platform waiting for you.",
+    learnPrimaryBadge: "En Español · Primary",
+    learnClamaDesc: "Piano, composition and harmony in Spanish. Jesús Molina's educational platform for Spanish-speaking students.",
+    learnClamaBtn: "Explore CLAMA",
+    learnSecondaryBadge: "In English",
+    learnPianoteDesc: "World-class piano lessons in English. Learn at your own pace with Jesús Molina on Pianote.",
+    learnPianoteBtn: "Explore Pianote",
+
+    /* ── TOUR section heading ── */
+    tourEyebrow: "Upcoming Shows",
+
     /* ── PRICING ── */
     pricingEyebrow: "— Investment",
     pricingTitle: "Clear plans, no fine print",
@@ -340,6 +394,13 @@ export const translations = {
     /* ── FINAL CTA / CONTACT ── */
     ctaEyebrow: "— Contact",
     ctaTitle: "Let's Talk",
+    connectEyebrow: "— Connect",
+    connectTitle: "Connect",
+    connectSub: "Have a question, collaboration proposal, or just want to say hello? Drop me a message and I'll get back to you as soon as possible.",
+    connectSignupLabel: "Join the email list to get updates, tour dates, and new music.",
+    connectSignupPlaceholder: "your@email.com",
+    connectSignupBtn: "Subscribe",
+    connectSignupDone: "You're on the list!",
     ctaSub: "Have a question, collaboration proposal, or just want to say hello? Drop me a message and I'll get back to you as soon as possible.",
     ctaBtn: "Send message",
     ctaSent: "Sent!",
@@ -357,16 +418,16 @@ export const translations = {
     footerNav: "Navigation",
     footerNavLinks: [
       { href: "/", label: "Home" },
-      { href: "/concerts", label: "Concerts" },
-      { href: "/biography", label: "Biography" },
-      { href: "/contact", label: "Contact" },
+      { href: "/concerts", label: "Tour" },
+      { href: "/biography", label: "About" },
+      { href: "/contact", label: "Connect" },
     ],
     footerExplore: "Explore",
     footerExploreLinks: [
-      { href: "/#spotify", label: "Spotify" },
-      { href: "/#destacados", label: "Featured" },
-      { href: "/#cursos-disponibles", label: "CLAMA Courses" },
-      { href: "/#metodo", label: "How It Works" },
+      { href: "/#spotify", label: "Music" },
+      { href: "/#destacados", label: "Watch" },
+      { href: "/#cursos-disponibles", label: "Learn" },
+      { href: "/#concerts-home", label: "Tour" },
     ],
     footerIntro: "Piano, composition, and stage presence for those who want to learn with depth and feel music in an authentic way.",
     footerContact: "Contact",
@@ -391,7 +452,9 @@ export const translations = {
     concertsMapTitle: "World Tour",
     concertsMapDesc: "Explore the cities where Jesús has performed live. Hover over each point for details.",
 
-    /* ── BIOGRAPHY ── */
+    /* ── BIOGRAPHY / ABOUT ── */
+    aboutEyebrow: "— About",
+    aboutLabel: "About",
     bioTitle1: "The story behind the music",
     bioEyebrow2: "— Journey",
     bioPortraitLabel: "Editorial portrait",

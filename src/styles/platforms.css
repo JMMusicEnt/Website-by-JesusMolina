@@ -99,7 +99,7 @@
   object-fit: cover;
   border-radius: var(--radius-md);
   z-index: 1;
-  box-shadow: 0 10px 24px -8px rgba(0,0,0,0.5);
+  box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.5);
 }
 
 .pm-play-btn {
@@ -121,7 +121,8 @@
   z-index: 2;
   cursor: pointer !important;
   transition: transform 0.25s var(--ease), background 0.25s, filter 0.25s;
-  padding-left: 3px; /* visual center for play icon */
+  padding-left: 3px;
+  /* visual center for play icon */
   pointer-events: auto;
 }
 
@@ -169,9 +170,11 @@
 .pm-list::-webkit-scrollbar {
   width: 6px;
 }
+
 .pm-list::-webkit-scrollbar-track {
   background: transparent;
 }
+
 .pm-list::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
@@ -282,4 +285,3 @@
     padding: 12px;
   }
 }
-

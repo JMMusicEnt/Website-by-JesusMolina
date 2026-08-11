@@ -1,12 +1,5 @@
 import { useApp } from '../context/AppContext';
-import { useTiltCards } from '../hooks/useTiltCards';
-import { COLLABORATORS, PLACEHOLDER_PORTRAIT } from '../data/collaborators';
-
-const INFLUENCES = [
-  { id: 1, name: 'Oscar Peterson', style: 'Jazz Swing / Virtuosismo', image: `${import.meta.env.BASE_URL}images/oscar.png` },
-  { id: 2, name: 'Brian Culbertson', style: 'Contemporary Jazz / Funk', image: `${import.meta.env.BASE_URL}images/brian.png` },
-  { id: 3, name: 'Chick Corea', style: 'Jazz Fusión / Armonía', image: `${import.meta.env.BASE_URL}images/chick.png` },
-];
+import { PLACEHOLDER_PORTRAIT } from '../data/collaborators';
 
 const INSTRUMENTS = [
   { id: 1, name: 'Steinway & Sons D-274', type: 'Piano de Cola Acústico', desc: 'El piano insignia del concertista clásico y del jazz moderno.', specs: '88 teclas · Madera de abeto · 2.74 m' },
@@ -16,11 +9,6 @@ const INSTRUMENTS = [
 
 export default function Biography() {
   const { t } = useApp();
-  useTiltCards();
-
-
-  // Triplicate for seamless infinite scroll
-  const carouselItems = [...COLLABORATORS, ...COLLABORATORS, ...COLLABORATORS];
 
   return (
     <section className="biography-page">
@@ -30,9 +18,9 @@ export default function Biography() {
 
       <div className="bio-container">
         <header className="bio-header" data-reveal>
-          <span className="section-eyebrow">{t.bioEyebrow2}</span>
+          <span className="section-eyebrow">{t.aboutEyebrow || t.bioEyebrow2}</span>
           <h1 className="section-title">
-            Jesús Molina <em>{t.biography}</em>
+            Jesús Molina <em>{t.aboutLabel || 'About'}</em>
           </h1>
         </header>
 
@@ -57,68 +45,6 @@ export default function Biography() {
             <p>{t.bioP3}</p>
             <p>{t.bioP4}</p>
             <p>{t.bioP5}</p>
-          </div>
-        </div>
-
-
-        {/* Collaborators — infinite scrolling carousel */}
-        <div className="bio-collaborators-section" data-reveal>
-          <div className="section-header-compact">
-            <div className="section-header-left">
-              <h3 className="section-subtitle-editorial">{t.bioCollaboratorsTitle}</h3>
-              <p className="section-desc-editorial">{t.bioCollaboratorsDesc}</p>
-            </div>
-            <span className="collab-count-badge">{COLLABORATORS.length} artistas</span>
-          </div>
-
-          <div className="collab-carousel-wrap">
-            <div className="collab-carousel-track">
-              {carouselItems.map((collab, i) => (
-                <article className="collab-card" key={`${collab.id}-${i}`}>
-                  <div className="collab-card-photo">
-                    <img
-                      src={collab.image || PLACEHOLDER_PORTRAIT}
-                      alt={collab.name}
-                      loading="lazy"
-                      style={{ objectPosition: collab.objectPosition || 'top center' }}
-                    />
-                    <div className="collab-card-overlay">
-                      <span className="collab-card-overlay-project">{collab.project}</span>
-                    </div>
-                  </div>
-                  <div className="collab-card-info">
-                    <span className="collab-project">{collab.project}</span>
-                    <h4 className="collab-name">{collab.name}</h4>
-                    <p className="collab-role">{collab.role}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Influences */}
-        <div className="bio-influences-section" data-reveal>
-          <div className="section-header-compact">
-            <div className="section-header-left">
-              <h3 className="section-subtitle-editorial">{t.bioInfluencesTitle}</h3>
-              <p className="section-desc-editorial">{t.bioInfluencesDesc}</p>
-            </div>
-          </div>
-
-          <div className="influences-grid" data-reveal-stagger>
-            {INFLUENCES.map((inf, i) => (
-              <div className="influence-card" data-reveal data-reveal-delay={i * 100} data-tilt key={inf.id}>
-                <div className="influence-card-photo">
-                  <img src={inf.image || PLACEHOLDER_PORTRAIT} alt={inf.name} loading="lazy" />
-                </div>
-                <div className="influence-card-content">
-                  <span className="influence-style">{inf.style}</span>
-                  <h4 className="influence-name">{inf.name}</h4>
-                </div>
-                <div className="influence-card-glow" aria-hidden="true" />
-              </div>
-            ))}
           </div>
         </div>
 

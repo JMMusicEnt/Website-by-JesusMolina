@@ -1617,3 +1617,84 @@
   font-style: italic;
 }
 
+/* ── Concert Cards — List Style (past concerts archive) ── */
+.concert-card--list {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 24px !important;
+  padding: 20px 24px !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid var(--linea-clara) !important;
+  border-radius: var(--radius-sm) !important;
+  transition: background .25s, border-color .25s !important;
+}
+
+.concert-card--list:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(247, 241, 230, 0.2) !important;
+}
+
+.concert-card-list-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.concert-card-year-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(247, 241, 230, 0.4);
+  border: 1px solid var(--linea-clara);
+  border-radius: 4px;
+  padding: 2px 7px;
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+}
+
+.concert-card--list .concert-card-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.concert-card--list .concert-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  background: transparent;
+  border: 1px solid var(--linea-clara);
+  border-radius: 100px;
+  color: rgba(247, 241, 230, 0.7);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: border-color .25s, color .25s, background .25s;
+  flex-shrink: 0;
+}
+
+.concert-card--list .concert-card-cta:hover {
+  border-color: rgba(247, 241, 230, 0.4);
+  color: var(--marfil);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Gallery grid override for list layout */
+.concerts-gallery:has(.concert-card--list) {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (max-width: 640px) {
+  .concert-card--list {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  .concert-card--list .concert-card-cta {
+    width: 100%;
+    justify-content: center;
+  }
+}

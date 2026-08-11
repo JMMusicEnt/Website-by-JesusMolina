@@ -4,7 +4,7 @@ import Loader from './components/Loader';
 import Chrome from './components/Chrome';
 import Nav from './components/Nav';
 import Hero from './components/Hero';
-import Marquee from './components/Marquee';
+
 import CoursesCarousel from './components/CoursesCarousel';
 import SpotifySection from './components/SpotifySection';
 import UpcomingConcerts from './components/UpcomingConcerts';
@@ -61,7 +61,6 @@ function Home() {
   return (
     <>
       <Hero />
-      <Marquee />
       <SpotifySection />
       <UpcomingConcerts />
       <CoursesCarousel />

@@ -17,11 +17,13 @@ export default function FinalCTA() {
   const { t } = useApp();
   const [formState, setFormState] = useState('idle'); // idle | sending | sent
   const [focusedField, setFocusedField] = useState(null);
+  const [signupState, setSignupState] = useState('idle'); // idle | sending | done
 
   const containerRef = useRef(null);
   const infoRef = useRef(null);
   const formWrapperRef = useRef(null);
   const formRef = useRef(null);
+  const signupEmailRef = useRef(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -72,6 +74,21 @@ export default function FinalCTA() {
     return () => ctx.revert();
   }, []);
 
+  // Email list signup handler (name + email only)
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    setSignupState('sending');
+    const email = signupEmailRef.current?.value;
+    if (!email) {
+      setSignupState('idle');
+      return;
+    }
+    // Simulate or connect to your email list service here
+    setTimeout(() => {
+      setSignupState('done');
+    }, 1200);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormState('sending');
@@ -119,9 +136,45 @@ export default function FinalCTA() {
       <div className="contact-container">
         {/* Left side — Text & info */}
         <div ref={infoRef} className="contact-info">
-          <div className="section-eyebrow section-eyebrow-light">{t.ctaEyebrow}</div>
-          <h2 className="contact-title">{t.ctaTitle}</h2>
-          <p className="contact-desc">{t.ctaSub}</p>
+          <div className="section-eyebrow section-eyebrow-light">{t.connectEyebrow || t.ctaEyebrow || '— Connect'}</div>
+          <h2 className="contact-title">{t.connectTitle || t.ctaTitle || 'Connect'}</h2>
+          <p className="contact-desc">{t.connectSub || t.ctaSub}</p>
+
+          {/* Email list signup */}
+          <div className="connect-signup-block">
+            <p className="connect-signup-label">
+              {t.connectSignupLabel || 'Join the email list to get updates, tour dates, and new music.'}
+            </p>
+            {signupState === 'done' ? (
+              <div className="connect-signup-success">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 6L9 17L4 12"></path>
+                </svg>
+                <span>{t.connectSignupDone || "You're on the list!"}</span>
+              </div>
+            ) : (
+              <form className="connect-signup-form" onSubmit={handleSignup}>
+                <input
+                  ref={signupEmailRef}
+                  type="email"
+                  required
+                  placeholder={t.connectSignupPlaceholder || 'your@email.com'}
+                  className="connect-signup-input"
+                />
+                <button
+                  type="submit"
+                  className={`connect-signup-btn${signupState === 'sending' ? ' sending' : ''}`}
+                  disabled={signupState === 'sending'}
+                >
+                  {signupState === 'sending' ? (
+                    <span className="contact-spinner"></span>
+                  ) : (
+                    t.connectSignupBtn || 'Subscribe'
+                  )}
+                </button>
+              </form>
+            )}
+          </div>
 
           <div className="contact-details">
             <div className="contact-detail-item">

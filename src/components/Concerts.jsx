@@ -219,10 +219,10 @@ export default function Concerts() {
             <div className="wt-header-left">
               <span className="wt-badge">
                 <span className="wt-badge-dot" />
-                WORLD TOUR
+                TOUR
               </span>
               <h1 className="wt-title">
-                WORLD TOUR
+                TOUR
                 <span className="wt-title-highlight">UPCOMING DATES</span>
               </h1>
             </div>
@@ -447,69 +447,34 @@ export default function Concerts() {
             </div>
           )}
           {filteredConcerts.map((concert, i) => {
-            const isPlaying = playingId === concert.id;
             return (
               <article
                 key={concert.id}
-                className={`concert-card ${isPlaying ? 'playing' : ''} ${i === 0 && !searchCountry ? 'concert-card--featured' : ''}`}
+                className={`concert-card concert-card--list ${i === 0 && !searchCountry ? 'concert-card--featured' : ''}`}
                 style={{ '--slide-delay': `${i * 80}ms` }}
               >
-                <div className="concert-card-video">
-                  {isPlaying ? (
-                    <iframe
-                      src={`https://www.youtube.com/embed/${concert.youtubeId}?rel=0&modestbranding=1&autoplay=1`}
-                      title={concert.title}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  ) : (
-                    <div
-                      className="concert-card-poster"
-                      onClick={() => handlePlay(concert.id)}
-                      onKeyDown={(e) => e.key === 'Enter' && handlePlay(concert.id)}
-                      role="button"
-                      tabIndex={0}
-                      aria-label={`Play ${concert.title}`}
-                    >
-                      <img
-                        src={`https://img.youtube.com/vi/${concert.youtubeId}/hqdefault.jpg`}
-                        alt={concert.title}
-                        loading="lazy"
-                      />
-                      <div className="poster-overlay">
-                        <div className="play-btn-wrap">
-                          <div className="play-btn-ring" />
-                          <svg className="play-btn-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M8 5v14l11-7z" />
-                          </svg>
-                        </div>
-                      </div>
-                      <span className="concert-card-year">{concert.year}</span>
-                    </div>
-                  )}
-                </div>
-                <div className="concert-card-body">
+                <div className="concert-card-list-body">
                   <div className="concert-card-meta-row">
                     <span className="concert-card-live-dot" />
                     <span className="concert-card-location">
                       {concert.city}, {concert.country}
                     </span>
+                    <span className="concert-card-year-badge">{concert.year}</span>
                   </div>
                   <h4 className="concert-card-title">{concert.title}</h4>
                   <p className="concert-card-venue">{concert.venue}</p>
-                  <a
-                    href={`https://www.youtube.com/watch?v=${concert.youtubeId}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="concert-card-cta"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <span>{t.concertsWatchLive}</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                      <path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </a>
                 </div>
+                <a
+                  href={`https://www.youtube.com/watch?v=${concert.youtubeId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="concert-card-cta"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                  <span>{t.concertsWatchLive || 'Watch Recap'}</span>
+                </a>
               </article>
             );
           })}

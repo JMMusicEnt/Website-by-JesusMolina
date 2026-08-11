@@ -362,5 +362,100 @@
   .contact-title {
     font-size: 28px;
   }
+
+  .connect-signup-form {
+    flex-direction: column;
+  }
+
+  .connect-signup-input {
+    width: 100%;
+  }
 }
 
+/* ── Connect Email Signup ── */
+.connect-signup-block {
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--linea-clara);
+}
+
+.connect-signup-label {
+  font-size: 15px;
+  color: rgba(247, 241, 230, 0.65);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.connect-signup-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.connect-signup-input {
+  flex: 1;
+  min-width: 180px;
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--linea-clara);
+  border-radius: 100px;
+  color: var(--marfil);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color .25s, background .25s;
+}
+
+.connect-signup-input::placeholder {
+  color: rgba(247, 241, 230, 0.35);
+}
+
+.connect-signup-input:focus {
+  border-color: rgba(247, 241, 230, 0.35);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.connect-signup-btn {
+  padding: 12px 22px;
+  background: var(--marfil);
+  color: var(--ebano);
+  border: none;
+  border-radius: 100px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .25s, transform .25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+  min-height: 42px;
+}
+
+.connect-signup-btn:hover {
+  background: #fff;
+  transform: translateY(-1px);
+}
+
+.connect-signup-btn.sending {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.connect-signup-success {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--marfil);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 0;
+}
+
+.connect-signup-success svg {
+  color: var(--bronce);
+  flex-shrink: 0;
+}

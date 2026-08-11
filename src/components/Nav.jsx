@@ -13,11 +13,13 @@ export default function Nav() {
   const [langOpen, setLangOpen] = useState(false);
   const [platformsOpen, setPlatformsOpen] = useState(false);
   const { language, setLanguage, t } = useApp();
-  
+
   const langRef = useRef(null);
   const menuListRef = useRef(null);
   const menuItemsRef = useRef([]);
   const location = useLocation();
+
+  const isHomepage = location.pathname === '/';
 
   /* Close menu when route changes */
   useEffect(() => {
@@ -91,11 +93,12 @@ export default function Nav() {
     .join(' ');
 
   const menuItems = [
-    { label: t.home, path: '/', isButton: false, offset: 10 },
-    { label: t.concerts, path: '/concerts', isButton: false, offset: 20 },
-    { label: t.biography, path: '/biography', isButton: false, offset: 30 },
-    { label: t.contact, path: '/contact', isButton: false, offset: 40 },
-    { label: t.platformsTitle || t.platform, path: '#', isButton: true, offset: 50 },
+    { label: t.home, path: '/', isButton: false, isExternal: false, offset: 10 },
+    { label: t.tourNav || 'Tour', path: '/concerts', isButton: false, isExternal: false, offset: 20 },
+    { label: t.aboutNav || 'About', path: '/biography', isButton: false, isExternal: false, offset: 30 },
+    { label: t.connectNav || 'Connect', path: '/contact', isButton: false, isExternal: false, offset: 40 },
+    { label: 'MISTER MOLINA', path: 'https://on.soundcloud.com/m22tPEah8lVmQLRFTe', isButton: false, isExternal: true, offset: 50 },
+    { label: t.platformsTitle || t.platform, path: '#', isButton: true, isExternal: false, offset: 60 },
   ];
 
   return (
@@ -104,10 +107,13 @@ export default function Nav() {
         {/* ── Logo ── */}
         <Link to="/" className="nav-logo" onClick={() => setMenuOpen(false)}>
           <img src={`${import.meta.env.BASE_URL}images/logo.png`} alt="Jesús Molina logo" className="nav-logo-img" />
-          <span className="nav-logo-text">Jesús Molina</span>
+          {/* Hide name on homepage — it's prominent in the hero below */}
+          {!isHomepage && (
+            <span className="nav-logo-text">Jesús Molina</span>
+          )}
         </Link>
 
-        {/* ── Controls: Language & Hamburger Button ── */}
+        {/* ── Controls: Language & Menu Button ── */}
         <div className="nav-controls">
           {/* Language selector */}
           <div className={`nav-lang${langOpen ? ' open' : ''}`} ref={langRef}>
@@ -143,15 +149,18 @@ export default function Nav() {
             </div>
           </div>
 
-          {/* Hamburger menu toggle button */}
+          {/* Menu button with text label */}
           <button
             className={`nav-burger${menuOpen ? ' open' : ''}`}
-            aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             onClick={() => setMenuOpen((v) => !v)}
           >
-            <span></span>
-            <span></span>
-            <span></span>
+            {!menuOpen && <span className="nav-burger-label">Menu</span>}
+            <span className="nav-burger-lines">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
           </button>
         </div>
       </header>
@@ -189,6 +198,16 @@ export default function Nav() {
                   >
                     {content}
                   </button>
+                ) : item.isExternal ? (
+                  <a
+                    href={item.path}
+                    className="Menu-list-item-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {content}
+                  </a>
                 ) : (
                   <Link
                     to={item.path}
@@ -212,4 +231,3 @@ export default function Nav() {
     </>
   );
 }
-

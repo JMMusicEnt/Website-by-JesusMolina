@@ -20,7 +20,8 @@
 .spotify-glow-1 {
   width: 400px;
   height: 400px;
-  background: #1DB954; /* Spotify green */
+  background: #1DB954;
+  /* Spotify green */
   top: -10%;
   right: -5%;
 }
@@ -113,7 +114,7 @@
   border-radius: 50%;
   overflow: hidden;
   border: 2px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 20px -8px rgba(0,0,0,0.5);
+  box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.5);
 }
 
 .spotify-avatar img {
@@ -236,17 +237,16 @@
   .spotify-sec {
     padding: 100px 24px;
   }
-  
+
   .spotify-profile-card {
     padding: 28px;
   }
-  
+
   .spotify-artist-name {
     font-size: 24px;
   }
-  
+
   .spotify-stat-num {
     font-size: 32px;
   }
 }
-

@@ -177,8 +177,8 @@ export default function UpcomingConcerts() {
         <div className="uc-container">
           {/* Header */}
           <div className="uc-header" ref={headingRef}>
-            <span className="section-eyebrow">— {t.concertsEyebrow2 || 'Upcoming Concerts'}</span>
-            <h2 className="section-title uc-title-glow">Live on stage</h2>
+            <span className="section-eyebrow">— {t.tourEyebrow || 'Upcoming Shows'}</span>
+            <h2 className="section-title uc-title-glow">Tour</h2>
           </div>
 
           {/* Concert List */}
