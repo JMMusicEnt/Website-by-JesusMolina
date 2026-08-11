@@ -97,7 +97,7 @@ export default function Nav() {
     { label: t.tourNav || 'Tour', path: '/concerts', isButton: false, isExternal: false, offset: 20 },
     { label: t.aboutNav || 'About', path: '/biography', isButton: false, isExternal: false, offset: 30 },
     { label: t.connectNav || 'Connect', path: '/contact', isButton: false, isExternal: false, offset: 40 },
-    { label: 'MISTER MOLINA', path: 'https://on.soundcloud.com/m22tPEah8lVmQLRFTe', isButton: false, isExternal: true, offset: 50 },
+    { label: 'MISTER MOLINA', path: 'https://soundcloud.com/mistermolinamusic?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing', isButton: false, isExternal: true, offset: 50 },
     { label: t.platformsTitle || t.platform, path: '#', isButton: true, isExternal: false, offset: 60 },
   ];
 

@@ -21,7 +21,7 @@ export const defaultTrackData = {
     {
       platformName: "SoundCloud",
       iconId: "soundcloud",
-      url: "https://on.soundcloud.com/m22tPEah8lVmQLRFTe",
+      url: "https://soundcloud.com/mistermolinamusic?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
       isDownload: false,
     },
     {

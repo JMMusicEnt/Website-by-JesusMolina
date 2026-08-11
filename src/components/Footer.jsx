@@ -41,7 +41,7 @@ export default function Footer() {
     {
       id: 'soundcloud',
       label: 'SoundCloud',
-      href: 'https://on.soundcloud.com/m22tPEah8lVmQLRFTe',
+      href: 'https://soundcloud.com/mistermolinamusic?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing',
     }
   ];
 
