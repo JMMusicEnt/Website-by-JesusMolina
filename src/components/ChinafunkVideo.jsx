@@ -32,11 +32,11 @@ export default function ChinafunkVideo() {
       youtubeId: 'jLBtZPVTPJs',
     },
     {
-      id: 'improvisacion',
-      title: 'Night in Tunisia',
+      id: 'falling-in-love-alone',
+      title: 'Falling In Love Alone (MISTER MOLINA Remix)',
       label: t.featuredCard3Label || 'New Concept',
-      description: t.featuredCard3Desc || 'Dizzy Gillespie\'s classic reimagined with a personal approach, exploring new textures and dynamics honoring traditional jazz.',
-      youtubeId: '4RaR210hglo',
+      description: t.featuredCard3Desc || 'A fresh MISTER MOLINA remix — blending groove, emotion, and modern production into a captivating reinterpretation.',
+      youtubeId: '17QV1R5tmdY',
     },
   ];
 
@@ -116,8 +116,7 @@ export default function ChinafunkVideo() {
                     title={item.title}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
-                    style={{ width: '100%', height: '100%', border: 'none', minHeight: '260px' }}
-                  ></iframe>
+                  />
                 </div>
                 <div className="featured-card-content">
                   <h3>{item.title}</h3>

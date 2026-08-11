@@ -2,24 +2,37 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const SUB_PAGES = ['/concerts', '/biography', '/contact'];
-const DARK_SECTION_SELECTORS = '.method, .community, .final-cta, .hero, .concerts-page, .biography-page, .contact-page';
+const DARK_SECTION_SELECTORS = [
+  '.hero',
+  '.spotify-sec',
+  '.uc-curtain-wrapper',
+  '.learn-section',
+  '.chinafunk',
+  '.method',
+  '.community',
+  '.final-cta',
+  '.concerts-page',
+  '.biography-page',
+  '.contact-page',
+].join(', ');
 
 /**
  * Tracks nav scroll state and contrast mode.
- * Sub-pages always get a visible nav from the first paint.
+ * Sub-pages and the homepage use the dark transparent nav at all times.
  */
 export function useNavScroll() {
   const [scrolled, setScrolled] = useState(false);
   const [onDark, setOnDark] = useState(false);
   const { pathname } = useLocation();
   const isSubPage = SUB_PAGES.includes(pathname);
+  const isHomepage = pathname === '/';
 
   useEffect(() => {
     function update() {
       const y = window.scrollY;
       setScrolled(isSubPage ? y > 8 : y > 40);
 
-      if (isSubPage) {
+      if (isSubPage || isHomepage) {
         setOnDark(true);
         return;
       }
@@ -39,7 +52,7 @@ export function useNavScroll() {
       window.removeEventListener('scroll', update);
       clearTimeout(timer);
     };
-  }, [pathname, isSubPage]);
+  }, [pathname, isSubPage, isHomepage]);
 
-  return { scrolled: isSubPage || scrolled, onDark: isSubPage || onDark, isSubPage };
+  return { scrolled: isSubPage || scrolled, onDark: isSubPage || isHomepage || onDark, isSubPage };
 }

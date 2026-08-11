@@ -226,7 +226,7 @@ export default function Nav() {
       <PlatformsModal
         isOpen={platformsOpen}
         onClose={() => setPlatformsOpen(false)}
-        {...defaultTrackData}
+        platforms={defaultTrackData.platforms}
       />
     </>
   );

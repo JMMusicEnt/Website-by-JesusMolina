@@ -489,4 +489,72 @@
   .instrument-specs { width: 100%; margin-top: 15px; }
 }
 
+@media (max-width: 640px) {
+  .biography-page {
+    padding: 100px 0 80px;
+  }
+
+  .bio-container {
+    padding: 0 16px;
+  }
+
+  .bio-hero-grid {
+    gap: 32px;
+    margin-bottom: 56px;
+  }
+
+  .bio-subtitle {
+    font-size: clamp(24px, 7vw, 32px);
+    margin-bottom: 18px;
+  }
+
+  .bio-story-text {
+    font-size: 15px;
+  }
+
+  .section-header-compact {
+    gap: 14px;
+    padding-bottom: 16px;
+  }
+
+  .section-subtitle-editorial {
+    font-size: 24px;
+  }
+
+  .section-desc-editorial {
+    font-size: 14px;
+  }
+
+  .collab-card {
+    width: min(84vw, 320px);
+  }
+
+  .influences-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .instrument-row {
+    padding: 24px 8px;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bio-portrait-caption {
+    margin-top: 14px;
+  }
+
+  .bio-caption-value {
+    font-size: 15px;
+  }
+
+  .collab-card-info {
+    padding: 16px;
+  }
+
+  .influence-card-content {
+    padding: 16px;
+  }
+}
+
 

@@ -629,24 +629,64 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
+  .contact-page {
+    padding: 90px 0 70px;
+  }
+
+  .contact-header .section-title {
+    font-size: clamp(30px, 8vw, 38px);
+  }
+
+  .contact-subtitle {
+    font-size: 16px;
+  }
+
+  .contact-grid {
+    gap: 28px;
+  }
+
   .contact-form-card,
   .contact-directory-card {
-    padding: 22px 14px;
+    padding: 24px 18px;
   }
+
+  .directory-details {
+    padding-left: 0;
+  }
+
+  .form-field {
+    margin-bottom: 24px;
+  }
+
   .subject-chips-row {
     gap: 8px;
   }
+
+  .btn-contact-submit {
+    height: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-form-card,
+  .contact-directory-card {
+    padding: 20px 14px;
+  }
+
   .subject-chip {
     padding: 8px 12px;
   }
+
   .subject-chip-text {
     font-size: 12px;
   }
+
   .subject-icon-svg {
     width: 15px;
     height: 15px;
   }
+
   .directory-link {
     font-size: 13px;
     word-break: break-all;

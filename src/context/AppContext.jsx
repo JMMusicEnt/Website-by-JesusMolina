@@ -19,9 +19,21 @@ export const translations = {
     startNow: "Empezar ahora",
     changeLanguage: "Cambiar idioma",
     platformsTitle: "Plataformas",
+    platformsListenTitle: "LISTEN",
+    platformsListenSub: "Elige tu plataforma favorita para vivir la música de Jesús Molina.",
+    platformsClose: "Cerrar",
     platformsSubtitle: "Elige tu plataforma",
     platformsPlay: "Play",
     platformsDownload: "Descargar",
+    platformDescriptions: {
+      spotify: "Escucha álbumes, singles y playlists",
+      apple: "Disponible en Apple Music",
+      youtube: "Videos, performances y sesiones en vivo",
+      soundcloud: "Sets exclusivos y material inédito",
+      instagram: "Contenido detrás de cámaras y momentos",
+      tiktok: "Clips, covers y highlights",
+      facebook: "Comunidad y actualizaciones",
+    },
 
     /* ── HERO ── */
     heroTitle1: "Jesús",
@@ -102,12 +114,14 @@ export const translations = {
     /* ── LEARN (formerly Courses carousel) ── */
     learnEyebrow: "Cursos en línea",
     learnTitle: "Learn",
-    learnSub: "Elige tu camino de aprendizaje. Ya sea en español o en inglés, hay una plataforma de clase mundial esperándote.",
-    learnPrimaryBadge: "En Español · Principal",
-    learnClamaDesc: "Piano, composición y armonía en español. La plataforma educativa de Jesús Molina para estudiantes de habla hispana.",
+    learnSub: "Dos plataformas de clase mundial para dominar el piano, la composición y la armonía — disponibles en inglés y español.",
+    learnPrimaryBadge: "Inglés y Español",
+    learnClamaBadge: "Inglés y Español",
+    learnClamaDesc: "Piano, composición y armonía con la metodología de Jesús Molina. Una experiencia serena, creativa y elegante para aprender a tu ritmo.",
     learnClamaBtn: "Explorar CLAMA",
-    learnSecondaryBadge: "In English",
-    learnPianoteDesc: "World-class piano lessons in English. Learn at your own pace with Jesús Molina on Pianote.",
+    learnSecondaryBadge: "Inglés y Español",
+    learnPianoteBadge: "Inglés y Español",
+    learnPianoteDesc: "Lecciones de piano de nivel internacional con Jesús Molina. Energía, excelencia y una metodología paso a paso en inglés y español.",
     learnPianoteBtn: "Explore Pianote",
 
     /* ── TOUR section heading ── */
@@ -127,7 +141,7 @@ export const translations = {
     featuredCard2Label: "En escena",
     featuredCard2Desc: "Una emotiva interpretación en vivo durante la décima edición de los La Musa Awards, donde la nostalgia y el sentimiento se fusionan en cada nota.",
     featuredCard3Label: "Nueva propuesta",
-    featuredCard3Desc: "El clásico de Dizzy Gillespie reimaginado con un enfoque personal, explorando nuevas texturas y dinámicas que rinden homenaje al jazz tradicional.",
+    featuredCard3Desc: "Un remix de MISTER MOLINA que fusiona groove, emoción y producción moderna en una reinterpretación cautivadora.",
     featuredListenPlatforms: "Escuchar en plataformas",
 
     /* ── PRICING ── */
@@ -264,9 +278,21 @@ export const translations = {
     startNow: "Start now",
     changeLanguage: "Change language",
     platformsTitle: "Platforms",
+    platformsListenTitle: "LISTEN",
+    platformsListenSub: "Choose your favorite platform to experience Jesús Molina's music.",
+    platformsClose: "Close",
     platformsSubtitle: "Choose your platform",
     platformsPlay: "Play",
     platformsDownload: "Download",
+    platformDescriptions: {
+      spotify: "Stream albums, singles & playlists",
+      apple: "Available on Apple Music",
+      youtube: "Videos, performances & live sessions",
+      soundcloud: "Exclusive sets & unreleased material",
+      instagram: "Behind-the-scenes content & moments",
+      tiktok: "Clips, covers & highlights",
+      facebook: "Community & updates",
+    },
 
     /* ── HERO ── */
     heroTitle1: "Jesús",
@@ -352,7 +378,7 @@ export const translations = {
     featuredCard2Label: "On Stage",
     featuredCard2Desc: "An emotional live performance at the 10th edition of the La Musa Awards, where nostalgia and deep feeling merge in every single note.",
     featuredCard3Label: "New Concept",
-    featuredCard3Desc: "Dizzy Gillespie's classic reimagined with a personal approach, exploring new textures and dynamics honoring traditional jazz.",
+    featuredCard3Desc: "A fresh MISTER MOLINA remix — blending groove, emotion, and modern production into a captivating reinterpretation.",
     featuredListenPlatforms: "Listen on all platforms",
 
     /* ── WATCH (formerly Featured) ── */
@@ -363,12 +389,14 @@ export const translations = {
     /* ── LEARN (formerly Courses carousel) ── */
     learnEyebrow: "Online Courses",
     learnTitle: "Learn",
-    learnSub: "Choose your learning path — whether you prefer Spanish or English instruction, there's a world-class platform waiting for you.",
-    learnPrimaryBadge: "En Español · Primary",
-    learnClamaDesc: "Piano, composition and harmony in Spanish. Jesús Molina's educational platform for Spanish-speaking students.",
+    learnSub: "Two world-class platforms to master piano, composition, and harmony — available in English and Spanish.",
+    learnPrimaryBadge: "English & Spanish",
+    learnClamaBadge: "English & Spanish",
+    learnClamaDesc: "Piano, composition, and harmony through Jesús Molina's methodology. A serene, creative, and elegant learning experience at your own pace.",
     learnClamaBtn: "Explore CLAMA",
-    learnSecondaryBadge: "In English",
-    learnPianoteDesc: "World-class piano lessons in English. Learn at your own pace with Jesús Molina on Pianote.",
+    learnSecondaryBadge: "English & Spanish",
+    learnPianoteBadge: "English & Spanish",
+    learnPianoteDesc: "International-level piano lessons with Jesús Molina. Energy, excellence, and a step-by-step methodology in English and Spanish.",
     learnPianoteBtn: "Explore Pianote",
 
     /* ── TOUR section heading ── */
@@ -505,9 +533,21 @@ export const translations = {
     startNow: "Commencer",
     changeLanguage: "Changer de langue",
     platformsTitle: "Plateformes",
+    platformsListenTitle: "LISTEN",
+    platformsListenSub: "Choisissez votre plateforme préférée pour découvrir la musique de Jesús Molina.",
+    platformsClose: "Fermer",
     platformsSubtitle: "Choisissez votre plateforme",
     platformsPlay: "Play",
     platformsDownload: "Télécharger",
+    platformDescriptions: {
+      spotify: "Écoutez albums, singles et playlists",
+      apple: "Disponible sur Apple Music",
+      youtube: "Vidéos, performances et sessions live",
+      soundcloud: "Sets exclusifs et matériel inédit",
+      instagram: "Contenu coulisses et moments",
+      tiktok: "Clips, covers et highlights",
+      facebook: "Communauté et actualités",
+    },
 
     /* ── HERO ── */
     heroTitle1: "Jesús",

@@ -437,13 +437,17 @@
 
 @media (max-width: 640px) {
   .uc-curtain-inner {
-    padding: 80px 20px 60px;
+    padding: 86px 16px 60px;
+  }
+
+  .uc-container {
+    margin-top: 24px;
   }
 
   .uc-row {
     grid-template-columns: 1fr;
-    gap: 14px;
-    padding: 20px;
+    gap: 12px;
+    padding: 18px;
     border-radius: 20px;
   }
 
@@ -461,10 +465,37 @@
     font-size: 28px;
   }
 
+  .uc-info {
+    gap: 6px;
+  }
+
   .uc-action {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .uc-ticket-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .uc-curtain-inner {
+    padding: 84px 14px 52px;
+  }
+
+  .uc-row {
+    padding: 16px;
+  }
+
+  .uc-venue {
+    font-size: 16px;
+  }
+
+  .uc-city {
+    font-size: 13px;
   }
 }
 

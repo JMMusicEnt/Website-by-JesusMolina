@@ -345,11 +345,30 @@
 
 @media (max-width: 640px) {
   .final-cta {
-    padding: 60px 16px;
+    padding: 80px 16px;
+  }
+
+  .final-cta .contact-container {
+    gap: 32px;
+  }
+
+  .contact-info {
+    padding-top: 0;
+    width: 100%;
+  }
+
+  .contact-details {
+    gap: 16px;
+    width: 100%;
+  }
+
+  .contact-detail-item {
+    align-items: flex-start;
+    width: 100%;
   }
 
   .contact-form {
-    padding: 24px 16px;
+    padding: 24px 18px;
     box-sizing: border-box;
     width: 100%;
   }
@@ -360,15 +379,38 @@
   }
 
   .contact-title {
-    font-size: 28px;
+    font-size: 30px;
+  }
+
+  .contact-desc {
+    font-size: 15px;
+    margin-bottom: 32px;
   }
 
   .connect-signup-form {
     flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
   }
 
   .connect-signup-input {
     width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-form {
+    padding: 20px 14px;
+  }
+
+  .contact-title {
+    font-size: 28px;
+  }
+
+  .contact-detail-icon {
+    width: 40px;
+    height: 40px;
   }
 }
 

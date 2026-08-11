@@ -1,7 +1,4 @@
 export const defaultTrackData = {
-  coverImage: `${import.meta.env.BASE_URL}images/album-cover.png`,
-  title: "Agape",
-  artists: "Jesús Molina",
   platforms: [
     {
       platformName: "Spotify",

@@ -35,4 +35,17 @@
   color: var(--bronce-soft);
 }
 
+@media (max-width: 640px) {
+  .section-eyebrow {
+    font-size: 11px;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-size: clamp(30px, 8.5vw, 40px);
+    margin-bottom: 18px;
+    line-height: 1;
+  }
+}
+
 

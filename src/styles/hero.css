@@ -27,8 +27,11 @@
 .hero-video {
   width: 100%;
   height: 100%;
+  min-width: 100%;
+  min-height: 100%;
   object-fit: cover;
-  transform: scale(1.08);
+  object-position: center;
+  transform: scale(1.04);
   will-change: transform;
 }
 
@@ -424,15 +427,25 @@
 
   .hero-title {
     font-size: clamp(48px, 14vw, 80px);
+    margin-bottom: 10px;
+    line-height: .9;
   }
 
   .hero-subtitle {
     font-size: 12px;
     letter-spacing: .16em;
+    margin-bottom: 20px;
+  }
+
+  .hero-roles {
+    font-size: 14px;
+    margin-bottom: 24px;
   }
 
   .hero-sub {
     font-size: 15px;
+    margin-bottom: 28px;
+    max-width: 100%;
   }
 
   .hero-stats {
@@ -454,21 +467,46 @@
 
 @media (max-width: 480px) {
   .hero {
-    padding: 0 18px 32px;
+    padding: 0 18px 28px;
   }
 
   .hero-title {
-    font-size: clamp(42px, 16vw, 64px);
+    font-size: clamp(38px, 15vw, 56px);
+    letter-spacing: .01em;
   }
 
   .hero-actions {
     flex-direction: column;
     align-items: flex-start;
-    gap: 18px;
+    gap: 14px;
+    margin-bottom: 32px;
   }
 
   .hero-stats {
-    gap: 18px;
+    gap: 14px;
+  }
+
+  .hero-stat {
+    min-width: 0;
+  }
+
+  .hero-stat-divider {
+    display: none;
+  }
+
+  .hero-stat-num,
+  .hero-stat-suffix {
+    font-size: 22px;
+  }
+
+  .hero-stat-label {
+    font-size: 10px;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 20px;
   }
 }
 
