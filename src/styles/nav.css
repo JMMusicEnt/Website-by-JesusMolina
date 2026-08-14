@@ -59,13 +59,20 @@
   font-size: 18px;
 }
 
+/* ── Nav Desktop Layout ── */
+.nav-desktop {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex: 1;
+  justify-content: center;
+}
+
 /* ── Nav links (centro) ── */
 .nav-links {
   display: flex;
   align-items: center;
   gap: 28px;
-  flex: 1;
-  justify-content: center;
 }
 
 .nav-link {
@@ -106,6 +113,40 @@
 
 .nav-link:hover::after {
   transform: scaleX(1);
+}
+
+/* ── Socials in Nav ── */
+.nav-socials {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  padding-left: 20px;
+}
+
+.nav.scrolled:not(.on-dark) .nav-socials {
+  border-left-color: rgba(0, 0, 0, 0.1);
+}
+
+.nav-social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: inherit;
+  opacity: 0.7;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.nav-social-icon:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.nav-social-icon svg {
+  width: 100%;
+  height: 100%;
 }
 
 /* ── Services Dropdown ── */
@@ -506,7 +547,16 @@
 }
 
 /* Responsive tweaks */
+@media (min-width: 881px) {
+  .nav-burger {
+    display: none;
+  }
+}
+
 @media (max-width: 880px) {
+  .nav-desktop {
+    display: none;
+  }
   .nav-controls {
     display: flex;
   }

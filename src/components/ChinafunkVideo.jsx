@@ -95,7 +95,7 @@ export default function ChinafunkVideo() {
     <section ref={containerRef} className="chinafunk" id="destacados">
       <div className="chinafunk-container">
         <div ref={textRef} className="chinafunk-text">
-          <div className="section-eyebrow">{t.watchEyebrow || '— Watch'}</div>
+
           <h2 className="section-title">{t.watchTitle || 'Watch'}</h2>
           <p className="chinafunk-sub">
             {t.watchSub || t.featuredSub}
@@ -128,7 +128,7 @@ export default function ChinafunkVideo() {
                       rel="noopener noreferrer"
                       className="featured-card-link-btn"
                     >
-                      <span>{t.featuredListenPlatforms || 'Escuchar en plataformas'}</span>
+                      <span>{t.featuredListenPlatforms || 'Listen on platforms'}</span>
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                         <polyline points="15 3 21 3 21 9"></polyline>

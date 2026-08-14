@@ -23,7 +23,6 @@ export default function Loader() {
             alt="JM Music logo"
             className="loader-logo-img"
           />
-          <div className="loader-logo-name">JM MUSIC</div>
         </div>
 
         <div className="loader-info">

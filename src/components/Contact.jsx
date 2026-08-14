@@ -53,12 +53,17 @@ export default function Contact() {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) return;
 
-    setSubmitting(true);
-    setTimeout(() => {
-      setSubmitting(false);
-      setSuccess(true);
-      setForm({ name: '', email: '', subject: 'hiring', message: '' });
-    }, 1800);
+    let subjectText = "Hiring";
+    if (form.subject === 'masterclass') subjectText = "Masterclass";
+    else if (form.subject === 'lessons') subjectText = "Lessons";
+    else if (form.subject === 'other') subjectText = "Other";
+
+    const mailtoLink = `mailto:Info@thecolombygroup.com?subject=${encodeURIComponent(`[${subjectText}] Contact from ${form.name}`)}&body=${encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`)}`;
+    
+    window.location.href = mailtoLink;
+
+    setSuccess(true);
+    setForm({ name: '', email: '', subject: 'hiring', message: '' });
   };
 
   const handleInputChange = (field, value) => {
@@ -72,9 +77,9 @@ export default function Contact() {
 
       <div className="contact-container">
         <header className="contact-header" data-reveal>
-          <span className="section-eyebrow">{t.contactEyebrow2}</span>
+          
           <h1 className="section-title">{t.contactTitle}</h1>
-          <p className="contact-subtitle">{t.contactSub}</p>
+          
         </header>
 
         <div className="contact-grid">

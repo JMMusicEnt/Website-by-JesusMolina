@@ -215,30 +215,11 @@ export default function Concerts() {
         {/* ── World Tour Interactive Section ── */}
         <div className="wt-section" data-reveal>
           {/* Section Header */}
-          <div className="wt-header">
-            <div className="wt-header-left">
-              <span className="wt-badge">
-                <span className="wt-badge-dot" />
-                TOUR
-              </span>
-              <h1 className="wt-title">
-                TOUR
-                <span className="wt-title-highlight">UPCOMING DATES</span>
+          <div className="wt-header" style={{ justifyContent: 'center' }}>
+            <div className="wt-header-left" style={{ alignItems: 'center' }}>
+              <h1 className="wt-title" style={{ textAlign: 'center' }}>
+                TOUR <span className="wt-title-highlight">UPCOMING DATES</span>
               </h1>
-            </div>
-
-            <div className="wt-counter-badge">
-              <span className="wt-counter-label">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                  <rect x="3" y="4" width="18" height="18" rx="3" stroke="currentColor" strokeWidth="1.5"/>
-                  <path d="M3 9h18" stroke="currentColor" strokeWidth="1.5"/>
-                  <path d="M8 2v4M16 2v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                </svg>
-                PRÓXIMAS FECHAS
-              </span>
-              <span className="wt-counter-value">
-                {UPCOMING_SHOWS.length} <small>SHOWS</small>
-              </span>
             </div>
           </div>
 
@@ -289,7 +270,7 @@ export default function Concerts() {
                           <rect x="2" y="6" width="20" height="12" rx="2" stroke="currentColor" strokeWidth="1.5"/>
                           <path d="M6 10h.01M6 14h.01M18 10h.01M18 14h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                         </svg>
-                        ENTRADAS
+                        TICKETS
                       </a>
                       <svg className="wt-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none">
                         <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -303,7 +284,7 @@ export default function Concerts() {
             {/* Right Column: Dark Interactive Card */}
             <aside className="wt-preview-card">
               <div className="wt-card-header">
-                <span className="wt-card-subhead">PRÓXIMO SHOW</span>
+                <span className="wt-card-subhead">NEXT SHOW</span>
                 <LiveCountdown targetDateStr={activeShow.targetDate} />
               </div>
 
@@ -337,16 +318,6 @@ export default function Concerts() {
             <h3 className="gallery-title">{t.concertsGalleryTitle}</h3>
             <p className="gallery-desc">{t.concertsGalleryDesc}</p>
           </div>
-          <div className="gallery-stats">
-            <div className="gallery-stat">
-              <span className="stat-number">{CONCERTS.length}</span>
-              <span className="stat-label">Shows</span>
-            </div>
-            <div className="gallery-stat">
-              <span className="stat-number">{ALL_COUNTRIES.length}</span>
-              <span className="stat-label">Países</span>
-            </div>
-          </div>
         </div>
 
         {/* ── Search & Filter Bar ── */}
@@ -359,7 +330,7 @@ export default function Concerts() {
             <input
               type="text"
               className="filter-search-input"
-              placeholder="Buscar por país o ciudad..."
+              placeholder="Search by country or city..."
               value={searchCountry}
               onChange={(e) => setSearchCountry(e.target.value)}
               onFocus={() => setIsSearchFocused(true)}
@@ -369,7 +340,7 @@ export default function Concerts() {
               <button
                 className="filter-search-clear"
                 onClick={() => setSearchCountry('')}
-                aria-label="Limpiar búsqueda"
+                aria-label="Clear search"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                   <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -402,7 +373,7 @@ export default function Concerts() {
           </div>
 
           <div className="filter-sort-wrap">
-            <span className="filter-sort-label">Ordenar:</span>
+            <span className="filter-sort-label">Sort by:</span>
             <button
               className={`filter-sort-btn ${sortOrder === 'newest' ? 'filter-sort-btn--active' : ''}`}
               onClick={() => setSortOrder('newest')}
@@ -410,7 +381,7 @@ export default function Concerts() {
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
                 <path d="M12 5v14M5 12l7-7 7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" transform={sortOrder === 'newest' ? '' : 'rotate(180 12 12)'}/>
               </svg>
-              Más reciente
+              Newest
             </button>
             <button
               className={`filter-sort-btn ${sortOrder === 'oldest' ? 'filter-sort-btn--active' : ''}`}
@@ -419,7 +390,7 @@ export default function Concerts() {
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
                 <path d="M12 19V5M5 12l7 7 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-              Más antiguo
+              Oldest
             </button>
           </div>
 
@@ -427,7 +398,7 @@ export default function Concerts() {
             <div className="filter-result-count">
               <span className="filter-count-number">{filteredConcerts.length}</span>
               <span className="filter-count-text">
-                {filteredConcerts.length === 1 ? 'resultado' : 'resultados'}
+                {filteredConcerts.length === 1 ? 'result' : 'results'}
               </span>
             </div>
           )}
@@ -440,9 +411,9 @@ export default function Concerts() {
                 <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.5" opacity="0.4"/>
                 <path d="M20 20l-4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.4"/>
               </svg>
-              <p>No se encontraron conciertos para <strong>"{searchCountry}"</strong></p>
+              <p>No concerts found for <strong>"{searchCountry}"</strong></p>
               <button className="empty-state-reset" onClick={() => setSearchCountry('')}>
-                Mostrar todos los conciertos
+                Show all concerts
               </button>
             </div>
           )}

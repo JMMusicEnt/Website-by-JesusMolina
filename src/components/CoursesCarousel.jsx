@@ -79,7 +79,7 @@ export default function CoursesCarousel() {
     <section className="learn-section" id="cursos-disponibles">
       <div className="learn-container">
         <div className="learn-header" data-reveal>
-          <span className="section-eyebrow">— {t.learnEyebrow || 'Online Courses'}</span>
+
           <h2 className="section-title">{t.learnTitle || 'Learn'}</h2>
           <p className="learn-sub">
             {t.learnSub || 'Two world-class platforms to master piano, composition, and harmony — available in English and Spanish.'}

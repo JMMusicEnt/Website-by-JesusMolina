@@ -106,13 +106,11 @@ export default function CourseHeroFan() {
   const animate = !reduce;
   const isEs = language === 'es';
 
-  const title = isEs ? 'Domina el Piano con Cursos de Nivel Mundial' : 'Master the Piano with World-Class Courses';
-  const titleLine2Prefix = isEs ? 'por' : 'by';
-  const titleHighlight = 'Jesús Molina';
-  const description = isEs
-    ? 'Transforma tu técnica, armonía y presencia en el escenario con módulos especializados diseñados para todos los niveles dentro de la plataforma CLAMA.'
-    : 'Transform your technique, harmony, and stage performance with specialized modules designed for all levels inside CLAMA Academy.';
-  const socialProof = isEs ? '✦ Más de 5,000 estudiantes ✦ Calificación promedio 4.9★' : '✦ Trusted by 5,000+ Students Worldwide ✦ 4.9★ Rating';
+  const title = 'Master the Piano with World-Class Courses';
+  const titleLine2Prefix = 'by';
+  const titleHighlight = 'Jesus Molina';
+  const description = 'Two world-class platforms to master piano, composition, and harmony. Experience an elegant, step-by-step methodology designed to elevate your musical journey.';
+  const socialProof = '✦ Trusted by 5,000+ Students Worldwide ✦ 4.9★ Rating';
 
   const images = [
     `${import.meta.env.BASE_URL}images/image1.png`,

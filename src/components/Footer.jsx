@@ -51,9 +51,8 @@ export default function Footer() {
         <div className="footer-brand-block">
           <div className="footer-brand">
             <span className="nav-logo-mark">JM</span>
-            <span className="footer-brand-text">Jesús Molina</span>
+            <span className="footer-brand-text">Jesus Molina</span>
           </div>
-          <p className="footer-intro">{t.footerIntro}</p>
 
           {/* Animated Social Icons */}
           <div className="footer-socials">
@@ -140,7 +139,6 @@ export default function Footer() {
 
       <div className="footer-bottom">
         <span>{t.footerCopyright}</span>
-        <span>{t.footerTagline}</span>
       </div>
     </footer>
   );

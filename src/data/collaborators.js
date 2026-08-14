@@ -4,7 +4,7 @@ export const PLACEHOLDER_PORTRAIT = `${import.meta.env.BASE_URL}images/biography
 export const COLLABORATORS = [
   {
     id: 1,
-    name: 'Jesús Adrián Romero',
+    name: 'Jesus Adrián Romero',
     role: 'Cantautor · Producción',
     project: 'Colaboración Especial',
     image: `${import.meta.env.BASE_URL}images/jesusAdrian.jpeg`,

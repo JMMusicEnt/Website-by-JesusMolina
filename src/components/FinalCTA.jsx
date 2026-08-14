@@ -1,5 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
-import emailjs from '@emailjs/browser';
+import { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useApp } from '../context/AppContext';
@@ -8,61 +7,28 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Configuración de EmailJS — Reemplaza con tus claves de EmailJS:
-const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
-const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
-
 export default function FinalCTA() {
   const { t } = useApp();
-  const [formState, setFormState] = useState('idle'); // idle | sending | sent
-  const [focusedField, setFocusedField] = useState(null);
-  const [signupState, setSignupState] = useState('idle'); // idle | sending | done
-
   const containerRef = useRef(null);
-  const infoRef = useRef(null);
-  const formWrapperRef = useRef(null);
-  const formRef = useRef(null);
-  const signupEmailRef = useRef(null);
+  const cardRef = useRef(null);
+  const [contactMethod, setContactMethod] = useState('email');
 
   useEffect(() => {
     if (!containerRef.current) return;
 
     const ctx = gsap.context(() => {
-      // 1. Left side info section transition
-      if (infoRef.current) {
+      if (cardRef.current) {
         gsap.fromTo(
-          infoRef.current,
-          { opacity: 0, x: -45, y: 30 },
+          cardRef.current,
+          { opacity: 0, y: 40, scale: 0.98 },
           {
             opacity: 1,
-            x: 0,
-            y: 0,
-            duration: 1.1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: infoRef.current,
-              start: 'top 85%',
-              toggleActions: 'play none none reverse',
-            },
-          }
-        );
-      }
-
-      // 2. Right side form wrapper transition
-      if (formWrapperRef.current) {
-        gsap.fromTo(
-          formWrapperRef.current,
-          { opacity: 0, x: 45, y: 30, scale: 0.96 },
-          {
-            opacity: 1,
-            x: 0,
             y: 0,
             scale: 1,
-            duration: 1.1,
+            duration: 1.2,
             ease: 'power3.out',
             scrollTrigger: {
-              trigger: formWrapperRef.current,
+              trigger: cardRef.current,
               start: 'top 85%',
               toggleActions: 'play none none reverse',
             },
@@ -74,218 +40,84 @@ export default function FinalCTA() {
     return () => ctx.revert();
   }, []);
 
-  // Email list signup handler (name + email only)
-  const handleSignup = async (e) => {
+  const handleSignup = (e) => {
     e.preventDefault();
-    setSignupState('sending');
-    const email = signupEmailRef.current?.value;
-    if (!email) {
-      setSignupState('idle');
-      return;
-    }
-    // Simulate or connect to your email list service here
-    setTimeout(() => {
-      setSignupState('done');
-    }, 1200);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setFormState('sending');
-
-    try {
-      await emailjs.sendForm(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        formRef.current,
-        EMAILJS_PUBLIC_KEY
-      );
-      setFormState('sent');
-      formRef.current.reset();
-      setTimeout(() => setFormState('idle'), 4000);
-    } catch (error) {
-      console.error('EmailJS Error:', error);
-      setFormState('idle');
-      alert('Hubo un error al enviar el mensaje. Asegúrate de configurar tus claves de EmailJS.');
-    }
+    // Preparado para integración futura con Cobrand
   };
 
   return (
-    <section ref={containerRef} className="final-cta" id="contacto">
-      {/* Animated background elements */}
-      <div className="contact-bg-elements" aria-hidden="true">
-        <div className="contact-glow contact-glow-1"></div>
-        <div className="contact-glow contact-glow-2"></div>
-        <div className="contact-float-notes">
-          <span className="contact-note contact-note-1">♪</span>
-          <span className="contact-note contact-note-2">♫</span>
-          <span className="contact-note contact-note-3">♩</span>
-          <span className="contact-note contact-note-4">♬</span>
-          <span className="contact-note contact-note-5">♪</span>
-        </div>
-        {/* Staff lines */}
-        <svg className="contact-staff-svg" viewBox="0 0 1600 160" preserveAspectRatio="none">
-          <line x1="0" y1="20" x2="1600" y2="20"></line>
-          <line x1="0" y1="55" x2="1600" y2="55"></line>
-          <line x1="0" y1="90" x2="1600" y2="90"></line>
-          <line x1="0" y1="125" x2="1600" y2="125"></line>
-          <line x1="0" y1="160" x2="1600" y2="160"></line>
-        </svg>
-      </div>
+    <section ref={containerRef} className="final-cta newsletter-layout" id="contacto">
+      <div className="newsletter-container">
+        <header className="newsletter-header" data-reveal>
+          <h1 className="newsletter-title">{t.connectTitle || 'CONNECT'}</h1>
+        </header>
 
-      <div className="contact-container">
-        {/* Left side — Text & info */}
-        <div ref={infoRef} className="contact-info">
-          <div className="section-eyebrow section-eyebrow-light">{t.connectEyebrow || t.ctaEyebrow || '— Connect'}</div>
-          <h2 className="contact-title">{t.connectTitle || t.ctaTitle || 'Connect'}</h2>
-          <p className="contact-desc">{t.connectSub || t.ctaSub}</p>
+        <div ref={cardRef} className="newsletter-card">
+          <form className="newsletter-form" onSubmit={handleSignup}>
+            
+            <div className="newsletter-field">
+              <label htmlFor="newsletter-input">
+                {contactMethod === 'email' ? 'Email Address' : 'Phone Number'} <span className="required">(Required)</span>
+              </label>
 
-          {/* Email list signup */}
-          <div className="connect-signup-block">
-            <p className="connect-signup-label">
-              {t.connectSignupLabel || 'Join the email list to get updates, tour dates, and new music.'}
-            </p>
-            {signupState === 'done' ? (
-              <div className="connect-signup-success">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M20 6L9 17L4 12"></path>
-                </svg>
-                <span>{t.connectSignupDone || "You're on the list!"}</span>
-              </div>
-            ) : (
-              <form className="connect-signup-form" onSubmit={handleSignup}>
-                <input
-                  ref={signupEmailRef}
-                  type="email"
-                  required
-                  placeholder={t.connectSignupPlaceholder || 'your@email.com'}
-                  className="connect-signup-input"
-                />
-                <button
-                  type="submit"
-                  className={`connect-signup-btn${signupState === 'sending' ? ' sending' : ''}`}
-                  disabled={signupState === 'sending'}
+              <div className="newsletter-toggle-group">
+                <button 
+                  type="button" 
+                  className={`newsletter-toggle-btn ${contactMethod === 'email' ? 'active' : ''}`}
+                  onClick={() => setContactMethod('email')}
                 >
-                  {signupState === 'sending' ? (
-                    <span className="contact-spinner"></span>
-                  ) : (
-                    t.connectSignupBtn || 'Subscribe'
-                  )}
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+                    <path d="M22 4l-10 8L2 4"></path>
+                  </svg>
                 </button>
-              </form>
-            )}
-          </div>
-
-          <div className="contact-details">
-            <div className="contact-detail-item">
-              <div className="contact-detail-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                  <path d="M22 4L12 13L2 4"></path>
-                </svg>
+                <button 
+                  type="button"
+                  className={`newsletter-toggle-btn ${contactMethod === 'phone' ? 'active' : ''}`}
+                  onClick={() => setContactMethod('phone')}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="5" y="2" width="14" height="20" rx="4" ry="4"></rect>
+                    <path d="M12 18h.01"></path>
+                  </svg>
+                </button>
               </div>
-              <span>Info@thecolombygroup.com</span>
-            </div>
-            <div className="contact-detail-item">
-              <div className="contact-detail-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path>
-                </svg>
-              </div>
-              <span>{t.ctaWorldwide || 'Worldwide'}</span>
-            </div>
-          </div>
-        </div>
 
-        {/* Right side — Contact form */}
-        <div ref={formWrapperRef} className="contact-form-wrapper">
-          <form
-            ref={formRef}
-            className={`contact-form ${focusedField ? 'contact-form-active' : ''}`}
-            onSubmit={handleSubmit}
-          >
-            <div className="contact-form-grid">
-              <div className={`contact-field ${focusedField === 'name' ? 'contact-field-focus' : ''}`}>
-                <label htmlFor="contact-name">{t.ctaLabelName || 'Name'}</label>
-                <input
-                  type="text"
-                  id="contact-name"
-                  name="user_name"
-                  required
-                  placeholder={t.ctaPlaceholderName || 'Your name'}
-                  onFocus={() => setFocusedField('name')}
-                  onBlur={() => setFocusedField(null)}
-                />
-              </div>
-              <div className={`contact-field ${focusedField === 'email' ? 'contact-field-focus' : ''}`}>
-                <label htmlFor="contact-email">{t.ctaLabelEmail || 'Email'}</label>
-                <input
-                  type="email"
-                  id="contact-email"
-                  name="user_email"
-                  required
-                  placeholder={t.ctaPlaceholderEmail || 'your@email.com'}
-                  onFocus={() => setFocusedField('email')}
-                  onBlur={() => setFocusedField(null)}
-                />
-              </div>
-            </div>
-
-            <div className={`contact-field ${focusedField === 'subject' ? 'contact-field-focus' : ''}`}>
-              <label htmlFor="contact-subject">{t.ctaLabelSubject || 'Subject'}</label>
-              <input
-                type="text"
-                id="contact-subject"
-                name="subject"
-                required
-                placeholder={t.ctaPlaceholderSubject || 'What is this about?'}
-                onFocus={() => setFocusedField('subject')}
-                onBlur={() => setFocusedField(null)}
-              />
-            </div>
-
-            <div className={`contact-field ${focusedField === 'message' ? 'contact-field-focus' : ''}`}>
-              <label htmlFor="contact-message">{t.ctaLabelMessage || 'Message'}</label>
-              <textarea
-                id="contact-message"
-                name="message"
-                rows="5"
-                required
-                placeholder={t.ctaPlaceholderMessage || 'Tell me what you have in mind...'}
-                onFocus={() => setFocusedField('message')}
-                onBlur={() => setFocusedField(null)}
-              ></textarea>
-            </div>
-
-            <button
-              type="submit"
-              className={`contact-submit ${formState !== 'idle' ? `contact-submit-${formState}` : ''}`}
-              disabled={formState !== 'idle'}
-            >
-              <span className="contact-submit-content">
-                {formState === 'idle' && (
-                  <>
-                    <span>{t.ctaBtn}</span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M22 2L11 13"></path>
-                      <path d="M22 2L15 22L11 13L2 9L22 2Z"></path>
+              {contactMethod === 'email' ? (
+                <div className="newsletter-input-wrapper">
+                  <input
+                    type="email"
+                    id="newsletter-input"
+                    name="email"
+                    placeholder="ramiro@gmail.com"
+                    required
+                  />
+                </div>
+              ) : (
+                <div className="newsletter-phone-input-wrapper">
+                  <div className="newsletter-country-code">
+                    <span className="flag">🇨🇴</span>
+                    <svg className="dropdown-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M6 9l6 6 6-6"></path>
                     </svg>
-                  </>
-                )}
-                {formState === 'sending' && (
-                  <span className="contact-spinner"></span>
-                )}
-                {formState === 'sent' && (
-                  <>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M20 6L9 17L4 12"></path>
-                    </svg>
-                    <span>{t.ctaSent || 'Sent!'}</span>
-                  </>
-                )}
-              </span>
+                    <span className="code">+57</span>
+                  </div>
+                  <input
+                    type="tel"
+                    id="newsletter-input"
+                    name="phone"
+                    required
+                  />
+                </div>
+              )}
+            </div>
+            
+            <button type="submit" className="newsletter-submit-btn">
+              Sign Up
             </button>
+            <p className="newsletter-disclaimer">
+              By submitting my info, I consent to receive recurring automated marketing messages from Elderbrook. Msg & Data rates may apply. Msg frequency varies. Reply STOP to cancel, HELP for help. SMS will be sent by Elderbrook, via co:brand. See co:brand's Terms of Service and Privacy Policy.
+            </p>
           </form>
         </div>
       </div>

@@ -51,7 +51,6 @@ export default function Hero() {
           loop
           playsInline
           preload="auto"
-          poster={`${import.meta.env.BASE_URL}images/image1.png`}
         >
           <source src={`${import.meta.env.BASE_URL}video/CortoAnimacion.mp4`} type="video/mp4" />
         </video>
@@ -87,11 +86,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ── Scroll indicator ── */}
-      <div className="hero-scrolldown">
-        <span>{t.heroScrollDown}</span>
-        <div className="hero-scrolldown-line"></div>
-      </div>
     </section>
   );
 }

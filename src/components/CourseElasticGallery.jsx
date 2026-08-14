@@ -8,10 +8,11 @@ export default function CourseElasticGallery() {
   const courses = [
     {
       id: '01',
-      title: isEs ? 'Paquete de Cursos' : 'Course Bundle',
-      category: isEs ? 'CLAMA • Bundle Especial' : 'CLAMA • Special Bundle',
+      title: 'Course Bundle',
+      category: 'CLAMA • Special Bundle',
       rating: 5.0,
       reviews: 1480,
+      stats: '15+ Hours • 3 Courses',
       src: `${import.meta.env.BASE_URL}images/image1.png`,
       alt: 'Course Bundle',
       link: 'https://www.clama.mx/offers/rLLoYagM/checkout',
@@ -130,7 +131,7 @@ export default function CourseElasticGallery() {
                     rel="noopener noreferrer"
                     className="ceg-cta-btn"
                   >
-                    <span>{isEs ? 'Ver Curso' : 'View Course'}</span>
+                    <span>View Course</span>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <line x1="7" y1="17" x2="17" y2="7"></line>
                       <polyline points="7 7 17 7 17 17"></polyline>

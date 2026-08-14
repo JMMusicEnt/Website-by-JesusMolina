@@ -13,13 +13,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: repeating-linear-gradient(
-    45deg,
-    rgba(201, 162, 39, 0.04),
-    rgba(201, 162, 39, 0.04) 1px,
-    transparent 1px,
-    transparent 22px
-  );
+  background: none;
   z-index: 1;
 }
 
@@ -30,7 +24,7 @@
   width: 600px;
   height: 600px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(201, 162, 39, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
   filter: blur(100px);
   pointer-events: none;
   z-index: 1;
@@ -43,7 +37,7 @@
   width: 500px;
   height: 500px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(201, 162, 39, 0.1) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
   filter: blur(100px);
   pointer-events: none;
   z-index: 1;
@@ -64,7 +58,7 @@
 }
 
 .concerts-header .section-eyebrow {
-  color: var(--bronce);
+  color: var(--marfil);
   display: block;
   margin-bottom: 12px;
 }
@@ -76,7 +70,7 @@
 }
 
 .concerts-header .section-title em {
-  color: var(--bronce-soft);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .concerts-subtitle {
@@ -113,7 +107,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -129,7 +123,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--bronce);
+  background: var(--marfil);
 }
 
 .wt-title {
@@ -145,7 +139,7 @@
 
 .wt-title-highlight {
   display: block;
-  color: var(--bronce);
+  color: var(--marfil);
   font-weight: 700;
 }
 
@@ -160,7 +154,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -176,7 +170,7 @@
 }
 
 .wt-counter-value small {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 13px;
   font-weight: 500;
   color: var(--niebla-claro);
@@ -219,7 +213,7 @@
 .wt-row:hover,
 .wt-row.wt-row--active {
   background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(201, 162, 39, 0.5);
+  border-color: rgba(255, 255, 255, 0.5);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
   transform: translateX(4px);
 }
@@ -240,11 +234,11 @@
 }
 
 .wt-date-my {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--bronce);
+  color: var(--marfil);
   margin-top: 4px;
   font-weight: 600;
 }
@@ -272,7 +266,7 @@
 }
 
 .wt-country-code {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 10px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.85);
@@ -301,7 +295,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
@@ -357,11 +351,11 @@
 }
 
 .wt-card-subhead {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 11px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--bronce);
+  color: var(--marfil);
   display: block;
   margin-bottom: 12px;
 }
@@ -391,7 +385,7 @@
 }
 
 .wt-countdown-lbl {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 9px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -428,11 +422,11 @@
 }
 
 .wt-card-date {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--bronce);
+  color: var(--marfil);
   margin-bottom: 4px;
   font-weight: 600;
 }
@@ -467,11 +461,11 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--bronce);
+  color: var(--marfil);
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s var(--ease);
@@ -622,7 +616,7 @@
 /* Marker styles */
 .marker-label {
   fill: rgba(255, 255, 255, 0.5);
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 8px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -635,13 +629,13 @@
 }
 
 .marker-dot {
-  fill: var(--bronce);
+  fill: var(--marfil);
   transition: r 0.35s var(--ease);
 }
 
 .marker-ring {
   fill: none;
-  stroke: rgba(201, 162, 39, 0.3);
+  stroke: rgba(255, 255, 255, 0.3);
   stroke-width: 1;
   transition: stroke 0.35s var(--ease), r 0.35s var(--ease);
 }
@@ -653,12 +647,12 @@
 
 .map-marker-group:hover .marker-ring,
 .map-marker-group.active .marker-ring {
-  stroke: rgba(201, 162, 39, 0.6);
+  stroke: rgba(255, 255, 255, 0.6);
   r: 14;
 }
 
 .marker-ripple {
-  fill: rgba(201, 162, 39, 0.2);
+  fill: rgba(255, 255, 255, 0.2);
   transform-origin: center;
   animation: marker-pulse 3s infinite ease-out;
   opacity: 0;
@@ -684,14 +678,14 @@
   position: absolute;
   transform: translate(-50%, -140%);
   background: rgba(14, 13, 15, 0.95);
-  border: 1px solid rgba(201, 162, 39, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   padding: 14px 20px;
   border-radius: 12px;
   pointer-events: none;
   min-width: 170px;
   z-index: 10;
   animation: tooltip-fade-in 0.25s var(--ease);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(201, 162, 39, 0.1);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
 }
 
@@ -704,18 +698,18 @@
 }
 
 .tooltip-year-badge {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 10px;
   letter-spacing: 0.1em;
   color: var(--ebano);
-  background: var(--bronce);
+  background: var(--marfil);
   padding: 3px 8px;
   border-radius: 100px;
   font-weight: 600;
 }
 
 .tooltip-country {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 10px;
   color: var(--niebla-claro);
   text-transform: uppercase;
@@ -764,19 +758,19 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--bronce);
-  box-shadow: 0 0 8px rgba(201, 162, 39, 0.5);
+  background: var(--marfil);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
 .legend-line {
   width: 28px;
   height: 0;
-  border-top: 1.5px dashed var(--bronce);
+  border-top: 1.5px dashed var(--marfil);
   opacity: 0.6;
 }
 
 .legend-text {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 11px;
   color: var(--niebla-claro);
   letter-spacing: 0.03em;
@@ -835,12 +829,12 @@
   font-family: var(--font-display);
   font-size: 32px;
   font-weight: 700;
-  color: var(--bronce);
+  color: var(--marfil);
   line-height: 1;
 }
 
 .stat-label {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -876,12 +870,12 @@
 }
 
 .filter-search-wrap:hover {
-  border-color: rgba(201, 162, 39, 0.4);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 .filter-search-wrap--focused {
-  border-color: rgba(201, 162, 39, 0.55);
-  box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.15), 0 8px 24px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15), 0 8px 24px rgba(0, 0, 0, 0.4);
   background: rgba(255, 255, 255, 0.09);
 }
 
@@ -892,7 +886,7 @@
 }
 
 .filter-search-wrap--focused .filter-search-icon {
-  color: var(--bronce);
+  color: var(--marfil);
 }
 
 .filter-search-input {
@@ -936,7 +930,7 @@
   left: 0;
   right: 0;
   background: rgba(14, 13, 15, 0.95);
-  border: 1px solid rgba(201, 162, 39, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 12px;
   padding: 6px;
   z-index: 50;
@@ -973,12 +967,12 @@
 }
 
 .filter-dropdown-item svg {
-  color: var(--bronce);
+  color: var(--marfil);
   flex-shrink: 0;
 }
 
 .filter-dropdown-item:hover {
-  background: rgba(201, 162, 39, 0.1);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 /* ── Sort Buttons ── */
@@ -990,7 +984,7 @@
 }
 
 .filter-sort-label {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 10px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1002,7 +996,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 11px;
   letter-spacing: 0.03em;
   color: rgba(255, 255, 255, 0.7);
@@ -1015,20 +1009,20 @@
 }
 
 .filter-sort-btn:hover {
-  border-color: rgba(201, 162, 39, 0.4);
+  border-color: rgba(255, 255, 255, 0.4);
   color: #ffffff;
   background: rgba(255, 255, 255, 0.1);
 }
 
 .filter-sort-btn--active {
-  background: rgba(201, 162, 39, 0.15);
-  border-color: rgba(201, 162, 39, 0.5);
-  color: var(--bronce);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: var(--marfil);
 }
 
 .filter-sort-btn--active:hover {
-  color: var(--bronce-soft);
-  background: rgba(201, 162, 39, 0.2);
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 [data-theme="light"] .filter-sort-btn {
@@ -1039,13 +1033,13 @@
 
 [data-theme="light"] .filter-sort-btn:hover {
   color: var(--ebano);
-  border-color: rgba(201, 162, 39, 0.3);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 [data-theme="light"] .filter-sort-btn--active {
-  background: rgba(201, 162, 39, 0.1);
-  border-color: rgba(201, 162, 39, 0.35);
-  color: var(--bronce);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: var(--marfil);
 }
 
 /* ── Result Count ── */
@@ -1053,18 +1047,18 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 11px;
   color: var(--niebla-claro);
   padding: 6px 14px;
   border-radius: 100px;
-  background: rgba(201, 162, 39, 0.08);
-  border: 1px solid rgba(201, 162, 39, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   animation: badge-slide-in 0.25s var(--ease) both;
 }
 
 .filter-count-number {
-  color: var(--bronce);
+  color: var(--marfil);
   font-weight: 700;
 }
 
@@ -1096,26 +1090,26 @@
 }
 
 .concerts-empty-state strong {
-  color: var(--bronce);
+  color: var(--marfil);
 }
 
 .empty-state-reset {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 12px;
   letter-spacing: 0.04em;
-  color: var(--bronce);
+  color: var(--marfil);
   padding: 10px 24px;
   border-radius: 100px;
-  border: 1px solid rgba(201, 162, 39, 0.3);
-  background: rgba(201, 162, 39, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
   cursor: pointer;
   transition: all 0.25s var(--ease);
 }
 
 .empty-state-reset:hover {
-  background: rgba(201, 162, 39, 0.15);
-  border-color: rgba(201, 162, 39, 0.5);
-  color: var(--bronce-soft);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* Concert cards grid */
@@ -1166,11 +1160,11 @@
 
 .concert-card:hover {
   transform: translateY(-10px);
-  border-color: rgba(201, 162, 39, 0.5);
+  border-color: rgba(255, 255, 255, 0.5);
   box-shadow:
     0 24px 64px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(201, 162, 39, 0.3),
-    0 0 40px rgba(201, 162, 39, 0.1);
+    0 0 0 1px rgba(255, 255, 255, 0.3),
+    0 0 40px rgba(255, 255, 255, 0.1);
 }
 
 .concert-card.playing:hover {
@@ -1296,9 +1290,9 @@
 }
 
 .concert-card:hover .play-btn-ring {
-  border-color: var(--bronce);
-  background: rgba(201, 162, 39, 0.2);
-  box-shadow: 0 0 0 8px rgba(201, 162, 39, 0.12), 0 0 24px rgba(201, 162, 39, 0.3);
+  border-color: var(--marfil);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.12), 0 0 24px rgba(255, 255, 255, 0.3);
 }
 
 .play-btn-icon {
@@ -1313,29 +1307,29 @@
 }
 
 .concert-card:hover .play-btn-icon {
-  color: var(--bronce-soft);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .concert-card-year {
   position: absolute;
   top: 14px;
   right: 14px;
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.08em;
   background: rgba(14, 13, 15, 0.65);
-  color: var(--bronce-soft);
+  color: rgba(255, 255, 255, 0.7);
   padding: 5px 13px;
   border-radius: 100px;
-  border: 1px solid rgba(201, 162, 39, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(10px);
   transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .concert-card:hover .concert-card-year {
-  background: rgba(201, 162, 39, 0.15);
-  border-color: rgba(201, 162, 39, 0.5);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 /* Card body */
@@ -1356,23 +1350,23 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--bronce);
-  box-shadow: 0 0 8px rgba(201, 162, 39, 0.7);
+  background: var(--marfil);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
   animation: badge-pulse 2.5s ease-in-out infinite;
   flex-shrink: 0;
 }
 
 .concert-card-location {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--bronce);
+  color: var(--marfil);
   font-weight: 600;
 }
 
 .concert-card-title {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 19px;
   font-weight: 700;
   color: #ffffff;
@@ -1406,7 +1400,7 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -1470,7 +1464,7 @@
   .upcoming-dates-card {
     width: 100%;
     border-left: none;
-    border-top: 1px solid rgba(201, 162, 39, 0.15);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
     flex-direction: row;
     flex-wrap: wrap;
     gap: 16px;
@@ -1596,7 +1590,7 @@
 }
 
 .globe-tooltip .tooltip-city {
-  color: var(--bronce);
+  color: var(--marfil);
   font-weight: 600;
 }
 
@@ -1641,7 +1635,7 @@
 }
 
 .concert-card-year-badge {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 11px;
   color: rgba(247, 241, 230, 0.4);
   border: 1px solid var(--linea-clara);

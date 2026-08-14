@@ -192,7 +192,7 @@ export default function ScrollytellingSection() {
       ref={wrapperRef}
       className="scrollytelling-wrapper"
       id="scrollytelling"
-      aria-label="Experiencia de Scrollytelling - Jesús Molina"
+      aria-label="Experiencia de Scrollytelling - Jesus Molina"
     >
       {/* Pinned Viewport Container (Technique 1) */}
       <div ref={pinnedRef} className="scrollytelling-pinned">
@@ -206,7 +206,7 @@ export default function ScrollytellingSection() {
             <img
               ref={bgImage1Ref}
               src={`${import.meta.env.BASE_URL}images/concert-hero.png`}
-              alt="Jesús Molina en Vivo"
+              alt="Jesus Molina en Vivo"
               className="scrolly-bg-img"
             />
             <div className="scrolly-vignette" />
@@ -235,7 +235,7 @@ export default function ScrollytellingSection() {
             <img
               ref={bgImage2Ref}
               src={`${import.meta.env.BASE_URL}images/image1.png`}
-              alt="Jesús Molina Virtuosismo"
+              alt="Jesus Molina Virtuosismo"
               className="scrolly-bg-img"
             />
             <div className="scrolly-vignette vignette-emerald" />

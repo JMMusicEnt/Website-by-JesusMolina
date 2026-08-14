@@ -177,7 +177,7 @@ export default function UpcomingConcerts() {
         <div className="uc-container">
           {/* Header */}
           <div className="uc-header" ref={headingRef}>
-            <span className="section-eyebrow">— {t.tourEyebrow || 'Upcoming Shows'}</span>
+
             <h2 className="section-title uc-title-glow">Tour</h2>
           </div>
 
@@ -204,12 +204,8 @@ export default function UpcomingConcerts() {
                     <span className="uc-city">{c.city}</span>
                   </div>
 
-                  {/* Type badge */}
-                  <span className="uc-type">{c.type}</span>
-
                   {/* Status + CTA */}
                   <div className="uc-action">
-                    <span className={`uc-status ${st.cls}`}>{st.text}</span>
                     {c.status !== 'soldout' && c.ticketUrl ? (
                       <a
                         href={c.ticketUrl}
