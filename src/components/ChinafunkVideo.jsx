@@ -97,9 +97,6 @@ export default function ChinafunkVideo() {
         <div ref={textRef} className="chinafunk-text">
 
           <h2 className="section-title">{t.watchTitle || 'Watch'}</h2>
-          <p className="chinafunk-sub">
-            {t.watchSub || t.featuredSub}
-          </p>
         </div>
 
         <div ref={gridRef} className="featured-grid">
@@ -120,7 +117,6 @@ export default function ChinafunkVideo() {
                 </div>
                 <div className="featured-card-content">
                   <h3>{item.title}</h3>
-                  <p>{item.description}</p>
                   {item.externalLink && (
                     <a
                       href={item.externalLink}
