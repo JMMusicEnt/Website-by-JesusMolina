@@ -3,58 +3,11 @@ import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useApp } from '../context/AppContext';
+import { useBandsintownEvents } from '../hooks/useBandsintownEvents';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
-
-const concerts = [
-  {
-    id: 1,
-    date: { day: '23', month: 'AUG', year: '2025' },
-    venue: 'Blue Note Jazz Club',
-    city: 'New York, USA',
-    type: 'Solo Piano',
-    status: 'available',
-    ticketUrl: '#',
-  },
-  {
-    id: 2,
-    date: { day: '05', month: 'SEP', year: '2025' },
-    venue: 'Palacio de Bellas Artes',
-    city: 'Ciudad de México, MX',
-    type: 'Orquesta',
-    status: 'available',
-    ticketUrl: '#',
-  },
-  {
-    id: 3,
-    date: { day: '18', month: 'SEP', year: '2025' },
-    venue: "Ronnie Scott's",
-    city: 'London, UK',
-    type: 'Jazz Trio',
-    status: 'few',
-    ticketUrl: '#',
-  },
-  {
-    id: 4,
-    date: { day: '02', month: 'OCT', year: '2025' },
-    venue: 'Sala Metronòm',
-    city: 'Barcelona, ES',
-    type: 'Solo Piano',
-    status: 'soldout',
-    ticketUrl: null,
-  },
-  {
-    id: 5,
-    date: { day: '14', month: 'OCT', year: '2025' },
-    venue: 'Festival Internacional de Jazz',
-    city: 'Buenos Aires, AR',
-    type: 'Jazz Fusión',
-    status: 'available',
-    ticketUrl: '#',
-  },
-];
 
 const statusLabels = {
   available: { text: 'Tickets available', cls: 'uc-status--available' },
@@ -68,10 +21,15 @@ export default function UpcomingConcerts() {
   const headingRef = useRef(null);
   const listRef = useRef(null);
   const ctaRef = useRef(null);
+  
+  const { events, loading, error, isEmpty } = useBandsintownEvents();
+  const topConcerts = events.slice(0, 5);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
     if (!wrapperRef.current) return;
+    // Don't animate if loading or error to prevent layout glitches before data is ready
+    if (loading || error) return;
 
     const ctx = gsap.context(() => {
       // 1. Header scroll transition
@@ -137,7 +95,7 @@ export default function UpcomingConcerts() {
     }, wrapperRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [loading, error, events]); // Re-run animations when data is loaded
 
   // Magnetic button effect helper
   const handleMouseMove = (e) => {
@@ -183,15 +141,30 @@ export default function UpcomingConcerts() {
 
           {/* Concert List */}
           <ul className="uc-list" ref={listRef}>
-            {concerts.map((c) => {
+            {loading && (
+              <li className="uc-row footer-glass-pill" style={{ justifyContent: 'center', opacity: 0.7 }}>
+                <span className="uc-city">Loading upcoming concerts...</span>
+              </li>
+            )}
+            {error && (
+              <li className="uc-row footer-glass-pill" style={{ justifyContent: 'center', opacity: 0.7 }}>
+                <span className="uc-city">Unable to load concerts at this time.</span>
+              </li>
+            )}
+            {isEmpty && (
+              <li className="uc-row footer-glass-pill" style={{ justifyContent: 'center', opacity: 0.7 }}>
+                <span className="uc-city">No upcoming concerts right now. Stay tuned!</span>
+              </li>
+            )}
+            {!loading && !error && topConcerts.map((c) => {
               const st = statusLabels[c.status];
               return (
                 <li key={c.id} className="uc-row footer-glass-pill">
                   {/* Date */}
                   <div className="uc-date">
-                    <span className="uc-date-day">{c.date.day}</span>
+                    <span className="uc-date-day">{c.day}</span>
                     <span className="uc-date-month">
-                      {c.date.month} {c.date.year}
+                      {c.month} {c.year}
                     </span>
                   </div>
 
@@ -201,7 +174,7 @@ export default function UpcomingConcerts() {
                   {/* Info */}
                   <div className="uc-info">
                     <span className="uc-venue">{c.venue}</span>
-                    <span className="uc-city">{c.city}</span>
+                    <span className="uc-city">{c.city}{c.countryCode ? `, ${c.countryCode}` : ''}</span>
                   </div>
 
                   {/* Status + CTA */}

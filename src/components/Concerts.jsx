@@ -1,78 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useApp } from '../context/AppContext';
-import { CONCERTS } from '../data/concerts';
-
-// 5 Upcoming Shows as seen in mockup
-const UPCOMING_SHOWS = [
-  {
-    id: 1,
-    day: '15',
-    month: 'OCT',
-    year: '2026',
-    dateLabel: '15 OCT 2026',
-    targetDate: '2026-10-15T20:00:00',
-    city: 'BOGOTÁ',
-    countryCode: 'CO',
-    venue: 'Teatro Mayor Julio Mario Santo Domingo',
-    ticketUrl: 'https://www.teatromayor.org',
-    image: `${import.meta.env.BASE_URL}images/concert-hero.png`
-  },
-  {
-    id: 2,
-    day: '04',
-    month: 'NOV',
-    year: '2026',
-    dateLabel: '04 NOV 2026',
-    targetDate: '2026-11-04T20:00:00',
-    city: 'LOS ANGELES',
-    countryCode: 'USA',
-    venue: 'Walt Disney Concert Hall',
-    ticketUrl: 'https://www.laphil.com',
-    image: `${import.meta.env.BASE_URL}images/image1.png`
-  },
-  {
-    id: 3,
-    day: '21',
-    month: 'NOV',
-    year: '2026',
-    dateLabel: '21 NOV 2026',
-    targetDate: '2026-11-21T20:00:00',
-    city: 'CIUDAD DE MÉXICO',
-    countryCode: 'MX',
-    venue: 'Auditorio Nacional',
-    ticketUrl: 'https://www.auditorio.com.mx',
-    image: `${import.meta.env.BASE_URL}images/image3.png`
-  },
-  {
-    id: 4,
-    day: '18',
-    month: 'ENE',
-    year: '2027',
-    dateLabel: '18 ENE 2027',
-    targetDate: '2027-01-18T20:00:00',
-    city: 'MADRID',
-    countryCode: 'ES',
-    venue: 'Teatro Real',
-    ticketUrl: 'https://www.teatroreal.es',
-    image: `${import.meta.env.BASE_URL}images/image2.png`
-  },
-  {
-    id: 5,
-    day: '09',
-    month: 'FEB',
-    year: '2027',
-    dateLabel: '09 FEB 2027',
-    targetDate: '2027-02-09T20:00:00',
-    city: 'BUENOS AIRES',
-    countryCode: 'AR',
-    venue: 'Teatro Coliseo',
-    ticketUrl: 'https://www.teatrocoliseo.org.ar',
-    image: `${import.meta.env.BASE_URL}images/biography-portrait.jpg`
-  }
-];
-
-// All unique countries from archived concerts
-const ALL_COUNTRIES = [...new Set(CONCERTS.map((c) => c.country))].sort();
+import { useBandsintownEvents } from '../hooks/useBandsintownEvents';
 
 function LiveCountdown({ targetDateStr }) {
   const [timeLeft, setTimeLeft] = useState({ days: 68, hours: 6, minutes: 58, seconds: 1 });
@@ -127,18 +55,24 @@ function LiveCountdown({ targetDateStr }) {
 
 export default function Concerts() {
   const { t } = useApp();
-  const [activeShowIndex, setActiveShowIndex] = useState(1); // Default to Los Angeles (index 1) as in mockup
+  const [activeShowIndex, setActiveShowIndex] = useState(0); // Default to first
   const [playingId, setPlayingId] = useState(null);
   const [searchCountry, setSearchCountry] = useState('');
   const [sortOrder, setSortOrder] = useState('newest');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const galleryRef = useRef(null);
 
-  const activeShow = UPCOMING_SHOWS[activeShowIndex] || UPCOMING_SHOWS[0];
+  const { events, loading, error, isEmpty } = useBandsintownEvents();
+  const topConcerts = events.slice(0, 5);
+  const activeShow = topConcerts[activeShowIndex] || topConcerts[0] || null;
+
+  const ALL_COUNTRIES = useMemo(() => {
+    return [...new Set(events.map((c) => c.country))].sort();
+  }, [events]);
 
   // Filtered + sorted concerts
   const filteredConcerts = useMemo(() => {
-    let result = [...CONCERTS];
+    let result = [...events];
     if (searchCountry.trim()) {
       const query = searchCountry.trim().toLowerCase();
       result = result.filter(
@@ -151,13 +85,13 @@ export default function Concerts() {
       sortOrder === 'newest' ? b.year - a.year : a.year - b.year
     );
     return result;
-  }, [searchCountry, sortOrder]);
+  }, [searchCountry, sortOrder, events]);
 
   const matchingCountries = useMemo(() => {
     if (!searchCountry.trim()) return [];
     const query = searchCountry.trim().toLowerCase();
     return ALL_COUNTRIES.filter((c) => c.toLowerCase().includes(query));
-  }, [searchCountry]);
+  }, [searchCountry, ALL_COUNTRIES]);
 
   // Slide-up animation on scroll using IntersectionObserver
   useEffect(() => {
@@ -227,7 +161,10 @@ export default function Concerts() {
           <div className="wt-grid">
             {/* Left Column: 5 Shows List */}
             <ul className="wt-list">
-              {UPCOMING_SHOWS.map((show, idx) => {
+              {loading && <li className="wt-row" style={{justifyContent: 'center'}}><span className="wt-city">Loading tours...</span></li>}
+              {error && <li className="wt-row" style={{justifyContent: 'center'}}><span className="wt-city">Error loading tours.</span></li>}
+              {isEmpty && <li className="wt-row" style={{justifyContent: 'center'}}><span className="wt-city">No upcoming dates.</span></li>}
+              {!loading && !error && topConcerts.map((show, idx) => {
                 const isActive = idx === activeShowIndex;
                 return (
                   <li
@@ -282,6 +219,7 @@ export default function Concerts() {
             </ul>
 
             {/* Right Column: Dark Interactive Card */}
+            {activeShow && (
             <aside className="wt-preview-card">
               <div className="wt-card-header">
                 <span className="wt-card-subhead">NEXT SHOW</span>
@@ -291,7 +229,7 @@ export default function Concerts() {
               <div className="wt-card-img-wrap">
                 <img
                   key={activeShow.id}
-                  src={activeShow.image}
+                  src={activeShow.image || `${import.meta.env.BASE_URL}images/concert-hero.png`}
                   alt={activeShow.city}
                   className="wt-card-img"
                 />
@@ -308,6 +246,7 @@ export default function Concerts() {
                 </div>
               </div>
             </aside>
+            )}
           </div>
 
         </div>
@@ -405,7 +344,17 @@ export default function Concerts() {
         </div>
 
         <div className="concerts-gallery" ref={galleryRef}>
-          {filteredConcerts.length === 0 && (
+          {loading && (
+             <div className="concerts-empty-state">
+               <p>Loading concerts...</p>
+             </div>
+          )}
+          {error && (
+             <div className="concerts-empty-state">
+               <p>Error loading concerts: {error}</p>
+             </div>
+          )}
+          {!loading && !error && filteredConcerts.length === 0 && (
             <div className="concerts-empty-state">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
                 <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.5" opacity="0.4"/>
@@ -435,17 +384,23 @@ export default function Concerts() {
                   <h4 className="concert-card-title">{concert.title}</h4>
                   <p className="concert-card-venue">{concert.venue}</p>
                 </div>
-                <a
-                  href={`https://www.youtube.com/watch?v=${concert.youtubeId}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="concert-card-cta"
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                  <span>{t.concertsWatchLive || 'Watch Recap'}</span>
-                </a>
+                {concert.ticketUrl ? (
+                  <a
+                    href={concert.ticketUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="concert-card-cta"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                    <span>Get Tickets</span>
+                  </a>
+                ) : (
+                  <span className="concert-card-cta" style={{opacity: 0.5}}>
+                    <span>Sold Out</span>
+                  </span>
+                )}
               </article>
             );
           })}
