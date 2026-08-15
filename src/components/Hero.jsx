@@ -74,7 +74,9 @@ export default function Hero() {
 
         <div className="hero-actions" data-reveal>
           <a
-            href="#spotify"
+            href="https://open.spotify.com/artist/7Gl7yiOLDSRr1cZyPwpGv4"
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn btn-primary btn-hero"
           >
             {/* Spotify icon */}

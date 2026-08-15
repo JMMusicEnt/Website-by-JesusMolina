@@ -63,8 +63,8 @@ function Home() {
       <Hero />
       <SpotifySection />
       <UpcomingConcerts />
-      <CoursesCarousel />
       <ChinafunkVideo />
+      <CoursesCarousel />
       <FinalCTA />
     </>
   );
