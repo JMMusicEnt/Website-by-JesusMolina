@@ -450,6 +450,165 @@
   gap: 4px;
 }
 
+/* Follow For Updates Card */
+.wt-follow-card {
+  background: #111218;
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  color: var(--marfil);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  text-align: center;
+  height: 100%;
+  min-height: 300px;
+}
+
+.wt-follow-bg-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.wt-follow-brand {
+  position: absolute;
+  top: 24px;
+  left: 28px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--marfil);
+  letter-spacing: -0.01em;
+  z-index: 5;
+}
+
+.wt-follow-brand svg {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.wt-follow-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+}
+
+.wt-follow-avatar {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.wt-follow-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.wt-follow-label {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--marfil);
+  margin-bottom: 2px;
+}
+
+.wt-follow-name {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--marfil);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+
+.wt-follow-stats-row {
+  margin-bottom: 12px;
+}
+
+.wt-follow-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #0E0D0F;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 100px;
+}
+
+.wt-follow-stats {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--marfil);
+  margin-bottom: 12px;
+}
+
+.wt-follow-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 24px;
+  background: transparent;
+  color: var(--marfil);
+  border: 1px solid var(--marfil);
+  border-radius: 100px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s var(--ease);
+}
+
+.wt-follow-btn:hover {
+  background: var(--marfil);
+  color: #0E0D0F;
+  border-color: var(--marfil);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255,255,255,0.15);
+}
+
+.wt-follow-decorative-text {
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-display);
+  font-size: 80px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.02);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 0.05em;
+}
+
 /* Bottom scroll link */
 .wt-all-link {
   margin-top: 48px;
@@ -483,7 +642,7 @@
     gap: 32px;
   }
 
-  .wt-preview-card {
+  .wt-preview-card, .wt-follow-card {
     position: static;
     max-width: 580px;
     margin: 0 auto;
@@ -542,7 +701,7 @@
     padding: 7px 14px;
   }
 
-  .wt-preview-card {
+  .wt-preview-card, .wt-follow-card {
     padding: 20px;
     max-width: 100%;
   }
@@ -591,6 +750,32 @@
 
   .wt-countdown-lbl {
     font-size: 8px;
+  }
+
+  .wt-follow-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+  
+  .wt-follow-info {
+    align-items: center;
+    text-align: center;
+  }
+  
+  .wt-follow-avatar {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .wt-follow-name {
+    font-size: 32px;
+  }
+  
+  .wt-follow-brand {
+    position: static;
+    margin-bottom: 24px;
+    justify-content: center;
   }
 }
 

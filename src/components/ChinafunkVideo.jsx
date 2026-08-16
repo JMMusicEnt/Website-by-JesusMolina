@@ -40,24 +40,24 @@ export default function ChinafunkVideo() {
     },
     {
       id: 'placeholder-1',
-      title: 'Agape (Live Performance)',
+      title: 'Pero me acuerdo de ti by Jesus Molina (Live session)',
       label: 'Performance',
       description: 'Experience the magic of Jesus Molina performing live.',
-      youtubeId: 'REQj4luiC1M',
+      youtubeId: '4I5ClfVskGY',
     },
     {
       id: 'placeholder-2',
-      title: 'Night in Tunisia',
-      label: 'Jazz Standard',
+      title: 'Jesús Adrián Romero, Jesus Molina - A Vivir (Video Oficial)',
+      label: 'Music Video',
       description: 'A virtuosic interpretation of a classic jazz standard.',
-      youtubeId: 'jLBtZPVTPJs',
+      youtubeId: 'II2vKWbiBno',
     },
     {
       id: 'placeholder-3',
-      title: 'Departure',
-      label: 'Original',
+      title: 'Jesus Molina- Spain (Live @ Blue Note Tokyo)',
+      label: 'Live Performance',
       description: 'An original composition showcasing incredible piano technique.',
-      youtubeId: '17QV1R5tmdY',
+      youtubeId: '_WzZL6IAlZ8',
     },
   ];
 

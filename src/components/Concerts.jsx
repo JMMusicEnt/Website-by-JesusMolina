@@ -169,8 +169,8 @@ export default function Concerts() {
         {/* ── World Tour Interactive Section ── */}
         <div className="wt-section" data-reveal>
           {/* Section Header */}
-          <div className="wt-header" style={{ justifyContent: 'center' }}>
-            <div className="wt-header-left" style={{ alignItems: 'center' }}>
+          <div className="wt-header" style={{ justifyContent: 'center', alignItems: 'center' }}>
+            <div className="wt-header-left" style={{ alignItems: 'center', textAlign: 'center' }}>
               <h1 className="wt-title" style={{ textAlign: 'center' }}>
                 TOUR <span className="wt-title-highlight">UPCOMING DATES</span>
               </h1>
@@ -181,9 +181,9 @@ export default function Concerts() {
           <div className="wt-grid">
             {/* Left Column: 5 Shows List */}
             <ul className="wt-list">
-              {loading && <li className="wt-row" style={{justifyContent: 'center'}}><span className="wt-city">Loading tours...</span></li>}
-              {error && <li className="wt-row" style={{justifyContent: 'center'}}><span className="wt-city">Error loading tours.</span></li>}
-              {isEmptyUpcoming && <li className="wt-row" style={{justifyContent: 'center'}}><span className="wt-city">No upcoming dates.</span></li>}
+              {loading && <li className="wt-row" style={{display: 'flex', justifyContent: 'center'}}><span className="wt-city">Loading tours...</span></li>}
+              {error && <li className="wt-row" style={{display: 'flex', justifyContent: 'center'}}><span className="wt-city">Error loading tours.</span></li>}
+              {isEmptyUpcoming && <li className="wt-row" style={{display: 'flex', justifyContent: 'center', textAlign: 'center'}}><span className="wt-city">NO UPCOMING DATES.</span></li>}
               {!loading && !error && topConcerts.map((show, idx) => {
                 const isActive = idx === activeShowIndex;
                 return (
@@ -239,33 +239,79 @@ export default function Concerts() {
             </ul>
 
             {/* Right Column: Dark Interactive Card */}
-            {activeShow && (
-            <aside className="wt-preview-card">
-              <div className="wt-card-header">
-                <span className="wt-card-subhead">NEXT SHOW</span>
-                <LiveCountdown targetDateStr={activeShow.targetDate} />
-              </div>
-
-              <div className="wt-card-img-wrap">
-                <img
-                  key={activeShow.id}
-                  src={activeShow.image || `${import.meta.env.BASE_URL}images/concert-hero.png`}
-                  alt={activeShow.city}
-                  className="wt-card-img"
-                />
-                <div className="wt-card-img-overlay">
-                  <span className="wt-card-date">{activeShow.dateLabel}</span>
-                  <h3 className="wt-card-city">{activeShow.city}</h3>
-                  <span className="wt-card-venue">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="currentColor"/>
-                      <circle cx="12" cy="9" r="2.5" fill="#0E0D0F"/>
-                    </svg>
-                    {activeShow.venue}
-                  </span>
+            {activeShow ? (
+              <aside className="wt-preview-card">
+                <div className="wt-card-header">
+                  <span className="wt-card-subhead">NEXT SHOW</span>
+                  <LiveCountdown targetDateStr={activeShow.targetDate} />
                 </div>
-              </div>
-            </aside>
+
+                <div className="wt-card-img-wrap">
+                  <img
+                    key={activeShow.id}
+                    src={activeShow.image || `${import.meta.env.BASE_URL}images/concert-hero.png`}
+                    alt={activeShow.city}
+                    className="wt-card-img"
+                  />
+                  <div className="wt-card-img-overlay">
+                    <span className="wt-card-date">{activeShow.dateLabel}</span>
+                    <h3 className="wt-card-city">{activeShow.city}</h3>
+                    <span className="wt-card-venue">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="currentColor"/>
+                        <circle cx="12" cy="9" r="2.5" fill="#0E0D0F"/>
+                      </svg>
+                      {activeShow.venue}
+                    </span>
+                  </div>
+                </div>
+              </aside>
+            ) : (
+              <aside className="wt-follow-card">
+                <div className="wt-follow-bg-glow" />
+                <div className="wt-follow-brand">
+                  <img 
+                    src={`${import.meta.env.BASE_URL}images/bandsintownlogo.svg`} 
+                    alt="Bandsintown" 
+                    className="wt-bandsintown-logo"
+                    style={{ height: '32px', marginTop: '2px' }}
+                  />
+                </div>
+                <div className="wt-follow-content">
+                  <img 
+                    src={`${import.meta.env.BASE_URL}images/biography-portrait.jpg`} 
+                    alt="Jesús Molina" 
+                    className="wt-follow-avatar" 
+                  />
+                  
+                  <div className="wt-follow-info">
+                    <span className="wt-follow-label">Artist</span>
+                    <h3 className="wt-follow-name">Jesús Molina</h3>
+                    <div className="wt-follow-stats-row">
+                      <span className="wt-follow-verified">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
+                          <path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                        Verified
+                      </span>
+                    </div>
+                    <div className="wt-follow-stats">8.49K Followers</div>
+
+                    <a 
+                      href="https://www.bandsintown.com/a/13813493-jesus-molina"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="wt-follow-btn"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      </svg>
+                      Follow
+                    </a>
+                  </div>
+                </div>
+                <div className="wt-follow-decorative-text">LIVE • UPDATES</div>
+              </aside>
             )}
           </div>
 
