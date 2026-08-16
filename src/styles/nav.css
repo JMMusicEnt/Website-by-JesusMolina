@@ -47,8 +47,8 @@
 }
 
 .nav-logo-img {
-  width: 36px;
-  height: 36px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   object-fit: contain;
 }
@@ -76,9 +76,11 @@
 }
 
 .nav-link {
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: .01em;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: .03em;
+  text-transform: uppercase;
   display: flex;
   align-items: center;
   gap: 5px;
@@ -90,7 +92,6 @@
   text-decoration: none;
   background: none;
   border: none;
-  font-family: inherit;
   cursor: pointer;
 }
 
@@ -426,7 +427,7 @@
 
 /* Menu List <ul> */
 .Menu-list {
-  font-family: var(--font-display, "Gilroy ExtraBold", system-ui, sans-serif);
+  font-family: var(--font-display);
   font-size: clamp(2rem, 5.5vw, 4.25rem);
   line-height: 1.25;
   text-transform: uppercase;
@@ -583,8 +584,8 @@
   }
 
   .nav-logo-img {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
   }
 
   .nav-burger-label {

@@ -1117,6 +1117,24 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 28px;
+  max-height: 800px;
+  overflow-y: auto;
+  padding-right: 12px;
+}
+
+.concerts-gallery::-webkit-scrollbar {
+  width: 6px;
+}
+.concerts-gallery::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+.concerts-gallery::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+.concerts-gallery::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
 }
 
 /* ── Slide-up entrance animation ── */
@@ -1622,6 +1640,7 @@
   border: 1px solid var(--linea-clara) !important;
   border-radius: var(--radius-sm) !important;
   transition: background .25s, border-color .25s !important;
+  flex-shrink: 0 !important;
 }
 
 .concert-card--list:hover {

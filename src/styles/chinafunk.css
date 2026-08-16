@@ -2,7 +2,7 @@
 .chinafunk {
   background: #090A0F;
   color: #FFFFFF;
-  padding: 140px 48px;
+  padding: 80px 48px;
   position: relative;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -39,15 +39,59 @@
   margin-top: 24px;
 }
 
-/* Standard Clean 3-Column Card Grid */
-.featured-grid {
+/* Standard Clean Carousel */
+.carousel-wrapper {
+  position: relative;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1240px;
+  display: flex;
+  align-items: center;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.carousel-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--marfil);
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  flex-shrink: 0;
+  z-index: 2;
+  margin: 0 16px;
+}
+
+.carousel-arrow:hover {
+  background: var(--marfil);
+  color: var(--ebano);
+  transform: scale(1.1);
+}
+
+.carousel-arrow.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: default;
+}
+
+.featured-carousel {
+  display: flex;
   gap: 28px;
-  padding: 10px 0 30px;
+  padding: 10px 10px 30px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  flex: 1;
+}
+
+.featured-carousel::-webkit-scrollbar {
+  display: none;
 }
 
 .featured-card {
@@ -62,6 +106,10 @@
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.4s ease;
+  min-width: 320px;
+  width: 380px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
 }
 
 .featured-card:hover {
@@ -198,14 +246,18 @@
 }
 
 @media (max-width: 960px) {
-  .featured-grid {
-    grid-template-columns: 1fr;
-    max-width: 640px;
-    padding: 10px 0 20px;
+  .featured-carousel {
+    padding: 10px 20px 20px;
+  }
+  
+  .carousel-arrow {
+    display: none; /* Hide arrows on touch devices */
   }
 
   .featured-card {
     transform: rotate(0deg) !important;
+    min-width: 300px;
+    width: 320px;
   }
 
   .featured-card:hover {

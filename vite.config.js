@@ -29,7 +29,11 @@ export default defineConfig(() => {
         '/api/events': {
           target: 'https://rest.bandsintown.com',
           changeOrigin: true,
-          rewrite: () => `/artists/Jesus%20Molina/events?app_id=${bandsintownAppId}`
+          rewrite: (path) => {
+            const url = new URL(path, 'http://localhost');
+            const dateParam = url.searchParams.get('date') || 'upcoming';
+            return `/artists/Jesus%20Molina/events?app_id=${bandsintownAppId}&date=${dateParam}`;
+          }
         }
       }
     }

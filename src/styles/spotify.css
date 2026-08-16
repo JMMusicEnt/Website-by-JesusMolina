@@ -1,7 +1,7 @@
 /* ============ SPOTIFY SECTION ============ */
 .spotify-sec {
   position: relative;
-  padding: 140px 48px;
+  padding: 80px 48px;
   background: var(--ebano);
   overflow: hidden;
   border-bottom: 1px solid var(--linea-clara);

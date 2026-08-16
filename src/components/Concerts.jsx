@@ -62,17 +62,37 @@ export default function Concerts() {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const galleryRef = useRef(null);
 
-  const { events, loading, error, isEmpty } = useBandsintownEvents();
-  const topConcerts = events.slice(0, 5);
+  const { events, loading, error } = useBandsintownEvents();
+
+  const { upcomingEvents, pastEvents } = useMemo(() => {
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    const upcoming = [];
+    const past = [];
+    events.forEach(e => {
+      if (new Date(e.targetDate) >= now) {
+        upcoming.push(e);
+      } else {
+        past.push(e);
+      }
+    });
+    upcoming.sort((a, b) => new Date(a.targetDate) - new Date(b.targetDate));
+    past.sort((a, b) => new Date(b.targetDate) - new Date(a.targetDate));
+    return { upcomingEvents: upcoming, pastEvents: past };
+  }, [events]);
+
+  const isEmptyUpcoming = !loading && !error && upcomingEvents.length === 0;
+
+  const topConcerts = upcomingEvents.slice(0, 5);
   const activeShow = topConcerts[activeShowIndex] || topConcerts[0] || null;
 
   const ALL_COUNTRIES = useMemo(() => {
-    return [...new Set(events.map((c) => c.country))].sort();
-  }, [events]);
+    return [...new Set(pastEvents.map((c) => c.country))].sort();
+  }, [pastEvents]);
 
-  // Filtered + sorted concerts
+  // Filtered + sorted past concerts for the gallery
   const filteredConcerts = useMemo(() => {
-    let result = [...events];
+    let result = [...pastEvents];
     if (searchCountry.trim()) {
       const query = searchCountry.trim().toLowerCase();
       result = result.filter(
@@ -82,10 +102,10 @@ export default function Concerts() {
       );
     }
     result.sort((a, b) =>
-      sortOrder === 'newest' ? b.year - a.year : a.year - b.year
+      sortOrder === 'newest' ? new Date(b.targetDate) - new Date(a.targetDate) : new Date(a.targetDate) - new Date(b.targetDate)
     );
     return result;
-  }, [searchCountry, sortOrder, events]);
+  }, [searchCountry, sortOrder, pastEvents]);
 
   const matchingCountries = useMemo(() => {
     if (!searchCountry.trim()) return [];
@@ -163,7 +183,7 @@ export default function Concerts() {
             <ul className="wt-list">
               {loading && <li className="wt-row" style={{justifyContent: 'center'}}><span className="wt-city">Loading tours...</span></li>}
               {error && <li className="wt-row" style={{justifyContent: 'center'}}><span className="wt-city">Error loading tours.</span></li>}
-              {isEmpty && <li className="wt-row" style={{justifyContent: 'center'}}><span className="wt-city">No upcoming dates.</span></li>}
+              {isEmptyUpcoming && <li className="wt-row" style={{justifyContent: 'center'}}><span className="wt-city">No upcoming dates.</span></li>}
               {!loading && !error && topConcerts.map((show, idx) => {
                 const isActive = idx === activeShowIndex;
                 return (
@@ -391,15 +411,23 @@ export default function Concerts() {
                     rel="noopener noreferrer"
                     className="concert-card-cta"
                   >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M8 5v14l11-7z" />
+                    <svg width="18" height="18" viewBox="0 0 50 50" fill="currentColor">
+                      <path d="M35.5 19.4a2.8 2.8 0 0 0-1.9-2c-1.7-.5-8.6-.5-8.6-.5s-6.9 0-8.6.5a2.8 2.8 0 0 0-1.9 2A29 29 0 0 0 14 25a29 29 0 0 0 .5 5.6 2.8 2.8 0 0 0 1.9 2c1.7.4 8.6.4 8.6.4s6.9 0 8.6-.4a2.8 2.8 0 0 0 1.9-2 29 29 0 0 0 .5-5.6 29 29 0 0 0-.5-5.6zM22.7 28.5v-7l6.2 3.5-6.2 3.5z" />
                     </svg>
-                    <span>Get Tickets</span>
+                    <span>Watch Recap</span>
                   </a>
                 ) : (
-                  <span className="concert-card-cta" style={{opacity: 0.5}}>
-                    <span>Sold Out</span>
-                  </span>
+                  <a
+                    href={concert.ticketUrl || "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="concert-card-cta"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 50 50" fill="currentColor">
+                      <path d="M35.5 19.4a2.8 2.8 0 0 0-1.9-2c-1.7-.5-8.6-.5-8.6-.5s-6.9 0-8.6.5a2.8 2.8 0 0 0-1.9 2A29 29 0 0 0 14 25a29 29 0 0 0 .5 5.6 2.8 2.8 0 0 0 1.9 2c1.7.4 8.6.4 8.6.4s6.9 0 8.6-.4a2.8 2.8 0 0 0 1.9-2 29 29 0 0 0 .5-5.6 29 29 0 0 0-.5-5.6zM22.7 28.5v-7l6.2 3.5-6.2 3.5z" />
+                    </svg>
+                    <span>Watch Recap</span>
+                  </a>
                 )}
               </article>
             );

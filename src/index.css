@@ -20,6 +20,7 @@
 @import './styles/finalcta.css';
 @import './styles/footer.css';
 @import './styles/reveal.css';
+@import './styles/separator.css';
 
 /* New pages styles */
 @import './styles/concerts.css';

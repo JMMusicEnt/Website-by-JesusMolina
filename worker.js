@@ -13,8 +13,9 @@ export default {
         });
       }
 
+      const dateParam = url.searchParams.get('date') || 'upcoming';
       const artistName = "Jesus Molina";
-      const apiUrl = `https://rest.bandsintown.com/artists/${encodeURIComponent(artistName)}/events?app_id=${appId}`;
+      const apiUrl = `https://rest.bandsintown.com/artists/${encodeURIComponent(artistName)}/events?app_id=${appId}&date=${dateParam}`;
 
       try {
         const response = await fetch(apiUrl);

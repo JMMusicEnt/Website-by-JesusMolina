@@ -11,6 +11,7 @@ import UpcomingConcerts from './components/UpcomingConcerts';
 import ChinafunkVideo from './components/ChinafunkVideo';
 import FinalCTA from './components/FinalCTA';
 import Footer from './components/Footer';
+import Separator from './components/Separator';
 
 // New Pages
 import Concerts from './components/Concerts';
@@ -61,9 +62,13 @@ function Home() {
   return (
     <>
       <Hero />
+      <Separator />
       <SpotifySection />
-      <UpcomingConcerts />
+      {/* <Separator />
+      <UpcomingConcerts /> */}
+      <Separator />
       <ChinafunkVideo />
+      <Separator />
       <CoursesCarousel />
       <FinalCTA />
     </>

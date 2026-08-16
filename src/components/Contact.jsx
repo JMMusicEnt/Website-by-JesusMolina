@@ -86,10 +86,6 @@ export default function Contact() {
           <div className="contact-info-cards" data-reveal="slide-left">
             <div className="contact-directory-card">
               <div className="directory-header">
-                <span className="directory-badge">
-                  <span className="directory-badge-dot" />
-                  Official Contacts
-                </span>
                 <h3 className="directory-title">Management & Booking</h3>
               </div>
 

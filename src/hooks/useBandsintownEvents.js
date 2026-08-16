@@ -33,8 +33,8 @@ export function useBandsintownEvents() {
     async function fetchEvents() {
       try {
         setLoading(true);
-        // Calls our secure proxy endpoint
-        const response = await fetch('/api/events');
+        // Calls our secure proxy endpoint with date=all to get both upcoming and past
+        const response = await fetch('/api/events?date=all');
         
         if (!response.ok) {
           throw new Error('Failed to fetch events from proxy');
