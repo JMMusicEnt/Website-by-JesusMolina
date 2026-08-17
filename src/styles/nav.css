@@ -133,8 +133,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   color: inherit;
   opacity: 0.7;
   transition: opacity 0.3s, transform 0.3s;

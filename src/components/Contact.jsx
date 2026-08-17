@@ -76,11 +76,7 @@ export default function Contact() {
       <div className="contact-glow-orb-2" aria-hidden="true" />
 
       <div className="contact-container">
-        <header className="contact-header" data-reveal>
-          
-          <h1 className="section-title">{t.contactTitle}</h1>
-          
-        </header>
+
 
         <div className="contact-grid">
           <div className="contact-info-cards" data-reveal="slide-left">

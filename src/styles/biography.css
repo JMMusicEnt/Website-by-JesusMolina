@@ -62,8 +62,8 @@
 
 .bio-hero-grid {
   display: grid;
-  grid-template-columns: 0.85fr 1.15fr;
-  gap: 64px;
+  grid-template-columns: 0.65fr 1.35fr;
+  gap: 40px;
   align-items: flex-start;
   margin-bottom: 72px;
 }
@@ -151,13 +151,13 @@
 }
 
 .bio-story-text {
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: 13.5px;
+  line-height: 1.6;
   color: var(--niebla-claro);
 }
 
 .bio-lead {
-  font-size: 15px;
+  font-size: 14px;
   color: var(--marfil);
   margin-bottom: 20px;
   font-weight: 500;

@@ -190,6 +190,15 @@ export default function ChinafunkVideo() {
           </button>
         </div>
 
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
+          <a href="https://www.youtube.com/@Jesusmolinamusic" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#ff0000', color: '#fff', padding: '12px 28px', borderRadius: '50px', textDecoration: 'none', fontWeight: 'bold', fontSize: '16px' }}>
+            <svg viewBox="0 0 50 50" width="24" height="24" fill="currentColor" stroke="none">
+               <path d="M35.5 19.4a2.8 2.8 0 0 0-1.9-2c-1.7-.5-8.6-.5-8.6-.5s-6.9 0-8.6.5a2.8 2.8 0 0 0-1.9 2A29 29 0 0 0 14 25a29 29 0 0 0 .5 5.6 2.8 2.8 0 0 0 1.9 2c1.7.4 8.6.4 8.6.4s6.9 0 8.6-.4a2.8 2.8 0 0 0 1.9-2 29 29 0 0 0 .5-5.6 29 29 0 0 0-.5-5.6zM22.7 28.5v-7l6.2 3.5-6.2 3.5z" />
+            </svg>
+            MORE
+          </a>
+        </div>
+
       </div>
     </section>
   );

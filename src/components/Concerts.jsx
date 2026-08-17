@@ -172,7 +172,7 @@ export default function Concerts() {
           <div className="wt-header" style={{ justifyContent: 'center', alignItems: 'center' }}>
             <div className="wt-header-left" style={{ alignItems: 'center', textAlign: 'center' }}>
               <h1 className="wt-title" style={{ textAlign: 'center' }}>
-                TOUR <span className="wt-title-highlight">UPCOMING DATES</span>
+                TOUR
               </h1>
             </div>
           </div>
@@ -320,8 +320,7 @@ export default function Concerts() {
         {/* ── Concert Gallery — Editorial bento grid ── */}
         <div id="todas-las-fechas" className="concerts-gallery-header" data-reveal>
           <div className="gallery-header-content">
-            <h3 className="gallery-title">{t.concertsGalleryTitle}</h3>
-            <p className="gallery-desc">{t.concertsGalleryDesc}</p>
+            <h3 className="gallery-title">Past Performances</h3>
           </div>
         </div>
 
