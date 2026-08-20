@@ -22,7 +22,7 @@ export default defineConfig(() => {
   }
 
   return {
-    base: '/JesusMolina-WebPage/',
+    base: '/Website-by-JesusMolina/',
     plugins: [react()],
     server: {
       proxy: {
