@@ -279,7 +279,7 @@ export default function Concerts() {
                 </div>
                 <div className="wt-follow-content">
                   <img 
-                    src={`${import.meta.env.BASE_URL}images/biography-portrait.jpg`} 
+                    src={`${import.meta.env.BASE_URL}images/bioPhoto.jpeg`} 
                     alt="Jesús Molina" 
                     className="wt-follow-avatar" 
                   />

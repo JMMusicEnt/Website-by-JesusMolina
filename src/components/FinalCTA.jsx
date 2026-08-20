@@ -11,7 +11,8 @@ export default function FinalCTA() {
   const { t } = useApp();
   const containerRef = useRef(null);
   const cardRef = useRef(null);
-  const [contactMethod, setContactMethod] = useState('email');
+  const [email, setEmail] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -42,7 +43,15 @@ export default function FinalCTA() {
 
   const handleSignup = (e) => {
     e.preventDefault();
-    // Preparado para integración futura con Cobrand
+    if (!email) return;
+
+    const subject = encodeURIComponent('Contact from jesusmolina.com');
+    const body = encodeURIComponent(`Email: ${email}\n\nMessage:\n`);
+    const mailtoLink = `mailto:Info@thecolombygroup.com?subject=${subject}&body=${body}`;
+
+    window.location.href = mailtoLink;
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 4000);
   };
 
   return (
@@ -54,70 +63,31 @@ export default function FinalCTA() {
 
         <div ref={cardRef} className="newsletter-card">
           <form className="newsletter-form" onSubmit={handleSignup}>
-            
+
             <div className="newsletter-field">
               <label htmlFor="newsletter-input">
-                {contactMethod === 'email' ? 'Email Address' : 'Phone Number'} <span className="required">(Required)</span>
+                {t.connectSignupLabel || 'Email Address'} <span className="required">(Required)</span>
               </label>
 
-              <div className="newsletter-toggle-group">
-                <button 
-                  type="button" 
-                  className={`newsletter-toggle-btn ${contactMethod === 'email' ? 'active' : ''}`}
-                  onClick={() => setContactMethod('email')}
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
-                    <path d="M22 4l-10 8L2 4"></path>
-                  </svg>
-                </button>
-                <button 
-                  type="button"
-                  className={`newsletter-toggle-btn ${contactMethod === 'phone' ? 'active' : ''}`}
-                  onClick={() => setContactMethod('phone')}
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="5" y="2" width="14" height="20" rx="4" ry="4"></rect>
-                    <path d="M12 18h.01"></path>
-                  </svg>
-                </button>
+              <div className="newsletter-input-wrapper">
+                <input
+                  type="email"
+                  id="newsletter-input"
+                  name="email"
+                  placeholder={t.connectSignupPlaceholder || 'your@email.com'}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
               </div>
-
-              {contactMethod === 'email' ? (
-                <div className="newsletter-input-wrapper">
-                  <input
-                    type="email"
-                    id="newsletter-input"
-                    name="email"
-                    placeholder="ramiro@gmail.com"
-                    required
-                  />
-                </div>
-              ) : (
-                <div className="newsletter-phone-input-wrapper">
-                  <div className="newsletter-country-code">
-                    <span className="flag">🇨🇴</span>
-                    <svg className="dropdown-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M6 9l6 6 6-6"></path>
-                    </svg>
-                    <span className="code">+57</span>
-                  </div>
-                  <input
-                    type="tel"
-                    id="newsletter-input"
-                    name="phone"
-                    required
-                  />
-                </div>
-              )}
             </div>
-            
+
             <button type="submit" className="newsletter-submit-btn">
-              Sign Up
+              {submitted
+                ? (t.connectSignupDone || "You're on the list!")
+                : (t.connectSignupBtn || 'Sign Up')}
             </button>
-            <p className="newsletter-disclaimer">
-              By submitting my info, I consent to receive recurring automated marketing messages from Elderbrook. Msg & Data rates may apply. Msg frequency varies. Reply STOP to cancel, HELP for help. SMS will be sent by Elderbrook, via co:brand. See co:brand's Terms of Service and Privacy Policy.
-            </p>
+
           </form>
         </div>
       </div>

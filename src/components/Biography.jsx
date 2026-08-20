@@ -22,7 +22,7 @@ export default function Biography() {
         <div className="bio-hero-grid">
           <div className="bio-portrait-wrap" data-reveal="slide-left">
             <div className="bio-portrait-frame">
-              <img src={PLACEHOLDER_PORTRAIT} alt="Jesus Molina" className="bio-portrait-img" />
+              <img src={`${import.meta.env.BASE_URL}images/bioPhoto.jpeg`} alt="Jesus Molina" className="bio-portrait-img" />
               <div className="bio-portrait-accent" aria-hidden="true" />
               <div className="bio-portrait-accent-2" aria-hidden="true" />
             </div>
@@ -41,6 +41,33 @@ export default function Biography() {
             <p>That instinct now has a name: MISTER MOLINA, the electronic alter ego Molina has built as a home base for this side of his artistry — a space to chase energy and production without asking his jazz work to make room for it.</p>
             <p>That vision debuted with "Chika I Funk," MISTER MOLINA's first single, a collaboration with Grammy-winning producer Julio Reyes Copello featuring Paola Guanche and Pablo Larrañaga — a record that blends live instrumentation, infectious groove, and modern electronic production, and points toward Molina's next chapter: music built to move as naturally through festival stages and streaming playlists as it does through concert halls.</p>
             <p>Beyond performing and recording, Molina has built a worldwide community of musicians through masterclasses, online education, and live clinics, extending his influence well past the stage. As his catalog continues to expand across genres and formats, Jesus Molina stands at the intersection of virtuosity and innovation — an artist committed to honoring musical tradition while pushing past its boundaries.</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="bio-carousel-section">
+        <div className="bio-marquee-wrapper">
+          <div className="bio-marquee-track">
+            {[...Array(4)].flatMap(() => [
+              { src: 'image2.png', alt: 'Reves Productions 1', pos: 'center' },
+              { src: 'image3.png', alt: 'Reves Productions 2', pos: 'center' },
+              { src: 'pianoteFoto.png', alt: 'Reves Productions 3', pos: '85% center' },
+              { src: 'biography-portrait.jpg', alt: 'Reves Productions 4', pos: 'center top' }
+            ]).map((img, idx) => (
+              <div key={idx} className="bio-carousel-item">
+                <div className="bio-carousel-img-wrap">
+                  <img 
+                    src={`${import.meta.env.BASE_URL}images/${img.src}`} 
+                    alt={img.alt} 
+                    className="bio-carousel-img"
+                    style={{ objectPosition: img.pos }}
+                  />
+                </div>
+                <div className="bio-carousel-caption">
+                  <span>Photo Credit: Carlos Montes</span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

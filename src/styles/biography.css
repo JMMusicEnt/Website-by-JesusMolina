@@ -558,3 +558,89 @@
 }
 
 
+
+/* Carousel Section */
+/* Carousel Marquee */
+.bio-carousel-section {
+  padding: 60px 0 100px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.bio-marquee-wrapper {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  /* Mask edges for a cleaner look */
+  -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+.bio-marquee-track {
+  display: flex;
+  flex-shrink: 0;
+  gap: 24px;
+  min-width: 100%;
+  animation: bioScroll 40s linear infinite;
+  padding: 0 12px; /* Half of gap to balance */
+}
+
+.bio-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes bioScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-25%); /* 4 sets, shift by exactly 1 set (25%) */
+  }
+}
+
+.bio-carousel-item {
+  position: relative;
+  width: clamp(260px, 22vw, 320px);
+  flex-shrink: 0;
+}
+
+.bio-carousel-img-wrap {
+  position: relative;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #11131A;
+}
+
+.bio-carousel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bio-carousel-img-wrap:hover .bio-carousel-img {
+  transform: scale(1.05);
+}
+
+.bio-carousel-caption {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.bio-carousel-caption span {
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 768px) {
+  .bio-carousel-item {
+    width: clamp(200px, 45vw, 260px);
+  }
+  .bio-marquee-track {
+    animation-duration: 30s;
+  }
+}

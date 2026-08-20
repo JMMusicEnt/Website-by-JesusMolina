@@ -17,14 +17,6 @@ export default function ChinafunkVideo() {
 
   const featuredItems = [
     {
-      id: 'chinafunk',
-      title: 'Chika I Funk',
-      label: t.featuredCard1Label || 'Main Highlight',
-      description: t.featuredCard1Desc || 'A vibrant piece bringing rhythm, energy, and an unforgettable stage presence, demonstrating musical versatility and improvisational skill.',
-      youtubeId: 'REQj4luiC1M',
-      externalLink: 'https://arthouserecords.lnk.to/ChikaIFunk',
-    },
-    {
       id: 'piano-en-vivo',
       title: 'LIVE @ La Musa Awards 10th Anniversary / Pero me acuerdo de ti',
       label: t.featuredCard2Label || 'On Stage',

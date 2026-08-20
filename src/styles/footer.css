@@ -94,7 +94,7 @@
 
 .social-link-name {
   font-size: 11px;
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   letter-spacing: 0.04em;
   color: var(--niebla-claro);
   transition: color .3s ease;

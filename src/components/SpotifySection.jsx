@@ -12,6 +12,7 @@ export default function SpotifySection() {
 
       <div className="spotify-container">
         <div className="spotify-header">
+          <h2 className="section-title">LISTEN</h2>
           {t.spotifyEyebrow && <span className="section-eyebrow section-eyebrow-light" data-reveal>{t.spotifyEyebrow}</span>}
           {t.spotifyTitle && <h2 className="section-title section-title-light" data-reveal>{t.spotifyTitle}</h2>}
           {t.spotifySub && <p className="spotify-subtitle-text" data-reveal>{t.spotifySub}</p>}

@@ -3,7 +3,7 @@
    ============================================================ */
 
 .learn-section {
-  padding: 80px 0;
+  padding: 60px 0;
   background: var(--ebano);
   position: relative;
   overflow: hidden;
@@ -28,7 +28,8 @@
 /* ── Header ── */
 .learn-header {
   max-width: 640px;
-  margin-bottom: 72px;
+  margin: 0 auto 72px auto;
+  text-align: center;
 }
 
 .learn-sub {
@@ -38,81 +39,61 @@
   margin-top: 16px;
 }
 
-/* ── Grid ── */
-.learn-paths {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 28px;
-}
-
-/* ── Card shell ── */
-.learn-path {
-  --learn-brand: #4fc3f7;
-  --learn-brand-soft: rgba(79, 195, 247, 0.35);
-  --learn-brand-glow: rgba(79, 195, 247, 0.22);
+/* ── Unified Composition ── */
+.learn-composition {
   position: relative;
-  min-height: 520px;
   border-radius: calc(var(--radius-lg) + 4px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   overflow: hidden;
-  isolation: isolate;
+  min-height: 600px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  transition:
-    transform 0.55s var(--ease),
-    border-color 0.55s var(--ease),
-    box-shadow 0.55s var(--ease);
+  padding: 0 48px 40px;
+}
+
+.learn-composition-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  transition: transform 8s var(--ease);
+  z-index: 0;
+}
+
+.learn-composition:hover .learn-composition-bg {
+  transform: scale(1.04);
+}
+
+.learn-composition::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(14, 13, 15, 0.75) 0%, rgba(14, 13, 15, 0.15) 45%, transparent 70%);
+  z-index: 1;
+}
+
+.learn-paths-overlay {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+  max-width: 940px;
+}
+
+.learn-path__glass {
+  --learn-brand: #4fc3f7;
+  --learn-brand-soft: rgba(79, 195, 247, 0.35);
+  --learn-brand-glow: rgba(79, 195, 247, 0.22);
 }
 
 .learn-path--pianote {
   --learn-brand: #e53935;
   --learn-brand-soft: rgba(229, 57, 53, 0.38);
   --learn-brand-glow: rgba(229, 57, 53, 0.24);
-}
-
-.learn-path:hover {
-  transform: translateY(-8px);
-  border-color: var(--learn-brand-soft);
-  box-shadow:
-    0 32px 80px -24px rgba(0, 0, 0, 0.75),
-    0 0 0 1px var(--learn-brand-soft),
-    0 0 48px -8px var(--learn-brand-glow);
-}
-
-.learn-path__frame {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.learn-path__art {
-  position: absolute;
-  inset: 0;
-}
-
-/* ── Photo frame (image only) ── */
-.learn-art {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-}
-
-.learn-art__photo {
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  transition: transform 8s var(--ease);
-}
-
-.learn-path--pianote .learn-art__photo {
-  background-position: 72% center;
-}
-
-.learn-path:hover .learn-art__photo {
-  transform: scale(1.04);
 }
 
 /* ── Glass panel ── */
@@ -128,15 +109,16 @@
 }
 
 .learn-path__glass {
-  pointer-events: auto;
-  width: min(88%, 100%);
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  gap: 16px;
   padding: 24px 32px;
-  border-radius: calc(var(--radius-lg) - 2px);
+  border-radius: var(--radius-lg);
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: rgba(255, 255, 255, 0.07);
   backdrop-filter: blur(28px) saturate(150%);
@@ -160,8 +142,9 @@
 
 .learn-path__glass-brand {
   display: flex;
-  align-items: center;
-  gap: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
 }
 
 .learn-path__glass-text {
@@ -170,7 +153,7 @@
   gap: 6px;
 }
 
-.learn-path:hover .learn-path__glass {
+.learn-path__glass:hover {
   transform: translateY(-6px);
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.22);
@@ -193,6 +176,7 @@
   border-radius: 0;
   padding: 0;
   width: fit-content;
+  white-space: nowrap;
   background: none;
   box-shadow: none;
   transition: color 0.55s var(--ease);
@@ -202,26 +186,23 @@
   color: rgba(255, 255, 255, 0.68);
 }
 
-.learn-path-icon {
-  flex-shrink: 0;
-  color: rgba(255, 255, 255, 0.55);
-  transition: color 0.4s var(--ease), filter 0.4s var(--ease);
+.learn-path-logo {
+  height: 44px;
+  max-width: 160px;
+  object-fit: contain;
+  object-position: left center;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+  transition: transform 0.4s var(--ease), filter 0.4s var(--ease);
 }
 
-.learn-path:hover .learn-path-icon {
-  color: rgba(255, 255, 255, 0.92);
-  filter: drop-shadow(0 0 12px var(--learn-brand-glow));
+.learn-path--clama .learn-path-logo {
+  height: 64px;
+  max-width: 220px;
 }
 
-.learn-path-name {
-  font-family: var(--font-display);
-  font-size: clamp(28px, 4vw, 44px);
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #fff;
-  line-height: 1;
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+.learn-path__glass:hover .learn-path-logo {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.15));
 }
 
 .learn-path-btn {
@@ -282,7 +263,7 @@
 
 /* ── Responsive ── */
 @media (max-width: 1024px) {
-  .learn-paths {
+  .learn-paths-overlay {
     grid-template-columns: 1fr;
     max-width: 680px;
     margin: 0 auto;
@@ -302,21 +283,18 @@
     padding: 0 24px;
   }
 
-  .learn-paths {
+  .learn-paths-overlay {
     grid-template-columns: 1fr;
     gap: 22px;
   }
 
-  .learn-path {
+  .learn-composition {
     min-height: 460px;
-  }
-
-  .learn-path__body {
-    padding: 28px 20px;
+    padding: 32px 24px;
   }
 
   .learn-path__glass {
-    width: min(92%, 100%);
+    width: 100%;
     flex-direction: column;
     align-items: flex-start;
     padding: 24px 26px;
@@ -341,12 +319,9 @@
     margin-bottom: 40px;
   }
 
-  .learn-path {
+  .learn-composition {
     min-height: 380px;
-  }
-
-  .learn-path__body {
-    padding: 20px 16px;
+    padding: 24px 16px;
   }
 
   .learn-path__glass {
@@ -366,13 +341,8 @@
     width: 100%;
   }
 
-  .learn-path-icon svg {
-    width: 32px;
-    height: 32px;
-  }
-
-  .learn-path-name {
-    font-size: clamp(24px, 7vw, 32px);
+  .learn-path-logo {
+    height: 38px;
   }
 
   .learn-path-btn {
@@ -390,11 +360,11 @@
     padding: 0 16px;
   }
 
-  .learn-path {
+  .learn-composition {
     min-height: 380px;
   }
 
-  .learn-path-name {
-    font-size: 22px;
+  .learn-path-logo {
+    height: 32px;
   }
 }
