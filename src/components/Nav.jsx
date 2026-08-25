@@ -187,12 +187,17 @@ export default function Nav() {
         {/* ── Desktop Links & Socials ── */}
         <div className="nav-desktop">
           <div className="nav-links">
-            {menuItems.filter(item => !item.isButton).map((item, idx) => (
-              item.isExternal ? (
+            {menuItems.filter(item => !item.isButton).map((item, idx) => {
+              const isMisterMolina = item.label === 'MISTER MOLINA';
+              const className = `nav-link${isMisterMolina ? ' notranslate' : ''}`;
+              const translateAttr = isMisterMolina ? 'no' : undefined;
+
+              return item.isExternal ? (
                 <a
                   key={idx}
                   href={item.path}
-                  className="nav-link"
+                  className={className}
+                  translate={translateAttr}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setMenuOpen(false)}
@@ -203,13 +208,14 @@ export default function Nav() {
                 <Link
                   key={idx}
                   to={item.path}
-                  className="nav-link"
+                  className={className}
+                  translate={translateAttr}
                   onClick={() => setMenuOpen(false)}
                 >
                   {item.label}
                 </Link>
-              )
-            ))}
+              );
+            })}
           </div>
           
           <div className="nav-socials">
@@ -251,14 +257,19 @@ export default function Nav() {
       <div className={`menu-overlay${menuOpen ? ' open' : ''}`}>
         <ul className="Menu-list" ref={menuListRef}>
           {menuItems.map((item, idx) => {
+            const isMisterMolina = item.label === 'MISTER MOLINA';
+            const sizerClass = `Menu-item-sizer${isMisterMolina ? ' notranslate' : ''}`;
+            const spanClass = isMisterMolina ? 'notranslate' : undefined;
+            const translateAttr = isMisterMolina ? 'no' : undefined;
+
             const content = (
               <>
-                <span className="Menu-item-sizer" aria-hidden="true">{item.label}</span>
+                <span className={sizerClass} aria-hidden="true" translate={translateAttr}>{item.label}</span>
                 <span className="Mask">
-                  <span>{item.label}</span>
+                  <span className={spanClass} translate={translateAttr}>{item.label}</span>
                 </span>
                 <span className="Mask">
-                  <span>{item.label}</span>
+                  <span className={spanClass} translate={translateAttr}>{item.label}</span>
                 </span>
               </>
             );
