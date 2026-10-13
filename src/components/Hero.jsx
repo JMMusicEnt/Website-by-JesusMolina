@@ -51,7 +51,7 @@ export default function Hero() {
           loop
           playsInline
           preload="auto"
-          poster={`${import.meta.env.BASE_URL}images/video-poster.jpg`}
+          poster={`${import.meta.env.BASE_URL}images/video-poster.png`}
         >
           <source src={`${import.meta.env.BASE_URL}video/CortoAnimacion.mp4`} type="video/mp4" />
         </video>
