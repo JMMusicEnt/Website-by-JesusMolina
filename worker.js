@@ -19,7 +19,7 @@ async function handleYouTube(request, env, ctx) {
   // ?artist=mister -> solo MISTER MOLINA; cualquier otro valor -> Jesus Molina
   const requested = new URL(request.url).searchParams.get('artist');
   const artist = Object.hasOwn(ARTISTS, requested ?? '') ? requested : 'jesus';
-  const cacheKey = new Request(new URL(`/__cache/youtube-videos-v4-${artist}`, request.url).toString());
+  const cacheKey = new Request(new URL(`/__cache/youtube-videos-v5-${artist}`, request.url).toString());
   const cache = typeof caches !== 'undefined' ? caches.default : null;
 
   // 1. Caché en memoria, luego Cache API de Cloudflare
@@ -41,7 +41,7 @@ async function handleYouTube(request, env, ctx) {
   try {
     const data = await fetchChannelVideos({
       apiKey: env.YOUTUBE_API_KEY,
-      channelId: env.YOUTUBE_CHANNEL_ID || DEFAULT_YOUTUBE_CHANNEL_ID,
+      channelId: artist === 'jesus' ? env.YOUTUBE_CHANNEL_ID || DEFAULT_YOUTUBE_CHANNEL_ID : undefined,
       artist,
     });
     const body = JSON.stringify(data);

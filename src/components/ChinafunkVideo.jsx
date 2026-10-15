@@ -8,7 +8,11 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const CHANNEL_URL = 'https://www.youtube.com/@Jesusmolinamusic';
+// Fallback for the MORE button if the API is unavailable
+const CHANNEL_URLS = {
+  jesus: 'https://www.youtube.com/@Jesusmolinamusic',
+  mister: 'https://www.youtube.com/@MISTERMOLINAMUSIC',
+};
 const SKELETON_COUNT = 3;
 
 
@@ -34,7 +38,7 @@ export default function ChinafunkVideo({ artist = 'jesus' } = {}) {
   const [playingId, setPlayingId] = useState(null);
 
   const { videos, loading, error, channelUrl } = useYouTubeVideos(artist);
-  const channelLink = channelUrl || CHANNEL_URL;
+  const channelLink = channelUrl || CHANNEL_URLS[artist] || CHANNEL_URLS.jesus;
   const showSkeletons = loading && videos.length === 0;
   const showStatus = !loading && videos.length === 0; // API error with no cached list, or channel without videos
   const videoIdsKey = videos.map((v) => v.id).join(',');

@@ -24,7 +24,7 @@ function youtubeDevApi(apiKey, channelId) {
         let memo = memos.get(artist)
         try {
           if (!memo || Date.now() - memo.fetchedAt > 60 * 60 * 1000) {
-            const data = await fetchChannelVideos({ apiKey, channelId, artist })
+            const data = await fetchChannelVideos({ apiKey, channelId: artist === 'jesus' ? channelId : undefined, artist })
             memo = { body: JSON.stringify(data), fetchedAt: Date.now() }
             memos.set(artist, memo)
           }

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 // (worker.js in production, vite.config.js in dev). The proxy caches YouTube results,
 // and this module keeps a single request per artist per page load.
 // artist: 'jesus' (Jesus Molina home) or 'mister' (MISTER MOLINA home)
-const API_VERSION = 4; // bump when the video source changes, to skip stale browser caches
+const API_VERSION = 5; // bump when the video source changes, to skip stale browser caches
 const storageKey = (artist) => `jm-youtube-videos-v${API_VERSION}-${artist}`;
 
 const inflight = new Map();

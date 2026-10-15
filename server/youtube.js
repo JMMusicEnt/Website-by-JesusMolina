@@ -16,15 +16,24 @@ const API = 'https://www.googleapis.com/youtube/v3';
 const MAX_VIDEOS = 12;
 const FETCH_POOL = 50; // API max per call (same 1-unit cost); extra room so filtered-out videos don't shrink the carousel
 
-// Both artists publish on the same channel; MISTER MOLINA (Jesus's electronic alter ego)
-// releases are told apart by title ("MISTER MOLINA", "Mister Molina", "#mistermolina"...).
+// MISTER MOLINA (Jesus's electronic alter ego) releases that still live on Jesus's channel
+// are kept out of his WATCH section by title ("MISTER MOLINA", "Mister Molina"...).
 const MISTER_MOLINA_TITLE = /mister\s*molina/i;
 
-// artist -> which titles to keep, and how many playlist pages (50 videos each) to scan.
-// MISTER MOLINA releases are rare among the uploads, so that home scans deeper.
+// artist -> source channel, which titles to keep, and how many playlist pages (50 each) to scan
 export const ARTISTS = {
-  jesus: { keep: (title) => !MISTER_MOLINA_TITLE.test(title), maxPages: 1 },
-  mister: { keep: (title) => MISTER_MOLINA_TITLE.test(title), maxPages: 4 },
+  jesus: {
+    channelId: DEFAULT_YOUTUBE_CHANNEL_ID,
+    channelUrl: YOUTUBE_CHANNEL_URL,
+    keep: (title) => !MISTER_MOLINA_TITLE.test(title),
+    maxPages: 1,
+  },
+  mister: {
+    channelId: 'UCXiQDFMQW5hCwLNBZtTg_DA', // youtube.com/@MISTERMOLINAMUSIC — everything there is MISTER MOLINA
+    channelUrl: 'https://www.youtube.com/@MISTERMOLINAMUSIC',
+    keep: () => true,
+    maxPages: 1,
+  },
 };
 
 const uploadsPlaylistCache = new Map();
@@ -85,9 +94,12 @@ async function collectIds(playlistId, { keep, maxPages }, apiKey) {
   return ids.slice(0, FETCH_POOL); // videos.list accepts at most 50 ids
 }
 
-export async function fetchChannelVideos({ apiKey, channelId = DEFAULT_YOUTUBE_CHANNEL_ID, artist = 'jesus' }) {
+// channelId optionally overrides the artist's default channel (YOUTUBE_CHANNEL_ID env, Jesus only)
+export async function fetchChannelVideos({ apiKey, channelId: channelOverride, artist = 'jesus' }) {
   if (!apiKey) throw new Error('Missing YouTube API key');
   const rules = Object.hasOwn(ARTISTS, artist) ? ARTISTS[artist] : ARTISTS.jesus;
+  const channelId = channelOverride || rules.channelId;
+  const channelUrl = rules.channelUrl;
 
   let ids;
   const longFormId = getLongFormPlaylistId(channelId);
@@ -99,7 +111,7 @@ export async function fetchChannelVideos({ apiKey, channelId = DEFAULT_YOUTUBE_C
     ids = await collectIds(await getUploadsPlaylistId(channelId, apiKey), rules, apiKey);
   }
   if (ids.length === 0) {
-    return { channelId, channelUrl: YOUTUBE_CHANNEL_URL, fetchedAt: new Date().toISOString(), videos: [] };
+    return { channelId, channelUrl, fetchedAt: new Date().toISOString(), videos: [] };
   }
 
   // videos.list only returns videos that still exist; private/deleted ones are simply absent
@@ -125,5 +137,5 @@ export async function fetchChannelVideos({ apiKey, channelId = DEFAULT_YOUTUBE_C
     .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
     .slice(0, MAX_VIDEOS);
 
-  return { channelId, channelUrl: YOUTUBE_CHANNEL_URL, fetchedAt: new Date().toISOString(), videos };
+  return { channelId, channelUrl, fetchedAt: new Date().toISOString(), videos };
 }
