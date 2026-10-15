@@ -21,6 +21,12 @@ import Contact from './components/Contact';
 import { useScrollReveal } from './hooks/useScrollReveal';
 import { useSmoothAnchorScroll } from './hooks/useSmoothAnchorScroll';
 import { AppProvider } from './context/AppContext';
+import {
+  MISTER_MOLINA_PATH,
+  MISTER_MOLINA_SPOTIFY_ID,
+  MISTER_MOLINA_SPOTIFY_URL,
+  MISTER_MOLINA_SOCIALS,
+} from './data/misterMolina';
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -75,9 +81,6 @@ function Home() {
   );
 }
 
-const MISTER_MOLINA_SPOTIFY_ID = '6teIt9cbhgw6voaoJRGLPy';
-const MISTER_MOLINA_SPOTIFY_URL = 'https://open.spotify.com/intl-es/artist/6teIt9cbhgw6voaoJRGLPy?si=nohfOxNPQAm4AOUszPExuQ';
-
 // MISTER MOLINA home: same sections as Home with MISTER MOLINA's media, videos and Spotify
 // (WATCH before LISTEN, BOOKING over a photo, no LEARN)
 function MisterMolinaHome() {
@@ -89,6 +92,8 @@ function MisterMolinaHome() {
         titleFirst="MISTER"
         titleLast="MOLINA"
         spotifyUrl={MISTER_MOLINA_SPOTIFY_URL}
+        socials={MISTER_MOLINA_SOCIALS}
+        socialsLabel="MISTER MOLINA social media"
       />
       <Separator />
       <ChinafunkVideo artist="mister" />
@@ -117,7 +122,7 @@ export default function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/mister-molina" element={<MisterMolinaHome />} />
+        <Route path={MISTER_MOLINA_PATH} element={<MisterMolinaHome />} />
         <Route path="/concerts" element={<Concerts />} />
         <Route path="/biography" element={<Biography />} />
         <Route path="/contact" element={<Contact />} />

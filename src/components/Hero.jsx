@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
+import { PlatformIcon } from './platformIcons';
 
 // Shared by the Jesus Molina home and the MISTER MOLINA home: only the media and
 // headline change; markup, styles and animations are the same.
@@ -9,6 +10,8 @@ export default function Hero({
   titleFirst,
   titleLast,
   spotifyUrl = 'https://open.spotify.com/artist/7Gl7yiOLDSRr1cZyPwpGv4',
+  socials = [], // optional vertical social rail: [{ id, label, href }] (MISTER MOLINA home)
+  socialsLabel = 'Social media',
 } = {}) {
   const videoRef = useRef(null);
   const { t } = useApp();
@@ -68,6 +71,28 @@ export default function Hero({
       {/* ── Cinematic overlays ── */}
       <div className="hero-overlay" aria-hidden="true"></div>
       <div className="hero-vignette" aria-hidden="true"></div>
+
+      {/* ── Vertical social rail (only when the page passes socials) ── */}
+      {socials.length > 0 && (
+        <nav className="hero-socials" aria-label={socialsLabel}>
+          <ul className="hero-socials-list">
+            {socials.map((s) => (
+              <li key={s.id}>
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hero-socials-link"
+                  aria-label={s.label}
+                  title={s.label}
+                >
+                  <PlatformIcon id={s.icon || s.id} size={18} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
 
       {/* ── Content ── */}
       <div className="hero-content">

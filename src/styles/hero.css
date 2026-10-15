@@ -519,3 +519,105 @@
   }
 }
 
+/* ===== VERTICAL SOCIAL RAIL (MISTER MOLINA hero) =====
+   Quiet monochrome icons on the right edge; full white on hover/focus. */
+.hero-socials {
+  position: absolute;
+  top: 50%;
+  right: 40px;
+  z-index: 2;
+  transform: translateY(-50%);
+}
+
+.hero-socials-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  opacity: 0;
+}
+
+/* hairlines above and below the icons */
+.hero-socials-list::before,
+.hero-socials-list::after {
+  content: '';
+  width: 1px;
+  height: 44px;
+  background: linear-gradient(180deg, transparent, rgba(245, 242, 238, 0.28));
+}
+
+.hero-socials-list::after {
+  background: linear-gradient(180deg, rgba(245, 242, 238, 0.28), transparent);
+}
+
+.hero-socials-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: rgba(245, 242, 238, 0.6);
+  transition: color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.hero-socials-link:hover,
+.hero-socials-link:focus-visible {
+  color: #FFFFFF;
+  transform: scale(1.12);
+}
+
+.hero-socials-link:focus-visible {
+  outline: 1px solid rgba(245, 242, 238, 0.6);
+  outline-offset: 2px;
+}
+
+.hero--visible .hero-socials-list {
+  animation: heroSocialsIn .9s cubic-bezier(.16, .84, .32, 1) 1.2s both;
+}
+
+@keyframes heroSocialsIn {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-socials {
+    right: 12px;
+  }
+
+  .hero-socials-list {
+    gap: 8px;
+  }
+
+  .hero-socials-list::before,
+  .hero-socials-list::after {
+    height: 28px;
+  }
+
+  .hero-socials-link {
+    width: 34px;
+    height: 34px;
+  }
+
+  .hero-socials-link svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero--visible .hero-socials-list {
+    animation: none;
+    opacity: 1;
+  }
+}

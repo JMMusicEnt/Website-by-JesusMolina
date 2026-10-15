@@ -30,6 +30,23 @@ export function PlatformIcon({ id, size = 20, className = "" }) {
           <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-2 14.5v-9l8 4.5-8 4.5z"/>
         </svg>
       );
+    case 'youtube-logo': // classic rounded-rectangle YouTube mark
+      return (
+        <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+          <path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/>
+        </svg>
+      );
+    case 'soundcloud-logo': // cloud + bars, readable at small sizes
+      return (
+        <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+          <path d="M10.6 8.3a5.2 5.2 0 0 1 2.1-.45c2.62 0 4.78 1.98 5.02 4.55.32-.11.66-.17 1.02-.17A3.38 3.38 0 0 1 22.1 15.6a3.38 3.38 0 0 1-3.36 3.4H10.6V8.3z"/>
+          <rect x="8.7" y="9.4" width="1.1" height="9.6" rx=".55"/>
+          <rect x="6.8" y="10.8" width="1.1" height="8.2" rx=".55"/>
+          <rect x="4.9" y="12" width="1.1" height="7" rx=".55"/>
+          <rect x="3" y="13.4" width="1.1" height="5.6" rx=".55"/>
+          <rect x="1.1" y="15" width="1.1" height="4" rx=".55"/>
+        </svg>
+      );
     case 'deezer':
       return (
         <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
