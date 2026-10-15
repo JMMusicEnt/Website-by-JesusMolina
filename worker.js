@@ -16,7 +16,7 @@ function jsonResponse(body, status, extraHeaders = {}) {
 
 async function handleYouTube(request, env, ctx) {
   const now = Date.now();
-  const cacheKey = new Request(new URL('/__cache/youtube-videos', request.url).toString());
+  const cacheKey = new Request(new URL('/__cache/youtube-videos-v2', request.url).toString());
   const cache = typeof caches !== 'undefined' ? caches.default : null;
 
   // 1. Caché en memoria, luego Cache API de Cloudflare

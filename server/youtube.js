@@ -2,8 +2,12 @@
 // Shared by worker.js (production) and vite.config.js (local dev) so the API key
 // never reaches the browser.
 //
-// Quota per refresh: channels.list (1, cached for the isolate's lifetime)
-// + playlistItems.list (1) + videos.list (1). Never uses search.list (100 units).
+// Source: the channel's long-form playlist ("UULF" + channel id without "UC"), which
+// YouTube keeps without Shorts. If it's ever unavailable we fall back to the full
+// uploads playlist so the section never goes empty.
+//
+// Quota per refresh: playlistItems.list (1) + videos.list (1).
+// Never uses search.list (100 units).
 
 export const DEFAULT_YOUTUBE_CHANNEL_ID = 'UCunKKpBXDHlVb4uqCko_-FA'; // youtube.com/@Jesusmolinamusic
 export const YOUTUBE_CHANNEL_URL = 'https://www.youtube.com/@Jesusmolinamusic';
@@ -29,6 +33,11 @@ async function ytGet(path, params, apiKey) {
   return res.json();
 }
 
+// Long-form videos only (no Shorts). Not part of the documented API surface, hence the fallback.
+function getLongFormPlaylistId(channelId) {
+  return channelId.startsWith('UC') ? `UULF${channelId.slice(2)}` : null;
+}
+
 async function getUploadsPlaylistId(channelId, apiKey) {
   if (uploadsPlaylistCache.has(channelId)) return uploadsPlaylistCache.get(channelId);
   const data = await ytGet('channels', { part: 'contentDetails', id: channelId }, apiKey);
@@ -47,12 +56,21 @@ function pickThumbnail(thumbnails = {}) {
 export async function fetchChannelVideos({ apiKey, channelId = DEFAULT_YOUTUBE_CHANNEL_ID }) {
   if (!apiKey) throw new Error('Missing YouTube API key');
 
-  const playlistId = await getUploadsPlaylistId(channelId, apiKey);
-  const playlist = await ytGet('playlistItems', {
+  const listItems = (playlistId) => ytGet('playlistItems', {
     part: 'contentDetails',
     playlistId,
     maxResults: String(FETCH_POOL),
   }, apiKey);
+
+  let playlist;
+  const longFormId = getLongFormPlaylistId(channelId);
+  try {
+    if (!longFormId) throw new Error('No long-form playlist for this channel id');
+    playlist = await listItems(longFormId);
+  } catch (e) {
+    console.warn('Long-form playlist unavailable, falling back to all uploads:', e.message);
+    playlist = await listItems(await getUploadsPlaylistId(channelId, apiKey));
+  }
 
   const ids = [...new Set((playlist.items || []).map((i) => i.contentDetails?.videoId).filter(Boolean))];
   if (ids.length === 0) {
