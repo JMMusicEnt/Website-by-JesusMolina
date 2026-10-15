@@ -24,7 +24,7 @@ export default function Biography() {
         <div className="bio-hero-grid">
           <div className="bio-portrait-wrap" data-reveal="slide-left">
             <div className="bio-portrait-frame">
-              <img src={`${import.meta.env.BASE_URL}images/newBioPhoto.jpg`} alt="Jesus Molina" className="bio-portrait-img" />
+              <img src={`${import.meta.env.BASE_URL}images/uno.jpg`} alt="Jesus Molina" className="bio-portrait-img" />
               <div className="bio-portrait-accent" aria-hidden="true" />
               <div className="bio-portrait-accent-2" aria-hidden="true" />
             </div>
@@ -35,7 +35,7 @@ export default function Biography() {
           </div>
 
           <div className="bio-story-text" data-reveal="slide-right">
-            <p className="bio-lead">Jesus Molina is a Colombian singer, pianist, composer, producer, vocalist, and multi-instrumentalist whose fearless musicianship has made him one of the most versatile artists of his generation — equally at home in jazz, Latin music, pop, and electronic production. With a global audience of over one million followers, Molina has built a career defined by technical brilliance, emotional depth, and a relentless drive to explore new musical territory.</p>
+            <p className="bio-lead">Romantic singer and virtuoso pianist. Latin pop with jazz roots. Jesus Molina is a Colombian composer, producer, and multi-instrumentalist whose fearless musicianship has made him one of the most versatile artists of his generation — equally at home in jazz, Latin music, pop, and electronic production. With a global audience of over one million followers, Molina has built a career defined by technical brilliance, emotional depth, and a relentless drive to explore new musical territory.</p>
             <p>A graduate of Berklee College of Music and a recipient of the Latin Grammy Cultural Foundation Scholarship, Molina drew early inspiration from masters including Oscar Peterson, Chick Corea, Art Tatum, Bill Evans, and Erroll Garner, channeling that foundation into a rapidly expanding career.</p>
             <p>Molina's breakthrough came with 2020's Departing, his fifth album and a set that reimagined eight jazz standards alongside two original compositions. Praised by outlets including El País — which called him "the Colombian musician who triumphs alongside great artists" — Departing introduced Molina to a global jazz audience and established the technical command and emotional depth that would define his sound.</p>
             <p>That foundation deepened with 2024's Selah, produced by Blood, Sweat & Tears co-founder Bobby Colomby, which showcased Molina's original compositions alongside collaborations with Hubert Laws, Noel Schajris, and Lucia Micarelli — raising his profile further and cementing his reputation as one of contemporary jazz's most distinctive voices.</p>
@@ -54,7 +54,7 @@ export default function Biography() {
               { src: 'image2.png', alt: 'Reves Productions 1', pos: 'center' },
               { src: 'dos.jpeg', alt: 'Reves Productions 2', pos: 'center' },
               { src: 'tres.jpeg', alt: 'Reves Productions 3', pos: '85% center' },
-              { src: 'uno.jpg', alt: 'Reves Productions 4', pos: 'center top' }
+              { src: 'newBioPhoto.jpg', alt: 'Reves Productions 4', pos: 'center top' }
             ]).map((img, idx) => (
               <div key={idx} className="bio-carousel-item">
                 <div className="bio-carousel-img-wrap">

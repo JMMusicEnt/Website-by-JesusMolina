@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 // Latest public videos of the official channel, served by our /api/youtube proxy
 // (worker.js in production, vite.config.js in dev). The proxy caches YouTube results,
 // and this module keeps a single request per page load.
-const STORAGE_KEY = 'jm-youtube-videos-v2';
+const STORAGE_KEY = 'jm-youtube-videos-v3';
 
 let inflight = null;
 
@@ -28,7 +28,7 @@ function writeStored(data) {
 
 function loadVideos() {
   if (!inflight) {
-    inflight = fetch('/api/youtube?v=2') // bump when the video source changes, to skip stale browser caches
+    inflight = fetch('/api/youtube?v=3') // bump when the video source changes, to skip stale browser caches
       .then(async (res) => {
         if (!res.ok) throw new Error(`Failed to fetch videos (${res.status})`);
         const json = await res.json();

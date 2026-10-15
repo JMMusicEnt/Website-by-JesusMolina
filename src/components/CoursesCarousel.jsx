@@ -57,9 +57,6 @@ export default function CoursesCarousel() {
       <div className="learn-container">
         <div className="learn-header" data-reveal>
           <h2 className="section-title">{t.learnTitle || 'Learn'}</h2>
-          <p className="learn-sub">
-            {t.learnSub || 'Two world-class platforms to master piano, composition, and harmony — available in English and Spanish.'}
-          </p>
         </div>
 
         <div className="learn-composition" data-reveal>

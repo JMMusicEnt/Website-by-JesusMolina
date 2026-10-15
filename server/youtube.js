@@ -14,7 +14,11 @@ export const YOUTUBE_CHANNEL_URL = 'https://www.youtube.com/@Jesusmolinamusic';
 
 const API = 'https://www.googleapis.com/youtube/v3';
 const MAX_VIDEOS = 12;
-const FETCH_POOL = 25; // fetch a few extra so filtered-out videos don't shrink the carousel
+const FETCH_POOL = 50; // API max per call (same 1-unit cost); extra room so filtered-out videos don't shrink the carousel
+
+// The WATCH section only shows Jesus Molina's own videos: MISTER MOLINA (his electronic
+// alter ego) releases are excluded by title ("MISTER MOLINA", "Mister Molina", "#mistermolina"...)
+const EXCLUDED_TITLE = /mister\s*molina/i;
 
 const uploadsPlaylistCache = new Map();
 
@@ -86,6 +90,7 @@ export async function fetchChannelVideos({ apiKey, channelId = DEFAULT_YOUTUBE_C
       v.status?.privacyStatus === 'public' &&
       v.status?.uploadStatus === 'processed' &&
       v.snippet?.liveBroadcastContent === 'none' && // skip upcoming/ongoing live placeholders
+      !EXCLUDED_TITLE.test(v.snippet?.title || '') &&
       !seen.has(v.id) && seen.add(v.id)
     )
     .map((v) => ({
