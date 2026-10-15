@@ -51,9 +51,9 @@ export default function Hero() {
           loop
           playsInline
           preload="auto"
-          poster={`${import.meta.env.BASE_URL}images/video-poster.png`}
+          poster={`${import.meta.env.BASE_URL}images/videoposternuevo.png`}
         >
-          <source src={`${import.meta.env.BASE_URL}video/CortoAnimacion.mp4`} type="video/mp4" />
+          <source src={`${import.meta.env.BASE_URL}video/cliphomepage.mp4`} type="video/mp4" />
         </video>
       </div>
 
@@ -68,9 +68,9 @@ export default function Hero() {
           <span className="hero-title-line hero-title-lastname" data-reveal>{t.heroTitle2}</span>
         </h1>
 
-        {/* Subhead: Pianist · Producer · Composer · Performer */}
+        {/* Subhead: Pianist · Producer · Composer · Performer · Singer */}
         <p className="hero-subtitle hero-roles" data-reveal>
-          {t.heroRoles || 'Pianist · Producer · Composer · Performer'}
+          {t.heroRoles || 'Pianist · Producer · Composer · Performer · Singer'}
         </p>
 
         <div className="hero-actions" data-reveal>

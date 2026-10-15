@@ -1,6 +1,6 @@
 /* ============================================================
    HERO — Cinematic Video Background
-   Full-viewport immersive hero with CortoAnimacion.mp4,
+   Full-viewport immersive hero with cliphomepage.mp4,
    cinematic overlays, and editorial typography.
    ============================================================ */
 
@@ -117,7 +117,7 @@
   transform: translateY(20px);
 }
 
-/* ── Roles subhead: Pianist · Producer · Composer · Performer ── */
+/* ── Roles subhead: Pianist · Producer · Composer · Performer · Singer ── */
 .hero-roles {
   font-family: var(--font-body);
   font-size: clamp(13px, 1.4vw, 16px);

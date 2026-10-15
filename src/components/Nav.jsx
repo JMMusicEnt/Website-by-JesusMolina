@@ -139,7 +139,7 @@ export default function Nav() {
     {
       id: 'tiktok',
       label: 'TikTok',
-      href: 'https://www.tiktok.com/t/ZTkpSxHP7',
+      href: 'https://www.tiktok.com/@jesusmolinamusic',
       icon: (
         <svg viewBox="0 0 50 50" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="M20 27a4 4 0 1 0 4 4V16a5 5 0 0 0 5 5" />
@@ -149,7 +149,7 @@ export default function Nav() {
     {
       id: 'facebook',
       label: 'Facebook',
-      href: 'https://www.facebook.com/saxofonologo',
+      href: 'https://www.facebook.com/soyjesusmolina',
       icon: (
         <svg viewBox="0 0 50 50" fill="currentColor" stroke="none">
           <path d="M30 15h-3a4 4 0 0 0-4 4v3h-3v5h3v10h5V27h4l1-5h-5v-3a1 1 0 0 1 1-1h3z" />

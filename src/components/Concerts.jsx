@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useApp } from '../context/AppContext';
 import { useBandsintownEvents } from '../hooks/useBandsintownEvents';
+import { getRecapUrl } from '../data/pastRecaps';
 
 function LiveCountdown({ targetDateStr }) {
   const [timeLeft, setTimeLeft] = useState({ days: 68, hours: 6, minutes: 58, seconds: 1 });
@@ -59,6 +60,7 @@ export default function Concerts() {
   const [playingId, setPlayingId] = useState(null);
   const [searchCountry, setSearchCountry] = useState('');
   const [sortOrder, setSortOrder] = useState('newest');
+  const [showOnlyRecaps, setShowOnlyRecaps] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const galleryRef = useRef(null);
 
@@ -101,11 +103,14 @@ export default function Concerts() {
           c.city.toLowerCase().includes(query)
       );
     }
+    if (showOnlyRecaps) {
+      result = result.filter((c) => getRecapUrl(c.id));
+    }
     result.sort((a, b) =>
       sortOrder === 'newest' ? new Date(b.targetDate) - new Date(a.targetDate) : new Date(a.targetDate) - new Date(b.targetDate)
     );
     return result;
-  }, [searchCountry, sortOrder, pastEvents]);
+  }, [searchCountry, sortOrder, showOnlyRecaps, pastEvents]);
 
   const matchingCountries = useMemo(() => {
     if (!searchCountry.trim()) return [];
@@ -396,9 +401,19 @@ export default function Concerts() {
               </svg>
               Oldest
             </button>
+            <button
+              className={`filter-sort-btn ${showOnlyRecaps ? 'filter-sort-btn--active' : ''}`}
+              onClick={() => setShowOnlyRecaps((v) => !v)}
+              aria-pressed={showOnlyRecaps}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                <path d="M8 5.5v13l10.5-6.5L8 5.5z" fill="currentColor"/>
+              </svg>
+              Show Recap
+            </button>
           </div>
 
-          {searchCountry && (
+          {(searchCountry || showOnlyRecaps) && (
             <div className="filter-result-count">
               <span className="filter-count-number">{filteredConcerts.length}</span>
               <span className="filter-count-text">
@@ -425,13 +440,18 @@ export default function Concerts() {
                 <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.5" opacity="0.4"/>
                 <path d="M20 20l-4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.4"/>
               </svg>
-              <p>No concerts found for <strong>"{searchCountry}"</strong></p>
-              <button className="empty-state-reset" onClick={() => setSearchCountry('')}>
+              <p>
+                {searchCountry
+                  ? <>No {showOnlyRecaps ? 'recaps' : 'concerts'} found for <strong>"{searchCountry}"</strong></>
+                  : 'No recaps found'}
+              </p>
+              <button className="empty-state-reset" onClick={() => { setSearchCountry(''); setShowOnlyRecaps(false); }}>
                 Show all concerts
               </button>
             </div>
           )}
           {filteredConcerts.map((concert, i) => {
+            const recapUrl = getRecapUrl(concert.id);
             return (
               <article
                 key={concert.id}
@@ -449,21 +469,9 @@ export default function Concerts() {
                   <h4 className="concert-card-title">{concert.title}</h4>
                   <p className="concert-card-venue">{concert.venue}</p>
                 </div>
-                {concert.ticketUrl ? (
+                {recapUrl && (
                   <a
-                    href={concert.ticketUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="concert-card-cta"
-                  >
-                    <svg width="18" height="18" viewBox="0 0 50 50" fill="currentColor">
-                      <path d="M35.5 19.4a2.8 2.8 0 0 0-1.9-2c-1.7-.5-8.6-.5-8.6-.5s-6.9 0-8.6.5a2.8 2.8 0 0 0-1.9 2A29 29 0 0 0 14 25a29 29 0 0 0 .5 5.6 2.8 2.8 0 0 0 1.9 2c1.7.4 8.6.4 8.6.4s6.9 0 8.6-.4a2.8 2.8 0 0 0 1.9-2 29 29 0 0 0 .5-5.6 29 29 0 0 0-.5-5.6zM22.7 28.5v-7l6.2 3.5-6.2 3.5z" />
-                    </svg>
-                    <span>Watch Recap</span>
-                  </a>
-                ) : (
-                  <a
-                    href={concert.ticketUrl || "#"}
+                    href={recapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="concert-card-cta"

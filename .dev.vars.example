@@ -1,0 +1,4 @@
+BANDSINTOWN_APP_ID=your-bandsintown-app-id
+YOUTUBE_API_KEY=your-youtube-data-api-v3-key
+# Optional: defaults to the official channel (youtube.com/@Jesusmolinamusic)
+YOUTUBE_CHANNEL_ID=UCunKKpBXDHlVb4uqCko_-FA

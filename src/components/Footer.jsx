@@ -30,12 +30,12 @@ export default function Footer() {
     {
       id: 'tiktok',
       label: 'TikTok',
-      href: 'https://www.tiktok.com/t/ZTkpSxHP7',
+      href: 'https://www.tiktok.com/@jesusmolinamusic',
     },
     {
       id: 'facebook',
       label: 'Facebook',
-      href: 'https://www.facebook.com/saxofonologo',
+      href: 'https://www.facebook.com/soyjesusmolina',
       path: 'M30 15h-3a4 4 0 0 0-4 4v3h-3v5h3v10h5V27h4l1-5h-5v-3a1 1 0 0 1 1-1h3z',
     },
     {

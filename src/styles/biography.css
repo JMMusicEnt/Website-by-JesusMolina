@@ -571,9 +571,17 @@
   display: flex;
   overflow: hidden;
   user-select: none;
+  -webkit-user-select: none;
+  /* Horizontal drag/swipe is handled in JS (useDragMarquee); vertical page scroll stays native */
+  touch-action: pan-y;
+  cursor: grab;
   /* Mask edges for a cleaner look */
   -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
   mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+.bio-marquee-wrapper.is-dragging {
+  cursor: grabbing;
 }
 
 .bio-marquee-track {
@@ -581,21 +589,9 @@
   flex-shrink: 0;
   gap: 24px;
   min-width: 100%;
-  animation: bioScroll 40s linear infinite;
+  /* Auto-scroll (40s per set, 30s on mobile), hover pause and drag live in useDragMarquee */
+  will-change: transform;
   padding: 0 12px; /* Half of gap to balance */
-}
-
-.bio-marquee-track:hover {
-  animation-play-state: paused;
-}
-
-@keyframes bioScroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-25%); /* 4 sets, shift by exactly 1 set (25%) */
-  }
 }
 
 .bio-carousel-item {
@@ -639,8 +635,5 @@
 @media (max-width: 768px) {
   .bio-carousel-item {
     width: clamp(200px, 45vw, 260px);
-  }
-  .bio-marquee-track {
-    animation-duration: 30s;
   }
 }

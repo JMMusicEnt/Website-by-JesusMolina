@@ -1227,6 +1227,13 @@
   color: var(--marfil);
 }
 
+@media (max-width: 480px) {
+  .filter-sort-wrap {
+    flex-wrap: wrap;
+    flex-shrink: 1;
+  }
+}
+
 /* ── Result Count ── */
 .filter-result-count {
   display: flex;

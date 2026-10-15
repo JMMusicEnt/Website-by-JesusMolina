@@ -10,3 +10,6 @@ dist-ssr
 !.dev.vars.example
 .env*
 !.env.example
+
+# Original high-res source files (kept locally, not deployed)
+originals/

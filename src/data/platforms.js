@@ -33,13 +33,13 @@ export const defaultTrackData = {
     {
       platformName: "TikTok",
       iconId: "tiktok",
-      url: "https://www.tiktok.com/t/ZTkpSxHP7",
+      url: "https://www.tiktok.com/@jesusmolinamusic",
       isDownload: false,
     },
     {
       platformName: "Facebook",
       iconId: "facebook",
-      url: "https://www.facebook.com/saxofonologo",
+      url: "https://www.facebook.com/soyjesusmolina",
       isDownload: false,
     },
   ],
