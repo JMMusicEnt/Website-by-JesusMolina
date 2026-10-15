@@ -147,6 +147,11 @@
 }
 
 /* ── Actions ── */
+/* Keeps the old gap now that the roles subhead between title and button was removed */
+.hero-title + .hero-actions {
+  margin-top: 36px;
+}
+
 .hero-actions {
   display: flex;
   align-items: center;
@@ -440,6 +445,10 @@
   .hero-roles {
     font-size: 14px;
     margin-bottom: 24px;
+  }
+
+  .hero-title + .hero-actions {
+    margin-top: 24px;
   }
 
   .hero-sub {

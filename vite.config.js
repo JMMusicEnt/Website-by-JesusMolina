@@ -9,20 +9,24 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import fs from 'fs'
 import path from 'path'
-import { fetchChannelVideos, DEFAULT_YOUTUBE_CHANNEL_ID } from './server/youtube.js'
+import { fetchChannelVideos, DEFAULT_YOUTUBE_CHANNEL_ID, ARTISTS } from './server/youtube.js'
 
 // Local equivalent of the /api/youtube route in worker.js (API key stays server-side)
 function youtubeDevApi(apiKey, channelId) {
-  let memo = null
+  const memos = new Map() // artist -> { body, fetchedAt }
   return {
     name: 'youtube-dev-api',
     configureServer(server) {
-      server.middlewares.use('/api/youtube', async (_req, res) => {
+      server.middlewares.use('/api/youtube', async (req, res) => {
         res.setHeader('Content-Type', 'application/json')
+        const requested = new URL(req.originalUrl || req.url, 'http://localhost').searchParams.get('artist')
+        const artist = Object.hasOwn(ARTISTS, requested ?? '') ? requested : 'jesus'
+        let memo = memos.get(artist)
         try {
           if (!memo || Date.now() - memo.fetchedAt > 60 * 60 * 1000) {
-            const data = await fetchChannelVideos({ apiKey, channelId })
+            const data = await fetchChannelVideos({ apiKey, channelId, artist })
             memo = { body: JSON.stringify(data), fetchedAt: Date.now() }
+            memos.set(artist, memo)
           }
           res.end(memo.body)
         } catch (e) {

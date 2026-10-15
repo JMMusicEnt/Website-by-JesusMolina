@@ -11,11 +11,6 @@ if (typeof window !== 'undefined') {
 const CHANNEL_URL = 'https://www.youtube.com/@Jesusmolinamusic';
 const SKELETON_COUNT = 3;
 
-const dateFormatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-const formatDate = (iso) => {
-  const d = new Date(iso);
-  return isNaN(d) ? '' : dateFormatter.format(d);
-};
 
 // Classic YouTube play button: red rounded rectangle with a white triangle
 const PlayIcon = () => (
@@ -28,7 +23,8 @@ const PlayIcon = () => (
   </svg>
 );
 
-export default function ChinafunkVideo() {
+// artist: 'jesus' (default) or 'mister' — which artist's videos the carousel shows
+export default function ChinafunkVideo({ artist = 'jesus' } = {}) {
   const { t } = useApp();
   const containerRef = useRef(null);
   const textRef = useRef(null);
@@ -37,7 +33,7 @@ export default function ChinafunkVideo() {
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [playingId, setPlayingId] = useState(null);
 
-  const { videos, loading, error, channelUrl } = useYouTubeVideos();
+  const { videos, loading, error, channelUrl } = useYouTubeVideos(artist);
   const channelLink = channelUrl || CHANNEL_URL;
   const showSkeletons = loading && videos.length === 0;
   const showStatus = !loading && videos.length === 0; // API error with no cached list, or channel without videos
@@ -51,10 +47,14 @@ export default function ChinafunkVideo() {
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5); // 5px tolerance
   }, []);
 
-  const scrollByAmount = (amount) => {
-    if (gridRef.current) {
-      gridRef.current.scrollBy({ left: amount, behavior: 'smooth' });
-    }
+  // Arrows move exactly one card (card width + gap), whatever the card size
+  const scrollByCards = (direction) => {
+    const grid = gridRef.current;
+    if (!grid) return;
+    const card = grid.querySelector('.featured-card');
+    const gap = parseFloat(getComputedStyle(grid).columnGap) || 0;
+    const step = card ? card.getBoundingClientRect().width + gap : 400;
+    grid.scrollBy({ left: direction * step, behavior: 'smooth' });
   };
 
   // Re-evaluate arrows once the videos arrive and on resize
@@ -122,7 +122,13 @@ export default function ChinafunkVideo() {
   }, [videoIdsKey]);
 
   return (
-    <section ref={containerRef} className="chinafunk" id="destacados">
+    <section ref={containerRef} className={`chinafunk${artist === 'mister' ? ' chinafunk--mm' : ''}`} id="destacados">
+      {artist === 'mister' && (
+        // Decorative backdrop (grain, petrol-blue light, giant wordmark) — see misterMolina.css
+        <div className="mm-backdrop" aria-hidden="true">
+          <span className="mm-backdrop-word">MISTER</span>
+        </div>
+      )}
       <div className="chinafunk-container">
         <div ref={textRef} className="chinafunk-text">
 
@@ -141,7 +147,7 @@ export default function ChinafunkVideo() {
           <div className="carousel-wrapper">
             <button
               className={`carousel-arrow carousel-arrow-left ${!canScrollLeft || showSkeletons ? 'disabled' : ''}`}
-              onClick={() => scrollByAmount(-400)}
+              onClick={() => scrollByCards(-1)}
               aria-label="Previous"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -200,11 +206,6 @@ export default function ChinafunkVideo() {
                     </div>
                     <div className="featured-card-content">
                       <h3>{video.title}</h3>
-                      {video.publishedAt && (
-                        <time className="featured-card-date" dateTime={video.publishedAt}>
-                          {formatDate(video.publishedAt)}
-                        </time>
-                      )}
                     </div>
                   </article>
                 );
@@ -213,7 +214,7 @@ export default function ChinafunkVideo() {
 
             <button
               className={`carousel-arrow carousel-arrow-right ${!canScrollRight || showSkeletons ? 'disabled' : ''}`}
-              onClick={() => scrollByAmount(400)}
+              onClick={() => scrollByCards(1)}
               aria-label="Next"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round"/></svg>

@@ -1,7 +1,15 @@
 import { useRef, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 
-export default function Hero() {
+// Shared by the Jesus Molina home and the MISTER MOLINA home: only the media and
+// headline change; markup, styles and animations are the same.
+export default function Hero({
+  videoSrc = 'video/cliphomepage.mp4',
+  poster = 'images/videoposternuevo.png',
+  titleFirst,
+  titleLast,
+  spotifyUrl = 'https://open.spotify.com/artist/7Gl7yiOLDSRr1cZyPwpGv4',
+} = {}) {
   const videoRef = useRef(null);
   const { t } = useApp();
 
@@ -51,9 +59,9 @@ export default function Hero() {
           loop
           playsInline
           preload="auto"
-          poster={`${import.meta.env.BASE_URL}images/videoposternuevo.png`}
+          poster={`${import.meta.env.BASE_URL}${poster}`}
         >
-          <source src={`${import.meta.env.BASE_URL}video/cliphomepage.mp4`} type="video/mp4" />
+          <source src={`${import.meta.env.BASE_URL}${videoSrc}`} type="video/mp4" />
         </video>
       </div>
 
@@ -64,18 +72,13 @@ export default function Hero() {
       {/* ── Content ── */}
       <div className="hero-content">
         <h1 className="hero-title">
-          <span className="hero-title-line hero-title-firstname" data-reveal>{t.heroTitle1}</span>
-          <span className="hero-title-line hero-title-lastname" data-reveal>{t.heroTitle2}</span>
+          <span className="hero-title-line hero-title-firstname" data-reveal>{titleFirst ?? t.heroTitle1}</span>
+          <span className="hero-title-line hero-title-lastname" data-reveal>{titleLast ?? t.heroTitle2}</span>
         </h1>
-
-        {/* Subhead: Pianist · Producer · Composer · Performer · Singer */}
-        <p className="hero-subtitle hero-roles" data-reveal>
-          {t.heroRoles || 'Pianist · Producer · Composer · Performer · Singer'}
-        </p>
 
         <div className="hero-actions" data-reveal>
           <a
-            href="https://open.spotify.com/artist/7Gl7yiOLDSRr1cZyPwpGv4"
+            href={spotifyUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-primary btn-hero"

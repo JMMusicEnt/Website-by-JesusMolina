@@ -25,7 +25,7 @@ export function useNavScroll() {
   const [onDark, setOnDark] = useState(false);
   const { pathname } = useLocation();
   const isSubPage = SUB_PAGES.includes(pathname);
-  const isHomepage = pathname === '/';
+  const isHomepage = pathname === '/' || pathname === '/mister-molina';
 
   useEffect(() => {
     function update() {

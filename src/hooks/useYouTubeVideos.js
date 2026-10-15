@@ -2,33 +2,35 @@ import { useState, useEffect } from 'react';
 
 // Latest public videos of the official channel, served by our /api/youtube proxy
 // (worker.js in production, vite.config.js in dev). The proxy caches YouTube results,
-// and this module keeps a single request per page load.
-const STORAGE_KEY = 'jm-youtube-videos-v3';
+// and this module keeps a single request per artist per page load.
+// artist: 'jesus' (Jesus Molina home) or 'mister' (MISTER MOLINA home)
+const API_VERSION = 4; // bump when the video source changes, to skip stale browser caches
+const storageKey = (artist) => `jm-youtube-videos-v${API_VERSION}-${artist}`;
 
-let inflight = null;
+const inflight = new Map();
 
 function isValidVideo(v) {
   return v && typeof v.id === 'string' && typeof v.title === 'string' && typeof v.thumbnail === 'string';
 }
 
-function readStored() {
+function readStored(artist) {
   try {
-    const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    const parsed = JSON.parse(localStorage.getItem(storageKey(artist)));
     return Array.isArray(parsed?.videos) ? parsed : null;
   } catch {
     return null;
   }
 }
 
-function writeStored(data) {
+function writeStored(artist, data) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    localStorage.setItem(storageKey(artist), JSON.stringify(data));
   } catch { /* storage unavailable (private mode, quota...) */ }
 }
 
-function loadVideos() {
-  if (!inflight) {
-    inflight = fetch('/api/youtube?v=3') // bump when the video source changes, to skip stale browser caches
+function loadVideos(artist) {
+  if (!inflight.has(artist)) {
+    const request = fetch(`/api/youtube?v=${API_VERSION}&artist=${artist}`)
       .then(async (res) => {
         if (!res.ok) throw new Error(`Failed to fetch videos (${res.status})`);
         const json = await res.json();
@@ -36,26 +38,30 @@ function loadVideos() {
         const seen = new Set();
         const videos = json.videos.filter((v) => isValidVideo(v) && !seen.has(v.id) && seen.add(v.id));
         const data = { videos, channelUrl: json.channelUrl };
-        writeStored(data);
+        writeStored(artist, data);
         return data;
       })
       .catch((err) => {
-        inflight = null; // allow a retry on the next mount
+        inflight.delete(artist); // allow a retry on the next mount
         throw err;
       });
+    inflight.set(artist, request);
   }
-  return inflight;
+  return inflight.get(artist);
 }
 
-export function useYouTubeVideos() {
-  const [state, setState] = useState(() => {
-    const stored = readStored();
-    return { videos: stored?.videos || [], channelUrl: stored?.channelUrl || null, loading: true, error: null };
-  });
+const initialState = (artist) => {
+  const stored = readStored(artist);
+  return { videos: stored?.videos || [], channelUrl: stored?.channelUrl || null, loading: true, error: null };
+};
+
+export function useYouTubeVideos(artist = 'jesus') {
+  const [state, setState] = useState(() => initialState(artist));
 
   useEffect(() => {
     let cancelled = false;
-    loadVideos()
+    setState(initialState(artist));
+    loadVideos(artist)
       .then((data) => {
         if (!cancelled) setState({ ...data, loading: false, error: null });
       })
@@ -67,7 +73,7 @@ export function useYouTubeVideos() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [artist]);
 
   return {
     ...state,

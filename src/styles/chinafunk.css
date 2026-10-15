@@ -107,7 +107,7 @@
               box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.4s ease;
   min-width: 320px;
-  width: 380px;
+  width: 480px;
   flex-shrink: 0;
   scroll-snap-align: start;
 }
@@ -299,14 +299,6 @@
   outline-offset: -2px;
 }
 
-.featured-card-date {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
-}
-
 /* ---- Loading placeholders ---- */
 .featured-card--skeleton {
   pointer-events: none;
@@ -373,8 +365,8 @@
 
   .featured-card {
     transform: rotate(0deg) !important;
-    min-width: 300px;
-    width: 320px;
+    min-width: 0;
+    width: min(420px, 82vw);
   }
 
   .featured-card:hover {

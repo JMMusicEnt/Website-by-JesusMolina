@@ -1,0 +1,190 @@
+/* ============ MISTER MOLINA — WATCH & LISTEN BACKDROPS ============
+   Only applies on the MISTER MOLINA home (.chinafunk--mm / .spotify-sec--mm).
+   Layers (all pointer-events: none, below the content):
+     section background  -> base blacks + ambient radial light
+     .mm-backdrop        -> giant low-opacity wordmark (Bebas Neue, the site's display face)
+     .mm-backdrop::before-> edge vignette
+     .mm-backdrop::after -> film grain (inline SVG noise, no extra request)
+   WATCH and LISTEN meet on the same near-black (#0B0B0E) so the seam is a gradual
+   shift from petrol blue to burgundy, with no separator. */
+
+.chinafunk--mm,
+.spotify-sec--mm {
+  --mm-text: #F5F2EE;
+  --mm-seam: #0B0B0E;
+  position: relative;
+  overflow: clip; /* crop the giant wordmark without creating a scroll container */
+  isolation: isolate;
+  border-bottom: none;
+}
+
+/* ── Shared decorative layers ── */
+.mm-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.mm-backdrop-word {
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: clamp(220px, 34vw, 560px);
+  line-height: 0.8;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  /* Outline + faint fill: reads as a graphic, not as text competing with the titles */
+  color: var(--mm-word-fill);
+  -webkit-text-stroke: 1.5px var(--mm-word-stroke);
+  user-select: none;
+}
+
+/* Edge vignette: keeps the corners dark and the light pooled in the middle */
+.mm-backdrop::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(ellipse 85% 75% at 50% 50%, transparent 45%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+/* Film grain — visible in the darks, never strong enough to hurt legibility */
+.mm-backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0.11;
+  mix-blend-mode: screen;
+  background-size: 180px 180px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.4 -0.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+/* Content always above the backdrop */
+.chinafunk--mm .chinafunk-container,
+.spotify-sec--mm .spotify-container {
+  position: relative;
+  z-index: 1;
+}
+
+.chinafunk--mm .section-title,
+.spotify-sec--mm .section-title {
+  color: var(--mm-text);
+}
+
+/* ═══════════ WATCH — blue-black & petrol ═══════════ */
+.chinafunk--mm {
+  --mm-secondary: #91A5AC;
+  background:
+    radial-gradient(ellipse 55% 45% at 78% 28%, rgba(18, 52, 56, 0.85) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 40% at 14% 72%, rgba(18, 52, 56, 0.55) 0%, transparent 70%),
+    radial-gradient(ellipse 70% 60% at 50% 45%, #10191D 0%, transparent 75%),
+    linear-gradient(180deg, #090D10 0%, #090D10 70%, var(--mm-seam) 100%);
+}
+
+.chinafunk--mm .mm-backdrop-word {
+  --mm-word-fill: rgba(145, 165, 172, 0.035);
+  --mm-word-stroke: rgba(145, 165, 172, 0.09);
+  left: -3vw;
+  bottom: -0.12em;
+}
+
+/* Cards: darker petrol surface, thin dark borders, slightly tighter corners */
+.chinafunk--mm .featured-card {
+  background: rgba(16, 25, 29, 0.82);
+  border-color: rgba(145, 165, 172, 0.14);
+  border-radius: 14px;
+  box-shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.8);
+}
+
+.chinafunk--mm .featured-card:hover {
+  border-color: rgba(64, 140, 150, 0.45);
+  box-shadow: 0 24px 50px -22px rgba(0, 0, 0, 0.85), 0 0 24px rgba(18, 52, 56, 0.6);
+}
+
+.chinafunk--mm .featured-card-content {
+  background: transparent;
+}
+
+.chinafunk--mm .featured-card-content h3 {
+  color: var(--mm-text);
+}
+
+.chinafunk--mm .featured-yt-play-bg {
+  fill: #FF2525;
+}
+
+.chinafunk--mm .carousel-arrow {
+  background: rgba(16, 25, 29, 0.7);
+  border-color: rgba(145, 165, 172, 0.22);
+  color: var(--mm-text);
+}
+
+.chinafunk--mm .carousel-arrow:hover {
+  background: var(--mm-text);
+  color: #090D10;
+}
+
+.chinafunk--mm .featured-status {
+  background: rgba(16, 25, 29, 0.82);
+  border-color: rgba(145, 165, 172, 0.14);
+}
+
+.chinafunk--mm .featured-status p {
+  color: var(--mm-secondary);
+}
+
+/* ═══════════ LISTEN — warm black & burgundy ═══════════ */
+.spotify-sec--mm {
+  --mm-secondary: #BBA1AA;
+  background:
+    radial-gradient(ellipse 50% 45% at 22% 40%, rgba(48, 21, 31, 0.9) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 38% at 84% 74%, rgba(60, 18, 24, 0.5) 0%, transparent 70%),
+    radial-gradient(ellipse 70% 60% at 50% 55%, #171116 0%, transparent 75%),
+    linear-gradient(180deg, var(--mm-seam) 0%, #0D0A0D 30%, #0D0A0D 100%);
+}
+
+/* The default green/bronze glows are replaced by the burgundy lighting */
+.spotify-sec--mm .spotify-glow {
+  display: none;
+}
+
+.spotify-sec--mm .mm-backdrop-word {
+  --mm-word-fill: rgba(187, 161, 170, 0.03);
+  --mm-word-stroke: rgba(187, 161, 170, 0.085);
+  right: -3vw;
+  top: -0.1em;
+}
+
+.spotify-sec--mm .spotify-player-card {
+  background: rgba(23, 17, 22, 0.55);
+  border-color: rgba(187, 161, 170, 0.12);
+  box-shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.9);
+}
+
+.spotify-sec--mm .spotify-subtitle-text {
+  color: var(--mm-secondary);
+}
+
+/* ── Responsive: smaller, quieter decoration on narrow screens ── */
+@media (max-width: 768px) {
+  .mm-backdrop-word {
+    font-size: clamp(150px, 46vw, 300px);
+    -webkit-text-stroke-width: 1px;
+  }
+
+  .mm-backdrop::after {
+    opacity: 0.09;
+  }
+
+  .chinafunk--mm .mm-backdrop-word {
+    --mm-word-fill: rgba(145, 165, 172, 0.025);
+    --mm-word-stroke: rgba(145, 165, 172, 0.07);
+  }
+
+  .spotify-sec--mm .mm-backdrop-word {
+    --mm-word-fill: rgba(187, 161, 170, 0.02);
+    --mm-word-stroke: rgba(187, 161, 170, 0.065);
+  }
+}

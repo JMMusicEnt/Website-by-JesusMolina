@@ -48,4 +48,22 @@
   }
 }
 
+/* Optional darkened photo behind a section (used by LISTEN and BOOKING on the MISTER MOLINA home).
+   The section needs position: relative + overflow: hidden, and its content a z-index above 0. */
+.section-bg-photo {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 30%;
+  z-index: 0;
+  pointer-events: none;
+}
 
+.section-bg-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(14, 13, 15, 0.9) 0%, rgba(14, 13, 15, 0.55) 35%, rgba(14, 13, 15, 0.55) 65%, rgba(14, 13, 15, 0.92) 100%),
+    rgba(14, 13, 15, 0.25);
+}

@@ -7,6 +7,10 @@
   border-bottom: 1px solid var(--linea-clara);
 }
 
+.spotify-sec--photo .spotify-glow {
+  display: none;
+}
+
 /* Background glows */
 .spotify-glow {
   position: absolute;

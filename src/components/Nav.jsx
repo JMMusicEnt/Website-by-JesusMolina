@@ -15,7 +15,8 @@ export default function Nav() {
   const menuItemsRef = useRef([]);
   const location = useLocation();
 
-  const isHomepage = location.pathname === '/';
+  // Both artist homes (Jesus Molina and MISTER MOLINA) open with the full-screen hero
+  const isHomepage = location.pathname === '/' || location.pathname === '/mister-molina';
 
   /* Close menu when route changes */
   useEffect(() => {
@@ -86,7 +87,7 @@ export default function Nav() {
     { label: t.home, path: '/', isButton: false, isExternal: false, offset: 10 },
     { label: t.tourNav || 'Tour', path: '/concerts', isButton: false, isExternal: false, offset: 20 },
     { label: t.aboutNav || 'About', path: '/biography', isButton: false, isExternal: false, offset: 30 },
-    { label: 'MISTER MOLINA', path: 'https://soundcloud.com/mistermolinamusic?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing', isButton: false, isExternal: true, offset: 40 },
+    { label: 'MISTER MOLINA', path: '/mister-molina', isButton: false, isExternal: false, offset: 40 },
     { label: t.platformsTitle || t.platform, path: '#', isButton: true, isExternal: false, offset: 50 },
     { label: 'Contact', path: '/contact', isButton: false, isExternal: false, offset: 60 },
   ];
@@ -153,20 +154,6 @@ export default function Nav() {
       icon: (
         <svg viewBox="0 0 50 50" fill="currentColor" stroke="none">
           <path d="M30 15h-3a4 4 0 0 0-4 4v3h-3v5h3v10h5V27h4l1-5h-5v-3a1 1 0 0 1 1-1h3z" />
-        </svg>
-      )
-    },
-    {
-      id: 'soundcloud',
-      label: 'SoundCloud',
-      href: 'https://soundcloud.com/mistermolinamusic?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing',
-      icon: (
-        <svg viewBox="0 0 50 50" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-          <line x1="14" y1="24" x2="14" y2="28" />
-          <line x1="18" y1="21" x2="18" y2="29" />
-          <line x1="22" y1="18" x2="22" y2="30" />
-          <line x1="26" y1="16" x2="26" y2="30" />
-          <path d="M29 18a5 5 0 0 1 5 5 4 4 0 0 1-4 4H29" fill="none" />
         </svg>
       )
     }

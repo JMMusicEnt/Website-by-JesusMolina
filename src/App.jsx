@@ -75,6 +75,35 @@ function Home() {
   );
 }
 
+const MISTER_MOLINA_SPOTIFY_ID = '6teIt9cbhgw6voaoJRGLPy';
+const MISTER_MOLINA_SPOTIFY_URL = 'https://open.spotify.com/intl-es/artist/6teIt9cbhgw6voaoJRGLPy?si=nohfOxNPQAm4AOUszPExuQ';
+
+// MISTER MOLINA home: same sections as Home with MISTER MOLINA's media, videos and Spotify
+// (WATCH before LISTEN, BOOKING over a photo, no LEARN)
+function MisterMolinaHome() {
+  return (
+    <>
+      <Hero
+        videoSrc="video/mrmolinaclipHomePage.mp4"
+        poster="images/mrmolinavideoposter.png"
+        titleFirst="MISTER"
+        titleLast="MOLINA"
+        spotifyUrl={MISTER_MOLINA_SPOTIFY_URL}
+      />
+      <Separator />
+      <ChinafunkVideo artist="mister" />
+      {/* No separator here: WATCH fades into LISTEN through the backdrop lighting */}
+      <SpotifySection
+        variant="mister"
+        artistName="MISTER MOLINA"
+        artistId={MISTER_MOLINA_SPOTIFY_ID}
+        artistUrl={MISTER_MOLINA_SPOTIFY_URL}
+      />
+      <FinalCTA title="BOOKING" backgroundImage="images/mistermolinaphoto.jpeg" />
+    </>
+  );
+}
+
 export default function App() {
   // Global, page-wide behaviours that used to live at the bottom of script.js
   useScrollReveal();
@@ -88,6 +117,7 @@ export default function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/mister-molina" element={<MisterMolinaHome />} />
         <Route path="/concerts" element={<Concerts />} />
         <Route path="/biography" element={<Biography />} />
         <Route path="/contact" element={<Contact />} />

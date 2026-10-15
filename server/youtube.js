@@ -6,7 +6,7 @@
 // YouTube keeps without Shorts. If it's ever unavailable we fall back to the full
 // uploads playlist so the section never goes empty.
 //
-// Quota per refresh: playlistItems.list (1) + videos.list (1).
+// Quota per refresh: playlistItems.list (1 per page) + videos.list (1).
 // Never uses search.list (100 units).
 
 export const DEFAULT_YOUTUBE_CHANNEL_ID = 'UCunKKpBXDHlVb4uqCko_-FA'; // youtube.com/@Jesusmolinamusic
@@ -16,9 +16,16 @@ const API = 'https://www.googleapis.com/youtube/v3';
 const MAX_VIDEOS = 12;
 const FETCH_POOL = 50; // API max per call (same 1-unit cost); extra room so filtered-out videos don't shrink the carousel
 
-// The WATCH section only shows Jesus Molina's own videos: MISTER MOLINA (his electronic
-// alter ego) releases are excluded by title ("MISTER MOLINA", "Mister Molina", "#mistermolina"...)
-const EXCLUDED_TITLE = /mister\s*molina/i;
+// Both artists publish on the same channel; MISTER MOLINA (Jesus's electronic alter ego)
+// releases are told apart by title ("MISTER MOLINA", "Mister Molina", "#mistermolina"...).
+const MISTER_MOLINA_TITLE = /mister\s*molina/i;
+
+// artist -> which titles to keep, and how many playlist pages (50 videos each) to scan.
+// MISTER MOLINA releases are rare among the uploads, so that home scans deeper.
+export const ARTISTS = {
+  jesus: { keep: (title) => !MISTER_MOLINA_TITLE.test(title), maxPages: 1 },
+  mister: { keep: (title) => MISTER_MOLINA_TITLE.test(title), maxPages: 4 },
+};
 
 const uploadsPlaylistCache = new Map();
 
@@ -57,26 +64,40 @@ function pickThumbnail(thumbnails = {}) {
   return t?.url || null;
 }
 
-export async function fetchChannelVideos({ apiKey, channelId = DEFAULT_YOUTUBE_CHANNEL_ID }) {
+// Walks the playlist (newest first) collecting ids whose title passes `keep`
+async function collectIds(playlistId, { keep, maxPages }, apiKey) {
+  const ids = [];
+  let pageToken;
+  for (let page = 0; page < maxPages; page++) {
+    const data = await ytGet('playlistItems', {
+      part: 'snippet,contentDetails',
+      playlistId,
+      maxResults: String(FETCH_POOL),
+      ...(pageToken ? { pageToken } : {}),
+    }, apiKey);
+    for (const item of data.items || []) {
+      const id = item.contentDetails?.videoId;
+      if (id && !ids.includes(id) && keep(item.snippet?.title || '')) ids.push(id);
+    }
+    pageToken = data.nextPageToken;
+    if (!pageToken || ids.length >= FETCH_POOL) break;
+  }
+  return ids.slice(0, FETCH_POOL); // videos.list accepts at most 50 ids
+}
+
+export async function fetchChannelVideos({ apiKey, channelId = DEFAULT_YOUTUBE_CHANNEL_ID, artist = 'jesus' }) {
   if (!apiKey) throw new Error('Missing YouTube API key');
+  const rules = Object.hasOwn(ARTISTS, artist) ? ARTISTS[artist] : ARTISTS.jesus;
 
-  const listItems = (playlistId) => ytGet('playlistItems', {
-    part: 'contentDetails',
-    playlistId,
-    maxResults: String(FETCH_POOL),
-  }, apiKey);
-
-  let playlist;
+  let ids;
   const longFormId = getLongFormPlaylistId(channelId);
   try {
     if (!longFormId) throw new Error('No long-form playlist for this channel id');
-    playlist = await listItems(longFormId);
+    ids = await collectIds(longFormId, rules, apiKey);
   } catch (e) {
     console.warn('Long-form playlist unavailable, falling back to all uploads:', e.message);
-    playlist = await listItems(await getUploadsPlaylistId(channelId, apiKey));
+    ids = await collectIds(await getUploadsPlaylistId(channelId, apiKey), rules, apiKey);
   }
-
-  const ids = [...new Set((playlist.items || []).map((i) => i.contentDetails?.videoId).filter(Boolean))];
   if (ids.length === 0) {
     return { channelId, channelUrl: YOUTUBE_CHANNEL_URL, fetchedAt: new Date().toISOString(), videos: [] };
   }
@@ -90,7 +111,7 @@ export async function fetchChannelVideos({ apiKey, channelId = DEFAULT_YOUTUBE_C
       v.status?.privacyStatus === 'public' &&
       v.status?.uploadStatus === 'processed' &&
       v.snippet?.liveBroadcastContent === 'none' && // skip upcoming/ongoing live placeholders
-      !EXCLUDED_TITLE.test(v.snippet?.title || '') &&
+      rules.keep(v.snippet?.title || '') && // re-check: the title may have changed
       !seen.has(v.id) && seen.add(v.id)
     )
     .map((v) => ({

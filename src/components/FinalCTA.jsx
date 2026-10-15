@@ -7,7 +7,8 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export default function FinalCTA() {
+// title / backgroundImage are optional overrides (the MISTER MOLINA home shows BOOKING over a photo)
+export default function FinalCTA({ title, backgroundImage } = {}) {
   const { t } = useApp();
   const containerRef = useRef(null);
   const cardRef = useRef(null);
@@ -56,9 +57,16 @@ export default function FinalCTA() {
 
   return (
     <section ref={containerRef} className="final-cta newsletter-layout" id="contacto">
+      {backgroundImage && (
+        <div
+          className="section-bg-photo"
+          style={{ backgroundImage: `url(${import.meta.env.BASE_URL}${backgroundImage})` }}
+          aria-hidden="true"
+        />
+      )}
       <div className="newsletter-container">
         <header className="newsletter-header" data-reveal>
-          <h1 className="newsletter-title">{t.connectTitle || 'CONNECT'}</h1>
+          <h1 className="newsletter-title">{title || t.connectTitle || 'CONNECT'}</h1>
         </header>
 
         <div ref={cardRef} className="newsletter-card">

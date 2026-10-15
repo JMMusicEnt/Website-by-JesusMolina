@@ -38,11 +38,6 @@ export default function Footer() {
       href: 'https://www.facebook.com/soyjesusmolina',
       path: 'M30 15h-3a4 4 0 0 0-4 4v3h-3v5h3v10h5V27h4l1-5h-5v-3a1 1 0 0 1 1-1h3z',
     },
-    {
-      id: 'soundcloud',
-      label: 'SoundCloud',
-      href: 'https://soundcloud.com/mistermolinamusic?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing',
-    }
   ];
 
   return (
@@ -93,15 +88,6 @@ export default function Footer() {
                     {channel.id === 'tiktok' && (
                       <g className="social-group__icon" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M20 27a4 4 0 1 0 4 4V16a5 5 0 0 0 5 5" />
-                      </g>
-                    )}
-                    {channel.id === 'soundcloud' && (
-                      <g className="social-group__icon" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                        <line x1="14" y1="24" x2="14" y2="28" />
-                        <line x1="18" y1="21" x2="18" y2="29" />
-                        <line x1="22" y1="18" x2="22" y2="30" />
-                        <line x1="26" y1="16" x2="26" y2="30" />
-                        <path d="M29 18a5 5 0 0 1 5 5 4 4 0 0 1-4 4H29" fill="none" />
                       </g>
                     )}
                   </g>

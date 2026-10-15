@@ -1,11 +1,32 @@
 import { useApp } from '../context/AppContext';
 
-export default function SpotifySection() {
+// Defaults to Jesus Molina; the MISTER MOLINA home passes its own Spotify artist
+export default function SpotifySection({
+  artistName = 'Jesus Molina',
+  artistId = '7Gl7yiOLDSRr1cZyPwpGv4',
+  artistUrl = `https://open.spotify.com/artist/${artistId}`,
+  backgroundImage, // optional photo behind the section (path inside public/)
+  variant, // 'mister' -> MISTER MOLINA backdrop (grain, burgundy light, giant wordmark)
+} = {}) {
   const { t } = useApp();
-  const artistUrl = 'https://open.spotify.com/artist/7Gl7yiOLDSRr1cZyPwpGv4';
 
   return (
-    <section className="spotify-sec" id="spotify">
+    <section
+      className={`spotify-sec${backgroundImage ? ' spotify-sec--photo' : ''}${variant === 'mister' ? ' spotify-sec--mm' : ''}`}
+      id="spotify"
+    >
+      {variant === 'mister' && (
+        <div className="mm-backdrop" aria-hidden="true">
+          <span className="mm-backdrop-word">MOLINA</span>
+        </div>
+      )}
+      {backgroundImage && (
+        <div
+          className="section-bg-photo"
+          style={{ backgroundImage: `url(${import.meta.env.BASE_URL}${backgroundImage})` }}
+          aria-hidden="true"
+        />
+      )}
       {/* Glow effects for Spotify branding */}
       <div className="spotify-glow spotify-glow-1" aria-hidden="true"></div>
       <div className="spotify-glow spotify-glow-2" aria-hidden="true"></div>
@@ -23,8 +44,8 @@ export default function SpotifySection() {
           <div className="spotify-player-card" data-reveal="slide-right" data-reveal-delay="150">
 
             <iframe
-              title="Jesus Molina on Spotify"
-              src="https://open.spotify.com/embed/artist/7Gl7yiOLDSRr1cZyPwpGv4?utm_source=generator&theme=0"
+              title={`${artistName} on Spotify`}
+              src={`https://open.spotify.com/embed/artist/${artistId}?utm_source=generator&theme=0`}
               frameBorder="0"
               allowFullScreen=""
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
