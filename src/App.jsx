@@ -76,7 +76,7 @@ function Home() {
       <ChinafunkVideo />
       <Separator />
       <CoursesCarousel />
-      <FinalCTA />
+      <FinalCTA backgroundImage="images/biography-portrait.jpg" />
     </>
   );
 }
