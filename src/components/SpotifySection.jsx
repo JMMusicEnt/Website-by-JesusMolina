@@ -6,15 +6,28 @@ export default function SpotifySection({
   artistId = '7Gl7yiOLDSRr1cZyPwpGv4',
   artistUrl = `https://open.spotify.com/artist/${artistId}`,
   backgroundImage, // optional photo behind the section (path inside public/)
-  variant, // 'mister' -> MISTER MOLINA backdrop (grain, burgundy light, giant wordmark)
+  variant, // 'mister' -> MISTER MOLINA backdrop; 'jesus' -> Jesus Molina home backdrop (stage blue + music staff)
 } = {}) {
   const { t } = useApp();
 
   return (
     <section
-      className={`spotify-sec${backgroundImage ? ' spotify-sec--photo' : ''}${variant === 'mister' ? ' spotify-sec--mm' : ''}`}
+      className={`spotify-sec${backgroundImage ? ' spotify-sec--photo' : ''}${variant === 'mister' ? ' spotify-sec--mm' : ''}${variant === 'jesus' ? ' spotify-sec--jm' : ''}`}
       id="spotify"
     >
+      {variant === 'jesus' && (
+        // Decorative backdrop: a music staff flowing behind the player — see jesusMolinaHome.css
+        <div className="jm-backdrop" aria-hidden="true">
+          <svg className="jm-staff" viewBox="0 0 1440 360" preserveAspectRatio="none">
+            {[0, 1, 2, 3, 4].map((i) => (
+              <path
+                key={i}
+                d={`M-20 ${150 + i * 18} C 300 ${40 + i * 18}, 520 ${300 + i * 18}, 760 ${170 + i * 18} S 1200 ${60 + i * 18}, 1460 ${190 + i * 18}`}
+              />
+            ))}
+          </svg>
+        </div>
+      )}
       {variant === 'mister' && (
         <div className="mm-backdrop" aria-hidden="true">
           <span className="mm-backdrop-word">MOLINA</span>
