@@ -8,10 +8,10 @@
     "dev": "vite",
     "build": "vite build",
     "build:cloudflare": "vite build --base=/",
-    "predeploy": "npm run build",
+    "predeploy": "npm run build && node -e \"require('fs').copyFileSync('dist/index.html','dist/404.html')\"",
     "deploy": "gh-pages -d dist",
     "lint": "oxlint",
-    "preview": "npm run build && wrangler dev"
+    "preview": "npm run build:cloudflare && wrangler dev --config wrangler.jsonc"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

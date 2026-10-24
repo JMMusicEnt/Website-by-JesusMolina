@@ -9,7 +9,10 @@
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
-    "not_found_handling": "single-page-application"
+    "not_found_handling": "single-page-application",
+    // Pages, robots.txt and sitemap.xml go through worker.js (per-domain meta and redirects);
+    // static files are served directly without invoking the Worker
+    "run_worker_first": ["/*", "!/assets/*", "!/images/*", "!/video/*"]
   },
   "compatibility_flags": [
     "nodejs_compat"

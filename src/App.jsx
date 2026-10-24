@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Loader from './components/Loader';
 import Chrome from './components/Chrome';
 import Nav from './components/Nav';
@@ -27,6 +27,7 @@ import {
   MISTER_MOLINA_SPOTIFY_URL,
   MISTER_MOLINA_SOCIALS,
 } from './data/misterMolina';
+import { IS_MISTER_SITE, SPLIT_DOMAINS, resolveSitePath } from './data/sites';
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -109,10 +110,57 @@ function MisterMolinaHome() {
   );
 }
 
+// Sends the visitor to a page that lives on the other artist's domain
+// (the Worker already does this with a 301; this covers local dev and in-app navigation)
+function OtherSiteRedirect({ path }) {
+  const { hash } = useLocation();
+  useEffect(() => {
+    window.location.replace(`${resolveSitePath(path).href}${hash}`);
+  }, [path, hash]);
+  return null;
+}
+
+// '/mister-molina#spotify' on the MISTER MOLINA domain -> '/#spotify'
+function ToMisterHome() {
+  const { hash } = useLocation();
+  return <Navigate to={{ pathname: '/', hash }} replace />;
+}
+
+function SiteRoutes() {
+  if (IS_MISTER_SITE) {
+    return (
+      <Routes>
+        <Route path="/" element={<MisterMolinaHome />} />
+        <Route path={MISTER_MOLINA_PATH} element={<ToMisterHome />} />
+        {['/concerts', '/biography', '/contact'].map((path) => (
+          <Route key={path} path={path} element={<OtherSiteRedirect path={path} />} />
+        ))}
+      </Routes>
+    );
+  }
+
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route
+        path={MISTER_MOLINA_PATH}
+        element={SPLIT_DOMAINS ? <OtherSiteRedirect path={MISTER_MOLINA_PATH} /> : <MisterMolinaHome />}
+      />
+      <Route path="/concerts" element={<Concerts />} />
+      <Route path="/biography" element={<Biography />} />
+      <Route path="/contact" element={<Contact />} />
+    </Routes>
+  );
+}
+
 export default function App() {
   // Global, page-wide behaviours that used to live at the bottom of script.js
   useScrollReveal();
   useSmoothAnchorScroll();
+
+  useEffect(() => {
+    if (IS_MISTER_SITE) document.title = 'MISTER MOLINA | Official Website';
+  }, []);
 
   return (
     <AppProvider>
@@ -120,13 +168,7 @@ export default function App() {
       <Loader />
       <Chrome />
       <Nav />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path={MISTER_MOLINA_PATH} element={<MisterMolinaHome />} />
-        <Route path="/concerts" element={<Concerts />} />
-        <Route path="/biography" element={<Biography />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
+      <SiteRoutes />
       <Footer />
     </AppProvider>
   );

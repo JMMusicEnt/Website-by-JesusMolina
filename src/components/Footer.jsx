@@ -1,6 +1,8 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import SiteLink from './SiteLink';
 import { useApp } from '../context/AppContext';
-import { MISTER_MOLINA_PATH, MISTER_MOLINA_SOCIALS, MISTER_MOLINA_EXPLORE_LINKS } from '../data/misterMolina';
+import { MISTER_MOLINA_SOCIALS, MISTER_MOLINA_EXPLORE_LINKS } from '../data/misterMolina';
+import { MISTER_HOME_PATH } from '../data/sites';
 
 // Path-based icons (50×50 viewBox); instagram, apple, tiktok and soundcloud are drawn inline below
 const ICON_PATHS = {
@@ -12,7 +14,7 @@ const ICON_PATHS = {
 export default function Footer() {
   const { t } = useApp();
   // The MISTER MOLINA page gets its own brand, socials and section links
-  const isMisterMolina = useLocation().pathname === MISTER_MOLINA_PATH;
+  const isMisterMolina = useLocation().pathname === MISTER_HOME_PATH;
 
   const jesusChannels = [
     {
@@ -123,7 +125,7 @@ export default function Footer() {
             <ul className="footer-link-list">
               {(t.footerNavLinks || []).map((link) => (
                 <li key={link.href}>
-                  <Link to={link.href}>{link.label}</Link>
+                  <SiteLink to={link.href}>{link.label}</SiteLink>
                 </li>
               ))}
             </ul>
@@ -134,7 +136,7 @@ export default function Footer() {
             <ul className="footer-link-list">
               {exploreLinks.map((link) => (
                 <li key={link.href}>
-                  <Link to={link.href}>{link.label}</Link>
+                  <SiteLink to={link.href}>{link.label}</SiteLink>
                 </li>
               ))}
             </ul>

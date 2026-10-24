@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import SiteLink from './SiteLink';
 import { useNavScroll } from '../hooks/useNavScroll';
 import { useApp } from '../context/AppContext';
 import PlatformsModal from './PlatformsModal';
@@ -163,13 +164,13 @@ export default function Nav() {
     <>
       <header className={navClass} id="nav">
         {/* ── Logo ── */}
-        <Link to="/" className="nav-logo" onClick={() => setMenuOpen(false)}>
+        <SiteLink to="/" className="nav-logo" onClick={() => setMenuOpen(false)}>
           <img src={`${import.meta.env.BASE_URL}images/logo.png`} alt="Jesus Molina logo" className="nav-logo-img" />
           {/* Hide name on homepage — it's prominent in the hero below */}
           {!isHomepage && (
             <span className="nav-logo-text">Jesus Molina</span>
           )}
-        </Link>
+        </SiteLink>
 
         {/* ── Desktop Links & Socials ── */}
         <div className="nav-desktop">
@@ -192,7 +193,7 @@ export default function Nav() {
                   {item.label}
                 </a>
               ) : (
-                <Link
+                <SiteLink
                   key={idx}
                   to={item.path}
                   className={className}
@@ -200,7 +201,7 @@ export default function Nav() {
                   onClick={() => setMenuOpen(false)}
                 >
                   {item.label}
-                </Link>
+                </SiteLink>
               );
             })}
           </div>
@@ -289,13 +290,13 @@ export default function Nav() {
                     {content}
                   </a>
                 ) : (
-                  <Link
+                  <SiteLink
                     to={item.path}
                     className="Menu-list-item-link"
                     onClick={() => setMenuOpen(false)}
                   >
                     {content}
-                  </Link>
+                  </SiteLink>
                 )}
               </li>
             );

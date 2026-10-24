@@ -69,9 +69,108 @@ async function handleYouTube(request, env, ctx) {
   }
 }
 
+// ── Dos dominios, una sola web ──
+// jesusmolina.org (principal) y mistermolinamusic.com (MISTER MOLINA en la raíz de su dominio).
+// *.localhost permite probarlo con `wrangler dev` (localhost:8787 y mistermolinamusic.localhost:8787).
+const SITE_URLS = { jesus: 'https://jesusmolina.org', mister: 'https://mistermolinamusic.com' };
+const MISTER_PATH = '/mister-molina';
+const JESUS_PAGES = ['/', '/concerts', '/biography', '/contact'];
+
+const JESUS_DESCRIPTION = 'Jesús Molina is a Colombian pianist, composer and producer. Tour dates, music, videos, biography and booking.';
+const SITE_META = {
+  jesus: {
+    siteName: 'Jesús Molina',
+    titles: {
+      '/': 'Jesús Molina | Official Website',
+      '/concerts': 'Tour | Jesús Molina',
+      '/biography': 'Biography | Jesús Molina',
+      '/contact': 'Contact | Jesús Molina',
+    },
+    description: JESUS_DESCRIPTION,
+    image: '/images/biography-portrait.jpg',
+  },
+  mister: {
+    siteName: 'MISTER MOLINA',
+    titles: { '/': 'MISTER MOLINA | Official Website' },
+    description: 'MISTER MOLINA is the electronic alter ego of pianist and producer Jesús Molina. Listen to "Chika I Funk", watch the videos and book MISTER MOLINA.',
+    image: '/images/mistermolinaphoto.jpeg',
+  },
+};
+
+function siteFor(hostname) {
+  if (/^(www\.)?mistermolinamusic\.(com|localhost)$/.test(hostname)) return 'mister';
+  if (/^(www\.)?jesusmolina\.org$/.test(hostname) || hostname === 'localhost') return 'jesus';
+  return null; // workers.dev, etc.: una sola web como antes
+}
+
+function originsFor(url) {
+  if (!url.hostname.endsWith('localhost')) return SITE_URLS;
+  const port = url.port ? `:${url.port}` : '';
+  return { jesus: `${url.protocol}//localhost${port}`, mister: `${url.protocol}//mistermolinamusic.localhost${port}` };
+}
+
+function redirect(location) {
+  return Response.redirect(location, 301);
+}
+
+// Redirecciones 301 entre dominios (las ve Google; el navegador también lo resuelve en el cliente)
+function siteRedirect(site, url, origins) {
+  if (url.hostname.startsWith('www.')) {
+    return redirect(`${url.protocol}//${url.host.slice(4)}${url.pathname}${url.search}`);
+  }
+  if (url.pathname === MISTER_PATH) return redirect(`${origins.mister}/${url.search}`);
+  if (site === 'mister' && JESUS_PAGES.includes(url.pathname) && url.pathname !== '/') {
+    return redirect(`${origins.jesus}${url.pathname}${url.search}`);
+  }
+  return null;
+}
+
+function robotsTxt(origin) {
+  return new Response(`User-agent: *\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n`, {
+    headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=3600' },
+  });
+}
+
+function sitemapXml(site, origin) {
+  const pages = site === 'mister' ? ['/'] : JESUS_PAGES;
+  const urls = pages.map((page) => `  <url><loc>${origin}${page}</loc></url>`).join('\n');
+  return new Response(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`, {
+    headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, max-age=3600' },
+  });
+}
+
+// Título, descripción, canonical y Open Graph según el dominio y la página
+function withSiteMeta(response, site, url, origin) {
+  const meta = SITE_META[site];
+  const page = meta.titles[url.pathname] ? url.pathname : '/';
+  const title = meta.titles[page];
+  const pageUrl = `${origin}${page}`;
+  const setContent = (value) => ({ element: (el) => el.setAttribute('content', value) });
+
+  return new HTMLRewriter()
+    .on('title', { element: (el) => el.setInnerContent(title) })
+    .on('meta[name="description"]', setContent(meta.description))
+    .on('link[rel="canonical"]', { element: (el) => el.setAttribute('href', pageUrl) })
+    .on('meta[property="og:site_name"]', setContent(meta.siteName))
+    .on('meta[property="og:title"]', setContent(title))
+    .on('meta[property="og:description"]', setContent(meta.description))
+    .on('meta[property="og:url"]', setContent(pageUrl))
+    .on('meta[property="og:image"]', setContent(`${origin}${meta.image}`))
+    .transform(response);
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    const site = siteFor(url.hostname);
+    const origins = originsFor(url);
+
+    if (site) {
+      const redirectResponse = siteRedirect(site, url, origins);
+      if (redirectResponse) return redirectResponse;
+      if (url.pathname === '/robots.txt') return robotsTxt(origins[site]);
+      if (url.pathname === '/sitemap.xml') return sitemapXml(site, origins[site]);
+    }
 
     // Endpoint API para YouTube (la API key se queda en el servidor)
     if (url.pathname === '/api/youtube') {
@@ -116,9 +215,10 @@ export default {
       }
     }
 
-    // Cualquier otra ruta la dejamos pasar para que Cloudflare sirva los archivos estáticos de tu frontend (React)
-    // En la nueva versión de Workers, si no devuelves nada o lanzas un throw fallará, 
-    // pero si usas env.ASSETS puedes servir los assets estáticos explícitamente:
-    return env.ASSETS.fetch(request);
+    // Cualquier otra ruta: archivos estáticos del frontend (React). Las páginas (/, /concerts...)
+    // reciben index.html por la configuración "single-page-application" de wrangler.jsonc
+    const response = await env.ASSETS.fetch(request);
+    const isHtml = (response.headers.get('Content-Type') || '').includes('text/html');
+    return site && isHtml ? withSiteMeta(response, site, url, origins[site]) : response;
   }
 };
