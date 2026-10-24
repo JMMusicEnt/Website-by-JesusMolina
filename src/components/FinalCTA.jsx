@@ -7,8 +7,9 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// title / backgroundImage are optional overrides (the MISTER MOLINA home shows BOOKING over a photo)
-export default function FinalCTA({ title, backgroundImage } = {}) {
+// title / backgroundImage are optional overrides (the MISTER MOLINA home shows BOOKING over a photo);
+// embedSrc swaps the email form for an embedded sign-up form (Cobrand on the Jesus Molina home)
+export default function FinalCTA({ title, backgroundImage, embedSrc } = {}) {
   const { t } = useApp();
   const containerRef = useRef(null);
   const cardRef = useRef(null);
@@ -69,35 +70,49 @@ export default function FinalCTA({ title, backgroundImage } = {}) {
           <h1 className="newsletter-title">{title || t.connectTitle || 'CONNECT'}</h1>
         </header>
 
-        <div ref={cardRef} className="newsletter-card">
-          <form className="newsletter-form" onSubmit={handleSignup}>
+        {embedSrc ? (
+          <div ref={cardRef} className="newsletter-card newsletter-card--embed">
+            <iframe
+              src={embedSrc}
+              title={`${title || t.connectTitle || 'CONNECT'} sign-up form`}
+              className="newsletter-embed"
+              allow="clipboard-write; fullscreen"
+              scrolling="no" // the form fits the iframe height; hide its inner scrollbar
+              allowFullScreen
+              loading="lazy"
+            />
+          </div>
+        ) : (
+          <div ref={cardRef} className="newsletter-card">
+            <form className="newsletter-form" onSubmit={handleSignup}>
 
-            <div className="newsletter-field">
-              <label htmlFor="newsletter-input">
-                {t.connectSignupLabel || 'Email Address'} <span className="required">(Required)</span>
-              </label>
+              <div className="newsletter-field">
+                <label htmlFor="newsletter-input">
+                  {t.connectSignupLabel || 'Email Address'} <span className="required">(Required)</span>
+                </label>
 
-              <div className="newsletter-input-wrapper">
-                <input
-                  type="email"
-                  id="newsletter-input"
-                  name="email"
-                  placeholder={t.connectSignupPlaceholder || 'your@email.com'}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
+                <div className="newsletter-input-wrapper">
+                  <input
+                    type="email"
+                    id="newsletter-input"
+                    name="email"
+                    placeholder={t.connectSignupPlaceholder || 'your@email.com'}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
               </div>
-            </div>
 
-            <button type="submit" className="newsletter-submit-btn">
-              {submitted
-                ? (t.connectSignupDone || "You're on the list!")
-                : (t.connectSignupBtn || 'Sign Up')}
-            </button>
+              <button type="submit" className="newsletter-submit-btn">
+                {submitted
+                  ? (t.connectSignupDone || "You're on the list!")
+                  : (t.connectSignupBtn || 'Sign Up')}
+              </button>
 
-          </form>
-        </div>
+            </form>
+          </div>
+        )}
       </div>
     </section>
   );

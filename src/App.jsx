@@ -64,6 +64,9 @@ function ScrollToAnchor() {
   return null;
 }
 
+// Cobrand fan sign-up form shown in the CONNECT section of the Jesus Molina home
+const COBRAND_SIGNUP_URL = 'https://drop.cobrand.com/d/JesusMolina/JMSU/embed?form_only=true';
+
 // Home Component wrapping all landing sections
 function Home() {
   return (
@@ -77,7 +80,7 @@ function Home() {
       <ChinafunkVideo />
       <Separator />
       <CoursesCarousel />
-      <FinalCTA backgroundImage="images/biography-portrait.jpg" />
+      <FinalCTA backgroundImage="images/biography-portrait.jpg" embedSrc={COBRAND_SIGNUP_URL} />
     </>
   );
 }
