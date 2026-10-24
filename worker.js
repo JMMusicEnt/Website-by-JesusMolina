@@ -113,16 +113,45 @@ function redirect(location) {
   return Response.redirect(location, 301);
 }
 
-// Redirecciones 301 entre dominios (las ve Google; el navegador también lo resuelve en el cliente)
+// URLs de la web antigua de Wix que siguen en Google (también con prefijo de idioma: /es/bio, /fr/concerts...)
+const LANG_PREFIX = /^\/(es|en|fr|it|pt|de)(?=\/|$)/;
+const LEGACY_REDIRECTS = [
+  [/^\/(bio|biografia(-1)?|copia-de-biografia|epk)$/, '/biography'],
+  [/^\/(conciertos|event-details-registration(\/.*)?)$/, '/concerts'],
+  [/^\/(contact-8|contactos|copia-de-contactos)$/, '/contact'],
+  [/^\/(masterclass(-1)?|clinicasmusicales|online-courses|pianote|videotutoriales|videotutorials)$/, '/#cursos-disponibles'],
+  [/^\/(selah|remix)$/, '/#spotify'],
+  [/^\/(videosydiscografia|copia-de-videos-discografia)$/, '/#destacados'],
+];
+
+// [sitio, ruta] de destino para una ruta pedida en cada dominio; lo que no existe va a la portada
+function jesusTarget(path) {
+  const unprefixed = path.replace(LANG_PREFIX, '') || '/';
+  if (JESUS_PAGES.includes(unprefixed)) return ['jesus', unprefixed];
+  const legacy = LEGACY_REDIRECTS.find(([pattern]) => pattern.test(unprefixed));
+  return ['jesus', legacy ? legacy[1] : '/'];
+}
+
+function misterTarget(path) {
+  return JESUS_PAGES.includes(path) && path !== '/' ? ['jesus', path] : ['mister', '/'];
+}
+
+// Redirecciones 301 entre dominios y desde URLs antiguas (las ve Google; el cliente también lo resuelve)
 function siteRedirect(site, url, origins) {
   if (url.hostname.startsWith('www.')) {
     return redirect(`${url.protocol}//${url.host.slice(4)}${url.pathname}${url.search}`);
   }
-  if (url.pathname === MISTER_PATH) return redirect(`${origins.mister}/${url.search}`);
-  if (site === 'mister' && JESUS_PAGES.includes(url.pathname) && url.pathname !== '/') {
-    return redirect(`${origins.jesus}${url.pathname}${url.search}`);
-  }
-  return null;
+  // APIs, robots.txt, sitemap.xml y archivos no se tocan
+  if (url.pathname.startsWith('/api/') || /\.\w+$/.test(url.pathname)) return null;
+
+  const path = url.pathname.replace(/\/+$/, '') || '/'; // '/concerts/' -> '/concerts'
+  const [targetSite, target] = path === MISTER_PATH
+    ? ['mister', '/']
+    : site === 'mister' ? misterTarget(path) : jesusTarget(path);
+  if (targetSite === site && target === url.pathname) return null;
+
+  const [targetPath, hash] = target.split('#');
+  return redirect(`${origins[targetSite]}${targetPath}${url.search}${hash ? `#${hash}` : ''}`);
 }
 
 function robotsTxt(origin) {

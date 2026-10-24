@@ -135,6 +135,7 @@ function SiteRoutes() {
         {['/concerts', '/biography', '/contact'].map((path) => (
           <Route key={path} path={path} element={<OtherSiteRedirect path={path} />} />
         ))}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     );
   }
@@ -149,6 +150,8 @@ function SiteRoutes() {
       <Route path="/concerts" element={<Concerts />} />
       <Route path="/biography" element={<Biography />} />
       <Route path="/contact" element={<Contact />} />
+      {/* Unknown paths (e.g. old Wix URLs like /bio) go home instead of an empty page */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
