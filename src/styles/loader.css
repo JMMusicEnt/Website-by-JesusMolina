@@ -52,6 +52,12 @@
   filter: drop-shadow(0 0 24px rgba(255, 255, 255, 0.15));
 }
 
+.loader-logo-img--wordmark {
+  width: auto;
+  height: 88px;
+  border-radius: 0;
+}
+
 .loader-logo-name {
   font-family: var(--font-display);
   font-size: 13px;

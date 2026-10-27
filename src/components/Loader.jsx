@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useLoader } from '../hooks/useLoader';
+import { useIsMisterPage } from '../hooks/useIsMisterPage';
 
 export default function Loader() {
   const { done, progress } = useLoader();
+  const isMister = useIsMisterPage();
   const [removed, setRemoved] = useState(false);
 
   useEffect(() => {
@@ -16,13 +18,21 @@ export default function Loader() {
   return (
     <div className={`loader${done ? ' done' : ''}`} id="loader">
       <div className="loader-scene">
-        {/* JM Logo only — no piano or music notes */}
+        {/* Logo only — no piano or music notes. MISTER MOLINA shows its own wordmark */}
         <div className="loader-logo-wrap">
-          <img
-            src={`${import.meta.env.BASE_URL}images/logo.png`}
-            alt="JM Music logo"
-            className="loader-logo-img"
-          />
+          {isMister ? (
+            <img
+              src={`${import.meta.env.BASE_URL}images/logomistermolina-web.png`}
+              alt="MISTER MOLINA"
+              className="loader-logo-img loader-logo-img--wordmark"
+            />
+          ) : (
+            <img
+              src={`${import.meta.env.BASE_URL}images/logo.png`}
+              alt="JM Music logo"
+              className="loader-logo-img"
+            />
+          )}
         </div>
 
         <div className="loader-info">

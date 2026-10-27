@@ -92,7 +92,7 @@ function MisterMolinaHome() {
     <>
       <Hero
         videoSrc="video/clipHomePageMisterMolinaNuevo.mp4"
-        poster="images/mrmolinavideoposter.png"
+        poster="images/videoposterhomepageMISTER.jpg"
         titleFirst="MISTER"
         titleLast="MOLINA"
         spotifyUrl={MISTER_MOLINA_SPOTIFY_URL}
