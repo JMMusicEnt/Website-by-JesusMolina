@@ -27,7 +27,7 @@ import {
   MISTER_MOLINA_SPOTIFY_URL,
   MISTER_MOLINA_SOCIALS,
 } from './data/misterMolina';
-import { IS_MISTER_SITE, SPLIT_DOMAINS, resolveSitePath } from './data/sites';
+import { IS_MISTER_SITE, SPLIT_DOMAINS, resolveSitePath, toMisterDomainPath } from './data/sites';
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -91,7 +91,7 @@ function MisterMolinaHome() {
   return (
     <>
       <Hero
-        videoSrc="video/mrmolinaclipHomePage.mp4"
+        videoSrc="video/clipHomePageMisterMolinaNuevo.mp4"
         poster="images/mrmolinavideoposter.png"
         titleFirst="MISTER"
         titleLast="MOLINA"
@@ -113,6 +113,15 @@ function MisterMolinaHome() {
   );
 }
 
+// MISTER MOLINA's pages, keyed by their path under MISTER_MOLINA_PATH ('' is its home).
+// Tour dates and booking contacts are shared with Jesus Molina for now.
+const MISTER_PAGES = [
+  ['', <MisterMolinaHome />],
+  ['/concerts', <Concerts artist="mister" />],
+  ['/biography', <Biography artist="mister" />],
+  ['/contact', <Contact artist="mister" />],
+];
+
 // Sends the visitor to a page that lives on the other artist's domain
 // (the Worker already does this with a 301; this covers local dev and in-app navigation)
 function OtherSiteRedirect({ path }) {
@@ -123,21 +132,20 @@ function OtherSiteRedirect({ path }) {
   return null;
 }
 
-// '/mister-molina#spotify' on the MISTER MOLINA domain -> '/#spotify'
-function ToMisterHome() {
-  const { hash } = useLocation();
-  return <Navigate to={{ pathname: '/', hash }} replace />;
+// '/mister-molina/concerts#x' on the MISTER MOLINA domain -> '/concerts#x'
+function ToMisterDomainPath() {
+  const { pathname, hash } = useLocation();
+  return <Navigate to={{ pathname: toMisterDomainPath(pathname), hash }} replace />;
 }
 
 function SiteRoutes() {
   if (IS_MISTER_SITE) {
     return (
       <Routes>
-        <Route path="/" element={<MisterMolinaHome />} />
-        <Route path={MISTER_MOLINA_PATH} element={<ToMisterHome />} />
-        {['/concerts', '/biography', '/contact'].map((path) => (
-          <Route key={path} path={path} element={<OtherSiteRedirect path={path} />} />
+        {MISTER_PAGES.map(([path, element]) => (
+          <Route key={path} path={path || '/'} element={element} />
         ))}
+        <Route path={`${MISTER_MOLINA_PATH}/*`} element={<ToMisterDomainPath />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     );
@@ -146,10 +154,16 @@ function SiteRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route
-        path={MISTER_MOLINA_PATH}
-        element={SPLIT_DOMAINS ? <OtherSiteRedirect path={MISTER_MOLINA_PATH} /> : <MisterMolinaHome />}
-      />
+      {MISTER_PAGES.map(([path, element]) => {
+        const misterPath = `${MISTER_MOLINA_PATH}${path}`;
+        return (
+          <Route
+            key={misterPath}
+            path={misterPath}
+            element={SPLIT_DOMAINS ? <OtherSiteRedirect path={misterPath} /> : element}
+          />
+        );
+      })}
       <Route path="/concerts" element={<Concerts />} />
       <Route path="/biography" element={<Biography />} />
       <Route path="/contact" element={<Contact />} />

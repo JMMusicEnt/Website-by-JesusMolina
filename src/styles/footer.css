@@ -29,6 +29,12 @@
   margin-bottom: 16px;
 }
 
+.footer-brand-wordmark {
+  display: block;
+  height: 56px;
+  width: auto;
+}
+
 .footer-brand-text {
   font-family: var(--font-display);
   font-size: 20px;

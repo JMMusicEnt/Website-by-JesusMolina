@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useApp } from '../context/AppContext';
 
+// `teaching` options are Jesus Molina's classes, not offered on the MISTER MOLINA site
 const SUBJECT_OPTIONS = [
   { value: 'hiring', labelKey: 'contactFormOptionHiring', icon: 'mic', color: 'hsl(38, 72%, 52%)' },
-  { value: 'masterclass', labelKey: 'contactFormOptionMasterclass', icon: 'school', color: 'hsl(280, 55%, 55%)' },
-  { value: 'lessons', labelKey: 'contactFormOptionLessons', icon: 'piano', color: 'hsl(200, 65%, 50%)' },
+  { value: 'masterclass', labelKey: 'contactFormOptionMasterclass', icon: 'school', color: 'hsl(280, 55%, 55%)', teaching: true },
+  { value: 'lessons', labelKey: 'contactFormOptionLessons', icon: 'piano', color: 'hsl(200, 65%, 50%)', teaching: true },
   { value: 'other', labelKey: 'contactFormOptionOther', icon: 'chat', color: 'hsl(150, 45%, 45%)' },
 ];
 
@@ -42,8 +43,11 @@ function SubjectIcon({ type, isSelected }) {
   );
 }
 
-export default function Contact() {
+// Same management & booking for both artists; artist="mister" tags the email and hides the class options
+export default function Contact({ artist = 'jesus' }) {
   const { t } = useApp();
+  const isMister = artist === 'mister';
+  const subjectOptions = isMister ? SUBJECT_OPTIONS.filter((opt) => !opt.teaching) : SUBJECT_OPTIONS;
   const [form, setForm] = useState({ name: '', email: '', subject: 'hiring', message: '' });
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -58,7 +62,7 @@ export default function Contact() {
     else if (form.subject === 'lessons') subjectText = "Lessons";
     else if (form.subject === 'other') subjectText = "Other";
 
-    const mailtoLink = `mailto:Info@thecolombygroup.com?subject=${encodeURIComponent(`[${subjectText}] Contact from ${form.name}`)}&body=${encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`)}`;
+    const mailtoLink = `mailto:Info@thecolombygroup.com?subject=${encodeURIComponent(`[${isMister ? 'MISTER MOLINA · ' : ''}${subjectText}] Contact from ${form.name}`)}&body=${encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`)}`;
     
     window.location.href = mailtoLink;
 
@@ -208,7 +212,7 @@ export default function Contact() {
                 <div className="form-subject-picker">
                   <span className="subject-picker-label">{t.contactFormSubject}</span>
                   <div className="subject-chips-row" role="radiogroup" aria-label={t.contactFormSubject}>
-                    {SUBJECT_OPTIONS.map((opt) => {
+                    {subjectOptions.map((opt) => {
                       const isSelected = form.subject === opt.value;
                       return (
                         <button

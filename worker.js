@@ -70,11 +70,12 @@ async function handleYouTube(request, env, ctx) {
 }
 
 // ── Dos dominios, una sola web ──
-// jesusmolina.org (principal) y mistermolinamusic.com (MISTER MOLINA en la raíz de su dominio).
+// jesusmolina.org (Jesús Molina) y mistermolinamusic.com (MISTER MOLINA), cada uno con sus propias páginas.
 // *.localhost permite probarlo con `wrangler dev` (localhost:8787 y mistermolinamusic.localhost:8787).
 const SITE_URLS = { jesus: 'https://jesusmolina.org', mister: 'https://mistermolinamusic.com' };
 const MISTER_PATH = '/mister-molina';
-const JESUS_PAGES = ['/', '/concerts', '/biography', '/contact'];
+// Ambos dominios tienen las mismas páginas, cada una con el contenido de su artista
+const SITE_PAGES = ['/', '/concerts', '/biography', '/contact'];
 
 const JESUS_DESCRIPTION = 'Jesús Molina is a Colombian pianist, composer and producer. Tour dates, music, videos, biography and booking.';
 const SITE_META = {
@@ -91,8 +92,13 @@ const SITE_META = {
   },
   mister: {
     siteName: 'MISTER MOLINA',
-    titles: { '/': 'MISTER MOLINA | Official Website' },
-    description: 'MISTER MOLINA is the electronic alter ego of pianist and producer Jesús Molina. Listen to "Chika I Funk", watch the videos and book MISTER MOLINA.',
+    titles: {
+      '/': 'MISTER MOLINA | Official Website',
+      '/concerts': 'Tour | MISTER MOLINA',
+      '/biography': 'Biography | MISTER MOLINA',
+      '/contact': 'Contact | MISTER MOLINA',
+    },
+    description: 'MISTER MOLINA is the electronic alter ego of pianist and producer Jesús Molina. Listen to "Higher Than Heaven" featuring Grace Kinstler, watch the videos and book MISTER MOLINA.',
     image: '/images/mistermolinaphoto.jpeg',
   },
 };
@@ -127,13 +133,19 @@ const LEGACY_REDIRECTS = [
 // [sitio, ruta] de destino para una ruta pedida en cada dominio; lo que no existe va a la portada
 function jesusTarget(path) {
   const unprefixed = path.replace(LANG_PREFIX, '') || '/';
-  if (JESUS_PAGES.includes(unprefixed)) return ['jesus', unprefixed];
+  if (SITE_PAGES.includes(unprefixed)) return ['jesus', unprefixed];
   const legacy = LEGACY_REDIRECTS.find(([pattern]) => pattern.test(unprefixed));
   return ['jesus', legacy ? legacy[1] : '/'];
 }
 
 function misterTarget(path) {
-  return JESUS_PAGES.includes(path) && path !== '/' ? ['jesus', path] : ['mister', '/'];
+  return ['mister', SITE_PAGES.includes(path) ? path : '/'];
+}
+
+// '/mister-molina' y '/mister-molina/concerts' (cualquier dominio) -> '/' y '/concerts' en mistermolinamusic.com
+function misterPathTarget(path) {
+  if (path !== MISTER_PATH && !path.startsWith(`${MISTER_PATH}/`)) return null;
+  return misterTarget(path.slice(MISTER_PATH.length) || '/');
 }
 
 // Redirecciones 301 entre dominios y desde URLs antiguas (las ve Google; el cliente también lo resuelve)
@@ -145,9 +157,8 @@ function siteRedirect(site, url, origins) {
   if (url.pathname.startsWith('/api/') || /\.\w+$/.test(url.pathname)) return null;
 
   const path = url.pathname.replace(/\/+$/, '') || '/'; // '/concerts/' -> '/concerts'
-  const [targetSite, target] = path === MISTER_PATH
-    ? ['mister', '/']
-    : site === 'mister' ? misterTarget(path) : jesusTarget(path);
+  const [targetSite, target] = misterPathTarget(path)
+    ?? (site === 'mister' ? misterTarget(path) : jesusTarget(path));
   if (targetSite === site && target === url.pathname) return null;
 
   const [targetPath, hash] = target.split('#');
@@ -160,9 +171,8 @@ function robotsTxt(origin) {
   });
 }
 
-function sitemapXml(site, origin) {
-  const pages = site === 'mister' ? ['/'] : JESUS_PAGES;
-  const urls = pages.map((page) => `  <url><loc>${origin}${page}</loc></url>`).join('\n');
+function sitemapXml(origin) {
+  const urls = SITE_PAGES.map((page) => `  <url><loc>${origin}${page}</loc></url>`).join('\n');
   return new Response(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`, {
     headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, max-age=3600' },
   });
@@ -198,7 +208,7 @@ export default {
       const redirectResponse = siteRedirect(site, url, origins);
       if (redirectResponse) return redirectResponse;
       if (url.pathname === '/robots.txt') return robotsTxt(origins[site]);
-      if (url.pathname === '/sitemap.xml') return sitemapXml(site, origins[site]);
+      if (url.pathname === '/sitemap.xml') return sitemapXml(origins[site]);
     }
 
     // Endpoint API para YouTube (la API key se queda en el servidor)

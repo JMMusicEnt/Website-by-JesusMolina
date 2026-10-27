@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { MISTER_MOLINA_PATH } from '../data/misterMolina';
 
 const SUB_PAGES = ['/concerts', '/biography', '/contact'];
 const DARK_SECTION_SELECTORS = [
@@ -24,7 +25,8 @@ export function useNavScroll() {
   const [scrolled, setScrolled] = useState(false);
   const [onDark, setOnDark] = useState(false);
   const { pathname } = useLocation();
-  const isSubPage = SUB_PAGES.includes(pathname);
+  // MISTER MOLINA's sub-pages also live at '/mister-molina/concerts'... when sharing one domain
+  const isSubPage = SUB_PAGES.some((page) => pathname === page || pathname === `${MISTER_MOLINA_PATH}${page}`);
   const isHomepage = pathname === '/' || pathname === '/mister-molina';
 
   useEffect(() => {

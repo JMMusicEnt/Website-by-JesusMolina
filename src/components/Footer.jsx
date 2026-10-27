@@ -1,8 +1,7 @@
-import { useLocation } from 'react-router-dom';
 import SiteLink from './SiteLink';
 import { useApp } from '../context/AppContext';
-import { MISTER_MOLINA_SOCIALS, MISTER_MOLINA_EXPLORE_LINKS } from '../data/misterMolina';
-import { MISTER_HOME_PATH } from '../data/sites';
+import { MISTER_MOLINA_PAGES, MISTER_MOLINA_SOCIALS, MISTER_MOLINA_EXPLORE_LINKS } from '../data/misterMolina';
+import { useIsMisterPage } from '../hooks/useIsMisterPage';
 
 // Path-based icons (50×50 viewBox); instagram, apple, tiktok and soundcloud are drawn inline below
 const ICON_PATHS = {
@@ -13,8 +12,8 @@ const ICON_PATHS = {
 
 export default function Footer() {
   const { t } = useApp();
-  // The MISTER MOLINA page gets its own brand, socials and section links
-  const isMisterMolina = useLocation().pathname === MISTER_HOME_PATH;
+  // MISTER MOLINA's pages get their own brand, socials and links
+  const isMisterMolina = useIsMisterPage();
 
   const jesusChannels = [
     {
@@ -51,14 +50,27 @@ export default function Footer() {
 
   const channels = isMisterMolina ? MISTER_MOLINA_SOCIALS : jesusChannels;
   const exploreLinks = isMisterMolina ? MISTER_MOLINA_EXPLORE_LINKS : (t.footerExploreLinks || []);
+  const navLinks = isMisterMolina
+    ? MISTER_MOLINA_PAGES.map((page) => ({ href: page.path, label: t[page.labelKey] || page.label }))
+    : (t.footerNavLinks || []);
 
   return (
     <footer className="footer">
       <div className="footer-top">
         <div className="footer-brand-block">
           <div className="footer-brand">
-            <span className="nav-logo-mark">{isMisterMolina ? 'MM' : 'JM'}</span>
-            <span className="footer-brand-text">{isMisterMolina ? 'MISTER MOLINA' : 'Jesus Molina'}</span>
+            {isMisterMolina ? (
+              <img
+                src={`${import.meta.env.BASE_URL}images/logomistermolina-web.png`}
+                alt="MISTER MOLINA"
+                className="footer-brand-wordmark"
+              />
+            ) : (
+              <>
+                <span className="nav-logo-mark">JM</span>
+                <span className="footer-brand-text">Jesus Molina</span>
+              </>
+            )}
           </div>
 
           {/* Animated Social Icons */}
@@ -123,7 +135,7 @@ export default function Footer() {
           <div className="footer-column">
             <h3>{t.footerNav}</h3>
             <ul className="footer-link-list">
-              {(t.footerNavLinks || []).map((link) => (
+              {navLinks.map((link) => (
                 <li key={link.href}>
                   <SiteLink to={link.href}>{link.label}</SiteLink>
                 </li>

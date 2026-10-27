@@ -54,8 +54,10 @@ function LiveCountdown({ targetDateStr }) {
   );
 }
 
-export default function Concerts() {
+// Tour dates are shared by both artists for now; artist="mister" only rebrands the artist card
+export default function Concerts({ artist = 'jesus' }) {
   const { t } = useApp();
+  const isMister = artist === 'mister';
   const [activeShowIndex, setActiveShowIndex] = useState(0); // Default to first
   const [playingId, setPlayingId] = useState(null);
   const [searchCountry, setSearchCountry] = useState('');
@@ -284,14 +286,17 @@ export default function Concerts() {
                 </div>
                 <div className="wt-follow-content">
                   <img 
-                    src={`${import.meta.env.BASE_URL}images/bioPhoto.jpeg`} 
-                    alt="Jesús Molina" 
+                    src={`${import.meta.env.BASE_URL}images/${isMister ? 'mistermolinaphoto.jpeg' : 'bioPhoto.jpeg'}`} 
+                    alt={isMister ? 'MISTER MOLINA' : 'Jesús Molina'} 
                     className="wt-follow-avatar" 
                   />
                   
                   <div className="wt-follow-info">
                     <span className="wt-follow-label">Artist</span>
-                    <h3 className="wt-follow-name">Jesús Molina</h3>
+                    <h3 className="wt-follow-name">{isMister ? 'MISTER MOLINA' : 'Jesús Molina'}</h3>
+                    {/* Verified badge and follower count belong to Jesus Molina's Bandsintown profile */}
+                    {!isMister && (
+                    <>
                     <div className="wt-follow-stats-row">
                       <span className="wt-follow-verified">
                         <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
@@ -301,6 +306,8 @@ export default function Concerts() {
                       </span>
                     </div>
                     <div className="wt-follow-stats">8.49K Followers</div>
+                    </>
+                    )}
 
                     <a 
                       href="https://www.bandsintown.com/a/13813493-jesus-molina"

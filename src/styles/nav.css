@@ -53,6 +53,13 @@
   object-fit: contain;
 }
 
+/* MISTER MOLINA wordmark: wide logo, sized by height */
+.nav-logo-img--wordmark {
+  width: auto;
+  height: 42px;
+  border-radius: 0;
+}
+
 .nav-logo-text {
   font-family: var(--font-display);
   font-weight: 500;
@@ -586,6 +593,11 @@
   .nav-logo-img {
     width: 40px;
     height: 40px;
+  }
+
+  .nav-logo-img--wordmark {
+    width: auto;
+    height: 34px;
   }
 
   .nav-burger-label {

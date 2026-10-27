@@ -19,12 +19,6 @@ export const defaultTrackData = {
       isDownload: false,
     },
     {
-      platformName: "SoundCloud",
-      iconId: "soundcloud",
-      url: "https://soundcloud.com/mistermolinamusic?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
-      isDownload: false,
-    },
-    {
       platformName: "Instagram",
       iconId: "instagram",
       url: "https://www.instagram.com/jesusmolinamusic?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
