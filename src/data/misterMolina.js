@@ -38,9 +38,9 @@ export const MISTER_MOLINA_BIO = [
 
 // About page photo carousel (stills from MISTER MOLINA's videos); `pos` is the crop focus
 export const MISTER_MOLINA_GALLERY = [
-  { src: 'mistermolinaphoto.jpeg', alt: 'MISTER MOLINA live at the keys', pos: '52% center' },
-  { src: 'videoposterhomepageMISTER.jpg', alt: 'MISTER MOLINA on the subway', pos: '65% center' },
-  { src: 'mrmolinavideoposter-web.jpg', alt: 'MISTER MOLINA behind the decks', pos: '45% center' },
+  { src: 'mistermolinaphoto.jpeg', alt: 'MISTER MOLINA live at the keys', pos: '52% center', credit: 'Carlos Montes' },
+  { src: 'videoposterhomepageMISTER.jpg', alt: 'MISTER MOLINA on the subway', pos: '65% center', credit: 'Carlos Montes' },
+  { src: 'mrmolinavideoposter-web.jpg', alt: 'MISTER MOLINA behind the decks', pos: '45% center', credit: 'Carlos Montes' },
 ];
 
 // Footer "Explore" column on the MISTER MOLINA site: its own home sections

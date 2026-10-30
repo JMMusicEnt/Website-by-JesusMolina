@@ -44,7 +44,7 @@ export default function Biography({ artist = 'jesus' }) {
               <div className="bio-portrait-accent-2" aria-hidden="true" />
             </div>
             <div className="bio-portrait-caption">
-              <span className="bio-caption-label">{t.bioPortraitLabel}</span>
+              <span className="bio-caption-label">Photo credit: Carlos Montes</span>
               <span className="bio-caption-value">
                 {isMister ? 'Pianist  ·  producer  ·  vocalist' : 'Singer  ·  multi-instrumentalist  ·  songwriter'}
               </span>
@@ -88,7 +88,7 @@ export default function Biography({ artist = 'jesus' }) {
                 </div>
                 {img.credit && (
                   <div className="bio-carousel-caption">
-                    <span>Photo Credit: {img.credit}</span>
+                    <span>Photo credit: {img.credit}</span>
                   </div>
                 )}
               </div>
