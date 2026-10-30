@@ -9,6 +9,7 @@ export default function Hero({
   poster = 'images/videoposternuevo.png',
   titleFirst,
   titleLast,
+  titleImage, // optional { src, alt }: shows a logo instead of the two-line name (MISTER MOLINA home)
   spotifyUrl = 'https://open.spotify.com/artist/7Gl7yiOLDSRr1cZyPwpGv4',
   socials = [], // optional vertical social rail: [{ id, label, href }] (MISTER MOLINA home)
   socialsLabel = 'Social media',
@@ -96,9 +97,22 @@ export default function Hero({
 
       {/* ── Content ── */}
       <div className="hero-content">
-        <h1 className="hero-title">
-          <span className="hero-title-line hero-title-firstname" data-reveal>{titleFirst ?? t.heroTitle1}</span>
-          <span className="hero-title-line hero-title-lastname" data-reveal>{titleLast ?? t.heroTitle2}</span>
+        <h1 className={`hero-title${titleImage ? ' hero-title--logo' : ''}`}>
+          {titleImage ? (
+            <span className="hero-title-line" data-reveal>
+              <img
+                src={`${import.meta.env.BASE_URL}${titleImage.src}`}
+                alt={titleImage.alt}
+                className="hero-title-logo"
+                fetchPriority="high"
+              />
+            </span>
+          ) : (
+            <>
+              <span className="hero-title-line hero-title-firstname" data-reveal>{titleFirst ?? t.heroTitle1}</span>
+              <span className="hero-title-line hero-title-lastname" data-reveal>{titleLast ?? t.heroTitle2}</span>
+            </>
+          )}
         </h1>
 
         <div className="hero-actions" data-reveal>

@@ -66,6 +66,8 @@ function ScrollToAnchor() {
 
 // Cobrand fan sign-up form shown in the CONNECT section of the Jesus Molina home
 const COBRAND_SIGNUP_URL = 'https://drop.cobrand.com/d/JesusMolina/JMSU/embed?form_only=true';
+// ...and in the BOOKING section of the MISTER MOLINA home
+const MISTER_COBRAND_SIGNUP_URL = 'https://drop.cobrand.com/d/MISTERMOLINA/MMSU/embed?form_only=true';
 
 // Home Component wrapping all landing sections
 function Home() {
@@ -93,8 +95,7 @@ function MisterMolinaHome() {
       <Hero
         videoSrc="video/clipHomePageMisterMolinaNuevo.mp4"
         poster="images/videoposterhomepageMISTER.jpg"
-        titleFirst="MISTER"
-        titleLast="MOLINA"
+        titleImage={{ src: 'images/logomistermolina-hero.png', alt: 'MISTER MOLINA' }}
         spotifyUrl={MISTER_MOLINA_SPOTIFY_URL}
         socials={MISTER_MOLINA_SOCIALS}
         socialsLabel="MISTER MOLINA social media"
@@ -108,7 +109,7 @@ function MisterMolinaHome() {
         artistId={MISTER_MOLINA_SPOTIFY_ID}
         artistUrl={MISTER_MOLINA_SPOTIFY_URL}
       />
-      <FinalCTA title="BOOKING" backgroundImage="images/mistermolinaphoto.jpeg" />
+      <FinalCTA title="BOOKING" backgroundImage="images/mistermolinaphoto.jpeg" embedSrc={MISTER_COBRAND_SIGNUP_URL} embedTall />
     </>
   );
 }

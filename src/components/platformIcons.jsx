@@ -36,6 +36,7 @@ export function PlatformIcon({ id, size = 20, className = "" }) {
           <path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/>
         </svg>
       );
+    case 'soundcloud':
     case 'soundcloud-logo': // cloud + bars, readable at small sizes
       return (
         <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -81,12 +82,6 @@ export function PlatformIcon({ id, size = 20, className = "" }) {
       return (
         <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
           <path d="M13.5 22v-8.2h2.8l.42-3.3H13.5V8.9c0-.95.26-1.6 1.63-1.6h1.74V4.14c-.3-.04-1.33-.13-2.53-.13-2.5 0-4.21 1.53-4.21 4.33V10.5H7.5v3.3h2.63V22h3.37z"/>
-        </svg>
-      );
-    case 'soundcloud':
-      return (
-        <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-          <path d="M1 13.5v2.5c0 .55.45 1 1 1h1.5c.55 0 1-.45 1-1v-2.5c0-.55-.45-1-1-1H2c-.55 0-1 .45-1 1zm3.5-1.5v4.5c0 .55.45 1 1 1H7c.55 0 1-.45 1-1V12c0-.55-.45-1-1-1H5.5c-.55 0-1 .45-1 1zm3.5-1v6.5c0 .55.45 1 1 1h1.5c.55 0 1-.45 1-1v-6.5c0-.55-.45-1-1-1H9c-.55 0-1 .45-1 1zm3.5-.5v7.5c0 .55.45 1 1 1h1.5c.55 0 1-.45 1-1V11c0-.55-.45-1-1-1h-1.5c-.55 0-1 .45-1 1zm3.5-1v9.5c0 .55.45 1 1 1H18c.55 0 1-.45 1-1V10c0-.55-.45-1-1-1h-1.5c-.55 0-1 .45-1 1zm3.5-.5v10.5c0 .55.45 1 1 1h1.5c.55 0 1-.45 1-1V9.5c0-.55-.45-1-1-1H19c-.55 0-1 .45-1 1zm4-2c-4.14 0-7.5 3.36-7.5 7.5 0 .83.14 1.63.39 2.38.26.77 1.36.98 1.96.45 1.48-1.28 3.4-2.06 5.5-2.06 4.69 0 8.5 3.81 8.5 8.5 0 .55.45 1 1 1h.5c.55 0 1-.45 1-1 0-6.35-5.15-11.5-11.5-11.5z"/>
         </svg>
       );
     default:

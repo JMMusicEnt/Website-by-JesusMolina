@@ -1,12 +1,20 @@
 import { useApp } from '../context/AppContext';
 import { PLACEHOLDER_PORTRAIT } from '../data/collaborators';
 import { useDragMarquee } from '../hooks/useDragMarquee';
-import { MISTER_MOLINA_BIO } from '../data/misterMolina';
+import { MISTER_MOLINA_BIO, MISTER_MOLINA_GALLERY } from '../data/misterMolina';
 
-// artist="mister" shows MISTER MOLINA's bio and photo (no Jesus Molina photo carousel)
+const JESUS_MOLINA_GALLERY = [
+  { src: 'image2.png', alt: 'Reves Productions 1', pos: 'center', credit: 'Carlos Montes' },
+  { src: 'dos.jpeg', alt: 'Reves Productions 2', pos: 'center', credit: 'Carlos Montes' },
+  { src: 'tres.jpeg', alt: 'Reves Productions 3', pos: '85% center', credit: 'Carlos Montes' },
+  { src: 'newBioPhoto.jpg', alt: 'Reves Productions 4', pos: 'center top', credit: 'Carlos Montes' },
+];
+
+// artist="mister" shows MISTER MOLINA's bio, photo and photo carousel
 export default function Biography({ artist = 'jesus' }) {
   const { t } = useApp();
   const isMister = artist === 'mister';
+  const gallery = isMister ? MISTER_MOLINA_GALLERY : JESUS_MOLINA_GALLERY;
   const { wrapperRef, trackRef } = useDragMarquee({ copies: 4 });
 
   return (
@@ -64,16 +72,10 @@ export default function Biography({ artist = 'jesus' }) {
         </div>
       </div>
 
-      {!isMister && (
       <div className="bio-carousel-section">
         <div className="bio-marquee-wrapper" ref={wrapperRef}>
           <div className="bio-marquee-track" ref={trackRef}>
-            {[...Array(4)].flatMap(() => [
-              { src: 'image2.png', alt: 'Reves Productions 1', pos: 'center' },
-              { src: 'dos.jpeg', alt: 'Reves Productions 2', pos: 'center' },
-              { src: 'tres.jpeg', alt: 'Reves Productions 3', pos: '85% center' },
-              { src: 'newBioPhoto.jpg', alt: 'Reves Productions 4', pos: 'center top' }
-            ]).map((img, idx) => (
+            {[...Array(4)].flatMap(() => gallery).map((img, idx) => (
               <div key={idx} className="bio-carousel-item">
                 <div className="bio-carousel-img-wrap">
                   <img 
@@ -84,15 +86,16 @@ export default function Biography({ artist = 'jesus' }) {
                     style={{ objectPosition: img.pos }}
                   />
                 </div>
-                <div className="bio-carousel-caption">
-                  <span>Photo Credit: Carlos Montes</span>
-                </div>
+                {img.credit && (
+                  <div className="bio-carousel-caption">
+                    <span>Photo Credit: {img.credit}</span>
+                  </div>
+                )}
               </div>
             ))}
           </div>
         </div>
       </div>
-      )}
     </section>
   );
 }

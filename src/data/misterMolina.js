@@ -36,6 +36,13 @@ export const MISTER_MOLINA_BIO = [
   '“No matter how big the sound gets, the music always comes first,” Molina says. “This is my sound, this is my world. And this is just the beginning.”',
 ];
 
+// About page photo carousel (stills from MISTER MOLINA's videos); `pos` is the crop focus
+export const MISTER_MOLINA_GALLERY = [
+  { src: 'mistermolinaphoto.jpeg', alt: 'MISTER MOLINA live at the keys', pos: '52% center' },
+  { src: 'videoposterhomepageMISTER.jpg', alt: 'MISTER MOLINA on the subway', pos: '65% center' },
+  { src: 'mrmolinavideoposter-web.jpg', alt: 'MISTER MOLINA behind the decks', pos: '45% center' },
+];
+
 // Footer "Explore" column on the MISTER MOLINA site: its own home sections
 export const MISTER_MOLINA_EXPLORE_LINKS = [
   { href: `${MISTER_MOLINA_PATH}#destacados`, label: 'Watch' },

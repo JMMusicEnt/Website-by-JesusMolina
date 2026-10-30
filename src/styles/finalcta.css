@@ -259,6 +259,10 @@
   border-radius: 16px;
 }
 
+.newsletter-embed--tall {
+  height: 600px;
+}
+
 @media (max-width: 640px) {
   .newsletter-card--embed {
     padding: 12px;
@@ -266,5 +270,9 @@
 
   .newsletter-embed {
     height: 600px;
+  }
+
+  .newsletter-embed--tall {
+    height: 680px;
   }
 }

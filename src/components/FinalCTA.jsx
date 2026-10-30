@@ -8,8 +8,9 @@ if (typeof window !== 'undefined') {
 }
 
 // title / backgroundImage are optional overrides (the MISTER MOLINA home shows BOOKING over a photo);
-// embedSrc swaps the email form for an embedded sign-up form (Cobrand on the Jesus Molina home)
-export default function FinalCTA({ title, backgroundImage, embedSrc } = {}) {
+// embedSrc swaps the email form for an embedded sign-up form (Cobrand on both homes);
+// embedTall gives it more height (MISTER MOLINA's form is longer)
+export default function FinalCTA({ title, backgroundImage, embedSrc, embedTall = false } = {}) {
   const { t } = useApp();
   const containerRef = useRef(null);
   const cardRef = useRef(null);
@@ -75,7 +76,7 @@ export default function FinalCTA({ title, backgroundImage, embedSrc } = {}) {
             <iframe
               src={embedSrc}
               title={`${title || t.connectTitle || 'CONNECT'} sign-up form`}
-              className="newsletter-embed"
+              className={`newsletter-embed${embedTall ? ' newsletter-embed--tall' : ''}`}
               allow="clipboard-write; fullscreen"
               scrolling="no" // the form fits the iframe height; hide its inner scrollbar
               allowFullScreen
